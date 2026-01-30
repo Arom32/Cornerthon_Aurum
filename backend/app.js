@@ -23,6 +23,10 @@ app.get('/', (req, res) => {
   res.send('Cornerthon Team 2 Server is Running!');
 });
 
+// 공연 전시 관련 라우트
+const performanceRouter = require('./routes/performance');
+app.use('/api/performances', performanceRouter);
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
   console.log(`Swagger Docs available at http://localhost:${port}/api-docs`);
