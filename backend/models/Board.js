@@ -10,7 +10,11 @@ const boardSchema = new mongoose.Schema(
         },
         title: { type: String, required: true }, // 게시물 제목
         content: { type: String, required: true }, // 게시물 내용
-        comments: [{ type: mongoose.Schema.Types.ObjectId }], // 댓글 배열
+        comments: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
+            }], // 댓글 배열
+            
         // 작성자
         creator: {
             type: mongoose.Schema.Types.ObjectId,
