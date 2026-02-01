@@ -1,6 +1,8 @@
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger/swagger');
+const cookieParser = require("cookie-parser");
+require("dotenv").config()
 const app = express();
 const port = 3000;
 const dbConnect = require("./config/dbConnect")
@@ -10,6 +12,9 @@ dbConnect()
 
 // 미들웨어 설정
 app.use(express.json());
+
+// 쿠키 파서
+app.use(cookieParser());
 
 // Swagger 연동
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
@@ -29,6 +34,10 @@ app.use('/api/performances', performanceRouter);
 
 const boardRouter = require('./routes/boardRoutes');
 app.use('/api/boards', boardRouter);
+
+// 유저 관련 라우트
+const userRouter = require('./routes/userRoutes');
+app.use('/api/user', userRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
