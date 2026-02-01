@@ -12,7 +12,9 @@ const options = {
       { url: 'http://localhost:3000', description: 'Local Server' },
     ],
   },
-  apis: ['./routes/*.js'], // routes 폴더 내의 파일을 스캔
+  apis: ['./routes/*.js',
+     './swagger/*.js'], 
+  
 };
 
 const specs = swaggerJsdoc(options);

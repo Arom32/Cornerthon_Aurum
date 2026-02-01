@@ -27,6 +27,9 @@ app.get('/', (req, res) => {
 const performanceRouter = require('./routes/performanceRoutes');
 app.use('/api/performances', performanceRouter);
 
+const boardRouter = require('./routes/boardRoutes');
+app.use('/api/boards', boardRouter);
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
   console.log(`Swagger Docs available at http://localhost:${port}/api-docs`);

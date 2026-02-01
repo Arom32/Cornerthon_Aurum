@@ -29,30 +29,33 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: "새싹 관람객",
         },
-        // 주간/월간 관람자 랭킹
-        weeklyViewCount: {
+        
+        // 주간/월간 관람자 랭킹 - 후기글
+        weeklyReviewCount: {
             type: Number,
             default: 0
         },
-        monthlyViewCount: {
+        monthlyReviewCount: {
             type: Number,
             default: 0
         },
-         totalViewCount: {
+         totalReviewCount: {
             type: Number,
             default: 0
         },
-        // 최다 추천 리뷰어 랭킹
+        
+        // 유저가 쓴 게시물 개수
+        totalPostCount: {
+            type: Number,
+            default: 0
+        },
+
         // 유저가 받은 추천 개수
         likesCount: {
             type: Number,
             default: 0
         },
-        // 유저가 쓴 리뷰 게시물 개수
-        reviewCount: {
-            type: Number,
-            default: 0
-        },
+        
         // 활동 데이터 관리
         lastActivityDate: { type: Date, default: Date.now } 
 }
