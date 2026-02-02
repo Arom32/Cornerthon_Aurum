@@ -1,7 +1,6 @@
 require("dotenv").config()
 const express = require('express');
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpecs = require('./swagger/swagger');
+
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const app = express();
@@ -21,6 +20,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Swagger 연동
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpecs = require('./swagger/swagger');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 // KOPIS 테스트 라우트

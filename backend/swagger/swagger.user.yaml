@@ -1,0 +1,75 @@
+tags:
+  - name: User
+    description: "유저 관리 및 인증 API"
+
+paths:
+  /api/user/register:
+    post:
+      summary: "회원가입"
+      tags: [User]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password1, password2]
+              properties:
+                username: { type: string }
+                password1: { type: string }
+                password2: { type: string }
+      responses:
+        200:
+          description: "회원 가입 성공"
+
+  /api/user/login:
+    post:
+      summary: "로그인"
+      tags: [User]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username: { type: string }
+                password: { type: string }
+      responses:
+        200:
+          description: "로그인 성공 (토큰 발급)"
+
+  /api/user/mypage:
+    get:
+      summary: "프로필 조회"
+      tags: [User]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "프로필 데이터 반환"
+    put:
+      summary: "프로필(닉네임) 수정"
+      tags: [User]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: { type: string }
+      responses:
+        200:
+          description: "수정 성공"
+
+  /api/user/logout:
+    get:
+      summary: "로그아웃"
+      tags: [User]
+      responses:
+        200:
+          description: "로그아웃 성공 (쿠키 만료)"

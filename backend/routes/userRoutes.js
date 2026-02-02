@@ -9,7 +9,7 @@ router.route("/register")
 
 // 로그인 ( http://localhost:3000/api/user/logout )
 router.route("/login")
-.get(loginUser)
+.post(loginUser)
 
 // 로그아웃 ( http://localhost:3000/api/user/logout )
 router.route("/logout")

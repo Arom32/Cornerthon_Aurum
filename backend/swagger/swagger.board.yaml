@@ -1,0 +1,84 @@
+tags:
+  - name: Boards
+    description: "게시물 관리 API"
+
+paths:
+  /api/boards:
+    post:
+      summary: "게시물 작성"
+      tags: [Boards]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [category, title, content]
+              properties:
+                category:
+                  type: string
+                  enum: [review, question, notice, general, trade]
+                title:
+                  type: string
+                content:
+                  type: string
+                PerformId:
+                  type: string
+                  description: "후기 게시판용 공연 ID"
+                price:
+                  type: number
+                  description: "거래 게시판용 가격"
+      responses:
+        201:
+          description: "게시물 작성 성공"
+        400:
+          description: "필수 항목 누락 또는 가격 미입력 (trade)"
+        401:
+          description: "로그인 필요"
+
+  /api/boards/{id}:
+    patch:
+      summary: "게시물 수정"
+      tags: [Boards]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string }
+                content: { type: string }
+                category: { type: string }
+                price: { type: number }
+                tradeStatus:
+                  type: string
+                  enum: [available, reserved, completed]
+      responses:
+        200:
+          description: "게시물 수정 성공"
+        403:
+          description: "수정 권한 없음"
+    delete:
+      summary: "게시물 삭제"
+      tags: [Boards]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          description: "게시물 삭제 성공"
+        403:
+          description: "삭제 권한 없음"

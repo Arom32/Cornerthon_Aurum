@@ -5,7 +5,14 @@ const User = require("../models/User")
 // 로그인 이후 프로필 조회, 수정에 필요한 인증 미들웨어
 const protect = asyncHandler(async (req, res, next) => {
     let token  
-    token = req.cookies.token // 쿠키에서 토큰 꺼내기
+    
+    // swagger 테스트를 위한 예외 처리
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        token = req.headers.authorization.split(" ")[1];
+    } 
+    else if (req.cookies && req.cookies.token) {
+        token = req.cookies.token // 쿠키에서 토큰 꺼내기
+    };
 
     if (!token) {
         res.status(401)

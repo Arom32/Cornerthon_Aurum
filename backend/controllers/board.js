@@ -1,7 +1,6 @@
 // 게시물 작성, 수정, 삭제 기능
 
 const Board = require('../models/Board');
-const User = require('../models/User');
 
 /** [POST] 게시물 작성
  * @param {Object} req - Express request object
@@ -10,9 +9,9 @@ const User = require('../models/User');
 async function createPost(req, res) {
     try {
          if (!req.user || !req.user.id) {
-            return res.status(401).json({ message: "로그인 필요" });
+            return res.status(401).json({ message: "로그인이 필요한 서비스 입니다." });
         }
-        const { category, title, content, PerformId, price } = req.body;
+        const { category, title, content, performId, price } = req.body;
         const creatorId = req.user.id;
 
         if (!category || !title || !content) {
@@ -28,7 +27,7 @@ async function createPost(req, res) {
             title,
             content, // description -> content 
             creator: creatorId,
-            PerformId,
+            performId,
             price
         });
 
