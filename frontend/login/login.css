@@ -1,5 +1,6 @@
 
         body {
+            background-color: #FFFFFF;
             margin: 0;              /* 브라우저 기본 여백 제거 */
             display: flex;          /* 정렬 기능을 켬 */
             justify-content: center; /* 가로 중앙 */
@@ -7,6 +8,8 @@
             min-height: 100vh;       /* 화면 전체 높이를 기준으로 잡음 */
         }
         
+
+
         /*회원가입 박스 바깥 테두리*/
         .inbox{
             padding-top: 150px;
@@ -38,6 +41,8 @@
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 8px;
+            color:black;
+            text-align:left;
         }
         
         /*아이디,비밀번호 입력창*/
@@ -45,8 +50,9 @@
             width: 100%;
             padding: 15px;
             font-size: 15px;
+            color:black;
             background-color: white;
-            border: 1px solid #4E4E4E99;
+            border: 1px solid #4E4E4E;
             border-radius: 15px;
             box-sizing: border-box;
         }
@@ -103,7 +109,6 @@
             align-items: center;
             margin-bottom: 40px;
             font-size: 16px;
-            color: #4E4E4E;
         }
 
         /* 자동 로그인 체크박스 스타일 */
