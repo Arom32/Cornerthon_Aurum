@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import {Link,useNavigate} from 'react-router-dom';
-import './performance-musical.css';
+import './performance-concert.css';
 
-const Display = () => {
+const Concert = () => {
     //백엔드에서 받아올 공연 데이터 (state)
     const [performance ,setPerformance]= useState([]);
         // 백엔드 api 호출
@@ -19,7 +19,7 @@ const Display = () => {
                             
                 // api 데이터를 서비스에 맞게
                 const performanceData = data
-                    .filter(post => post.category === '전시') // -이 부분은 카테고리별로 들어가서 할 예정 
+                    .filter(post => post.category === '콘서트') // -이 부분은 카테고리별로 들어가서 할 예정 
                     .map(post => ({
                         id: post.id,
                         imgUrl: post.url,
@@ -52,16 +52,16 @@ const Display = () => {
                     <Link to = "/display">전시</Link>
                 </nav>   
             </header>
-            {/* 공연 종류-전시 */}
-            <section className="kind-display">전시</section>
-            {/* 공연 종류 밑에 있는 설명-전시 */}
-            <nav className="ex-display">오늘의 전시 정보를 안내해드립니다.</nav>
-            {/* 공연 종류별로 공연 정보 - 전시 */}
-            <nav className="all-display">
+            {/* 공연 종류-콘서트 */}
+            <section className="kind-concert">콘서트</section>
+            {/* 공연 종류 밑에 있는 설명-콘서트 */}
+            <nav className="ex-concert">오늘의 콘서트 정보를 안내해드립니다.</nav>
+            {/* 공연 종류별로 공연 정보 - 콘서트 */}
+            <nav className="all-concert">
                 <div className="all-grid">
                     {/* map을 사용해서 performance 를 맵으로 바꾸면 전체 가능*/}
                     {performance
-                        .filter(item=>item.category==='전시')
+                        .filter(item=>item.category==='콘서트')
                         .map((item)=>(
                             <article key={'all-${item.id}'} className="image-card" onClick={()=>NavigationHistoryEntry('/detail/${item.id}')}>
                                 {/* onClick-상세 페이지 이동 */}
@@ -75,5 +75,5 @@ const Display = () => {
         </div>
    )
 };
-export default Display;
+export default Concert;
 
