@@ -12,4 +12,6 @@ router.delete('/:id', protect, controller.deletePost);
 
 router.get('/list', controller.getPosts);
 
+router.get('/user', protect, controller.getUserPosts);
+
 module.exports = router;
