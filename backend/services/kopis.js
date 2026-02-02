@@ -76,6 +76,7 @@ async function saveToDB(items) {
             poster: item.poster,
             genrenm: item.genrenm,
             prfstate: item.prfstate,
+            area : item.area,
             status: status,
             updatedAt: new Date()
           }
@@ -92,7 +93,7 @@ async function saveToDB(items) {
 // --------------------------------------------------------------
 
 //상세 정보 업데이트 (2단계 수집) - 공연 하나 
-async function updateDetailInfo(limitCount = 50) {
+async function updateDetailInfo(limitCount = 100) {
   try {
     // 1. 상세 정보가 없는(mt10id- 공연시설 정보가 없는) 공연 찾기 
     // 상태가 ACTIVE인 것만 조회하여 불필요한 API 호출 방지
