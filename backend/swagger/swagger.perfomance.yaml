@@ -21,17 +21,20 @@ paths:
         - in: query
           name: genre
           schema: { type: string }
-          description: "장르 필터 (쉼표 구분 가능)"
+          description: "장르 필터 (쉼표 다중 선택 가능) - 장르 : 연극, 서양음악(클래식), 뮤지컬, 한국음악(국악), 대중음악, 무용(서양/한국무용), 대중무용, 서커스/마술, 복합"
         - in: query
           name: state
-          schema: { type: string }
           description: "공연 상태 필터"
+          schema: 
+            type: string
+            enum: [공연예정, 공연중, 공연완료]
         - in: query
           name: area
           schema: { type: string }
-          description: "지역 필터"
+          description: "지역 필터 - 서울특별시, 경기도, 인천광역시 등"
         - in: query
           name: sort
+          description: "정렬 기준"
           schema:
             type: string
             enum: [latest, views, likes, rating, end]
