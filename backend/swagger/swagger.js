@@ -1,4 +1,6 @@
+require("dotenv").config();
 const swaggerJsdoc = require('swagger-jsdoc');
+const port = process.env.PORT;
 
 const options = {
   definition: {
@@ -9,7 +11,7 @@ const options = {
       description: '문화예술 커뮤니티 플랫폼 아우름 API',
     },
     servers: [
-      { url: 'http://localhost:3000', description: 'Local Server' },
+      { url: `http://localhost:${port}`, description: 'Local Server' },
     ],
   },
   apis: ['./routes/*.js',
@@ -18,4 +20,4 @@ const options = {
 };
 
 const specs = swaggerJsdoc(options);
-module.exports = specs;
+module.exports = specs; 

@@ -1,11 +1,15 @@
+require("dotenv").config()
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger/swagger');
+const cors = require('cors');
 const cookieParser = require("cookie-parser");
-require("dotenv").config()
 const app = express();
-const port = 3000;
 const dbConnect = require("./config/dbConnect")
+const port = process.env.PORT;
+
+// CORS 설정
+app.use(cors());
 
 // db 연결
 dbConnect()
@@ -40,6 +44,6 @@ const userRouter = require('./routes/userRoutes');
 app.use('/api/user', userRouter);
 
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-  console.log(`Swagger Docs available at http://localhost:${port}/api-docs`);
+  console.log(`[BE] Server is running on http://localhost:${port}`);
+  console.log(`[BE] Swagger Docs available at http://localhost:${port}/api-docs`);
 });
