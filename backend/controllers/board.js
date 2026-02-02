@@ -1,6 +1,11 @@
 // 게시물 작성, 수정, 삭제 기능
 
 const Board = require('../models/Board');
+const { 
+    validatedCategory,
+    getBoardSortOption,
+    handleCategoryCounters
+} = require('../utils/boardUtils');
 
 /** [POST] 게시물 작성
  * @param {Object} req - Express request object
@@ -31,6 +36,8 @@ async function createPost(req, res) {
             price
         });
 
+        // 카운터 업데이트
+        await handleCategoryCounters(newBoard, true);
         await newBoard.save();
         res.status(201).json({ message: "게시물이 성공적으로 작성되었습니다.", board: newBoard });
     } catch (err) {
@@ -109,8 +116,57 @@ async function deletePost(req, res) {
     }
 }
 
+async function getPosts(req, res){
+    try {
+        const {
+            page = 1,
+            limit = 10,
+            category,
+            sort,
+            search
+        } = req.query;
+
+        const query = {};
+
+        const validCategory = validatedCategory(category);
+        if (validCategory) {
+            query.category = validCategory;
+        }
+
+        if (search) {
+            query.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { content: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        //  DB 조회 / 페이징
+        const skipCount = (Number(page) - 1) * Number(limit);
+        const boards = await Board.find(query)
+            .populate('creator', 'username') // 작성자 정보 포함
+            .sort(getBoardSortOption(sort)) 
+            .skip(skipCount)
+            .limit(Number(limit));
+        res.status(200).json({ boards });
+
+        const totalCount = await Board.countDocuments(query);
+        res.json({
+            success: true,
+            data: boards,
+            pagination: {
+                currentPage: Number(page),
+                totalPage: Math.ceil(totalCount / Number(limit)),
+                totalCount
+            }
+        });
+    } catch (err) {
+        res.status(500).json({ message: "게시글 목록 조회 실패", error: err.message });
+    }
+} 
+
 module.exports = {
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    getPosts,
 };
