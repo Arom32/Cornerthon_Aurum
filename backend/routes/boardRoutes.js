@@ -10,4 +10,6 @@ router.patch('/:id', protect, controller.updatePost);
 
 router.delete('/:id', protect, controller.deletePost);
 
+router.get('/list', controller.getPosts);
+
 module.exports = router;

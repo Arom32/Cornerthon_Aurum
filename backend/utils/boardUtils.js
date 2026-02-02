@@ -1,6 +1,8 @@
 const User = require('../models/User');
 const Performance = require('../models/Performance');
 
+const ALLOWED_CATEGORIES = ["review", "question", "notice", "general", "trade"];
+
 async function handleCategoryCounters(boardData, increment) {
     const { category, creator, PerformId } = boardData;
     const value = increment ? 1 : -1;
@@ -18,4 +20,21 @@ async function handleCategoryCounters(boardData, increment) {
     }
 }
 
-module.exports = { handleCategoryCounters };
+function validatedCategory(category) {
+    return ALLOWED_CATEGORIES.includes(category)? category : undefined;
+}
+
+function getBoardSortOption(sort) {
+    switch (sort) {
+        case 'newest':
+            return { createdAt: -1 };
+        case 'oldest':
+            return { createdAt: 1 };
+        case 'popular':
+            return { countLikes: -1 };
+        default:
+            return { createdAt: -1 }; // 기본 정렬 기준
+    }
+}
+
+module.exports = { handleCategoryCounters, validatedCategory, getBoardSortOption };
