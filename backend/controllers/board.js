@@ -116,6 +116,7 @@ async function deletePost(req, res) {
     }
 }
 
+// [GET] 게시물 목록 조회
 async function getPosts(req, res){
     try {
         const {
@@ -123,7 +124,7 @@ async function getPosts(req, res){
             limit = 10,
             category,
             sort,
-            search
+            search,
         } = req.query;
 
         const query = {};
@@ -139,6 +140,8 @@ async function getPosts(req, res){
                 { content: { $regex: search, $options: 'i' } }
             ];
         }
+
+
 
         //  DB 조회 / 페이징
         const skipCount = (Number(page) - 1) * Number(limit);
@@ -164,9 +167,27 @@ async function getPosts(req, res){
     }
 } 
 
+// [GET] 특정 사용자 게시물 목록 조회
+async function getUserPosts(req, res) {
+    try {
+        if (!req.user || !req.user.id) {
+            return res.status(401).json({ message: "로그인 필요" });
+        }   
+        const userId = req.user.id;
+        const boards = await Board.find({ creator: userId })
+            .populate('creator', 'username')
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({ boards });
+    } catch (err) {
+        res.status(500).json({ message: "사용자 게시글 조회 실패", error: err.message });
+    }
+}
+
 module.exports = {
     createPost,
     updatePost,
     deletePost,
     getPosts,
+    getUserPosts,
 };
