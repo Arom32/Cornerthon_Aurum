@@ -2,6 +2,8 @@ import React,{useState,useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import './main-page.css';
 
+const BACK_URL = import.meta.env.VITE_BACK_URL
+
 const Mainpage = () => {
     //백엔드에서 받아올 공연 데이터 (state)
     const [performance ,setPerformance]= useState([]);
@@ -14,17 +16,20 @@ const Mainpage = () => {
         const fetchData = async() => {
             try{
                 //주소 부분 실제로 백엔드 주소 넣으면 됩니다
-                const response = await fetch('주소');
-                const data = await response.json();
+                const response = await fetch(BACK_URL + '/api/performances/ranking');
+                const result = await response.json();
                 
-                // api 데이터를 서비스에 맞게
-                const performanceData = data.map(post => ({
-                    id: post.id,
-                    imgUrl: post.url,
-                    title: post.title
-                }));
+                console.log(result);
+                
+                // result.data가 배열인지 확인 후 map 실행
+                if (result.success && Array.isArray(result.data)) {
+                    const performanceData = result.data.map(post => ({
+                        id: post._id,      // post.id -> post._id (API 응답 기준)
+                        imgUrl: post.poster, // post.url -> post.poster (API 응답 기준)
+                        title: post.prfnm    // post.title -> post.prfnm (API 응답 기준)
+                    }));
+                    setPerformance(performanceData); }
 
-                setPerformance(performanceData);
             } catch(error){console.error("데이터 연결 실패",error);}
         };
         fetchData();
