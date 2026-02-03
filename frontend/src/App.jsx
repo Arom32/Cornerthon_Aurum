@@ -11,25 +11,35 @@ import Communitymain from './community-main/community-main.jsx';
 import Communityfree from './community-free/community-free.jsx';
 import Communitydeal from './community-deal/community-deal.jsx';
 import Writing from './writing/writing.jsx';
+import LoginForm from "./login/login.jsx"; 
+import SignupForm from "./signup/signup.jsx"; 
 
 function App() {
   return(
     <Router>
       <Routes>
+        {/* 메인 기능 */}
         <Route path="/" element={<Mainpage/>}/>
-        <Route path="/" element={<Mainoption/>}/>
-        <Route path="/" element={<Mainperformance/>}/>
-        <Route path="/" element={<Performanceconcert/>}/>
-        <Route path="/" element={<Performancemusical/>}/>
-        <Route path="/" element={<Performanceplayacting/>}/>
-        <Route path="/" element={<Performancefestival/>}/>
-        <Route path="/" element={<Performancedisplay/>}/>
-        <Route path="/" element={<Communitymain/>}/>
-        <Route path="/" element={<Communityfree/>}/>
-        <Route path="/" element={<Communitydeal/>}/>
-        <Route path="/" element={<Writing/>}/>
+        <Route path="/option" element={<Mainoption/>}/>
+        <Route path="/performance" element={<Mainperformance/>}/>
+        {/* 공연 기능 */}
+        <Route path="/concert" element={<Performanceconcert/>}/>
+        <Route path="/musical" element={<Performancemusical/>}/>
+        <Route path="/playacting" element={<Performanceplayacting/>}/>
+        <Route path="/festival" element={<Performancefestival/>}/>
+        <Route path="/display" element={<Performancedisplay/>}/>
+        {/* 커뮤니티 */}
+        <Route path="/community" element={<Communitymain/>}/>
+        <Route path="/free" element={<Communityfree/>}/>
+        <Route path="/deal" element={<Communitydeal/>}/>
+        {/* 글쓰기 */}
+        <Route path="/writing" element={<Writing/>}/>
+        {/* 로그인및 회원가입 */}
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<SignupForm />} />
       </Routes>
     </Router>
   );
 }
+
 export default App;
