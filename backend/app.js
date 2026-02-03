@@ -44,6 +44,9 @@ app.use('/api/boards', boardRouter);
 const userRouter = require('./routes/userRoutes');
 app.use('/api/user', userRouter);
 
+const userTitleRouter = require('./routes/userTitleRoutes');
+app.use('/api/titles', userTitleRouter);
+
 app.listen(port, () => {
   console.log(`[BE] Server is running on http://localhost:${port}`);
   console.log(`[BE] Swagger Docs available at http://localhost:${port}/api-docs`);

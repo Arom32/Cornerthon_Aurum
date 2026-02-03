@@ -25,9 +25,14 @@ const userSchema = new mongoose.Schema(
             default: 0,
         },
         // 칭호
-        title: {
+        currentTitle: {
             type: String,
             default: "새싹 관람객",
+        },
+
+        ownedTitles: {
+             type: Number, 
+             default: 1 
         },
         
         // 주간/월간 관람자 랭킹 - 후기글
