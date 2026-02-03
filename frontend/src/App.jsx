@@ -5,7 +5,7 @@ import Mainperformance from './main-performance/main-performance.jsx';
 import Performanceconcert from './performance-concert/performance-concert.jsx';
 import Performancemusical from './performance-musical/performance-musical.jsx';
 import Performanceplayacting from './performance-playacting/performance-playacting.jsx';
-import Performancefestival from './performance-fstival/performance-festival.jsx';
+import Performancefestival from './performance-festival/performance-festival.jsx';
 import Performancedisplay from './performance-display/performance-display.jsx';
 import Communitymain from './community-main/community-main.jsx';
 import Communityfree from './community-free/community-free.jsx';
