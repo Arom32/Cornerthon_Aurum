@@ -3,7 +3,7 @@ const router = express.Router();
 const { fetchAndSavePerformances, updateDetailInfo } = require('../services/kopis');
 const Performance = require('../models/Performance');
 
-// [기본 수집] 공연 목록 가져오기 ( http://localhost:3000/test/fetch )
+// [기본 수집] 공연 목록 가져오기 ( http://localhost:5000/test/fetch )
 router.get('/fetch', async (req, res) => {
   try {
     console.log('--- 공연 목록 수집 시작 ---');
@@ -15,7 +15,7 @@ router.get('/fetch', async (req, res) => {
   }
 });
 
-// [상세 수집] 비어있는 상세정보 채우기 ( http://localhost:3000/test/detail )
+// [상세 수집] 비어있는 상세정보 채우기 ( http://localhost:5000/test/detail )
 router.get('/detail', async (req, res) => {
   try {
     console.log('--- 상세 정보 업데이트 시작 ---');
@@ -27,7 +27,7 @@ router.get('/detail', async (req, res) => {
   }
 });
 
-// DB에 몇 개나 저장됐는지 보기 ( http://localhost:3000/test/count )
+// DB에 몇 개나 저장됐는지 보기 ( http://localhost:5000/test/count )
 router.get('/count', async (req, res) => {
   try {
     const total = await Performance.countDocuments({});

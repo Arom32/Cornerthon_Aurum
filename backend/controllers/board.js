@@ -38,6 +38,8 @@ async function createPost(req, res) {
             price
         });
 
+        // 카운터 업데이트
+        await handleCategoryCounters(newBoard, true);
         await newBoard.save();
         res.status(201).json({ message: "게시물이 성공적으로 작성되었습니다.", board: newBoard });
     } catch (err) {

@@ -16,7 +16,7 @@ const getProfile = asyncHandler(async (req, res) => {
     }
 
     // 결과 전송 
-    res.json({name: user.username, point: user.point, level: user.level, title: user.title})
+    res.json({name: user.username, point: user.point, level: user.level, title: user.currentTitle})
 })
 
 // 프로필 수정
