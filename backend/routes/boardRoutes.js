@@ -10,4 +10,10 @@ router.patch('/:id', protect, controller.updatePost);
 
 router.delete('/:id', protect, controller.deletePost);
 
+router.get('/list', controller.getPosts);
+
+router.get('/user', protect, controller.getUserPosts);
+
+router.patch('/like', protect, controller.toggleBoardLike );
+
 module.exports = router;

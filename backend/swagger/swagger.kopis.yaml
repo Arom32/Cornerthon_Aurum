@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: KOPIS Data Collection API
+  description: 공연 데이터 수집 및 상태 확인을 위한 관리용 API (테스트용)
+  version: 1.0.0
+
+tags:
+  - name: KOPIS-Sync
+    description: "외부 데이터 동기화 및 관리 (백서버 관리용)"
+
+paths:
+  /test/fetch:
+    get:
+      summary: "공연 목록 수집 시작"
+      description: "KOPIS API로부터 공연 목록을 가져와 DB에 기초 데이터를 저장합니다."
+      tags: [KOPIS-Sync]
+      responses:
+        200:
+          description: "수집 완료"
+        500:
+          description: "목록 수집 중 서버 에러"
+
+  /test/detail:
+    get:
+      summary: "상세 정보 업데이트"
+      description: "DB에 저장된 공연 중 상세 정보가 없는 항목들을 찾아 업데이트합니다."
+      tags: [KOPIS-Sync]
+      responses:
+        200:
+          description: "업데이트된 공연 개수 반환"
+        500:
+          description: "상세 수집 중 서버 에러"
+
+  /test/count:
+    get:
+      summary: "DB 저장 현황 조회"
+      description: "수집된 전체 공연 수, 상영 중인 공연 수, 상세 정보가 필요한 공연 수를 확인합니다."
+      tags: [KOPIS-Sync]
+      responses:
+        200:
+          description: "통계 데이터 반환"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_performances:
+                    type: integer
+                  active_performances:
+                    type: integer
+                  need_detail_update:
+                    type: integer
+        500:
+          description: "DB 조회 실패"
