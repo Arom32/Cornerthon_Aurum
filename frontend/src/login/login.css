@@ -35,9 +35,10 @@
         /*아이디,비밀번호 라벨*/
         .form-group label {
             display: block;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            color:#4E4E4E;
+            margin-bottom: 10px;
         }
         
         /*아이디,비밀번호 입력창*/
@@ -78,12 +79,13 @@
         }
 
 
-        .login-link span{
+        .signup-link span{
             color: #888;
+           
         }
 
-        .login-link a {
-            color: #62C370;
+        .signup-link a {
+            color: #5235A8;
             text-decoration: none;
             font-weight: 600;
         }
@@ -116,11 +118,14 @@
         
         /* 커스텀 체크박스 스타일 (원형 느낌) */
         .auto-login input[type="checkbox"] {
+            appearance: none;
             width: 24px;
             height: 24px;
             margin-right: 10px;
-            accent-color: #62C370; 
+            accent-color: #5235A8; 
             cursor: pointer;
+            border: 1px solid #4E4E4E;
+            border-radius: 50%;
         }
 
         /* 비밀번호 찾기 링크 스타일 */
