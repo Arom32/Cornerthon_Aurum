@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'; 
 import {Link,useNavigate} from 'react-router-dom';
-import './main-performace.css';
+import './main-performance.css';
 
 const Mainperformance = () =>{
     //백엔드에서 받아올 공연 데이터 (state)
