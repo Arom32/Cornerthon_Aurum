@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const {getProfile, updateProfile, registerUser, loginUser, logoutUser} = require("../controllers/user")
+const {userLevel} = require("../controllers/userLeveling")
 const getRanking = require("../controllers/userRanking")
 const protect = require("../middleWares/authMiddleware")
 
@@ -8,7 +9,7 @@ const protect = require("../middleWares/authMiddleware")
 router.route("/register")  
 .post(registerUser)
 
-// 로그인 ( http://localhost:3000/api/user/logout )
+// 로그인 ( http://localhost:3000/api/user/login )
 router.route("/login")
 .post(loginUser)
 
@@ -25,6 +26,10 @@ router.route("/mypage")
 // 랭킹 조회  ( http://localhost:3000/api/user/ranking?type=weekly)
 router.route("/ranking")  
 .get(getRanking)
+
+// 레벨링  ( http://localhost:3000/api/user/leveling)
+router.route("/leveling")  
+.post(protect, userLevel)
 
 
 
