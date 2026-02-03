@@ -1,13 +1,18 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Mainpage from './main-page/main-page.jsx';
+import { Routes, Route } from "react-router-dom";
+import LoginForm from "./login/login.jsx"; 
+import SignupForm from "./signup/signup.jsx"; 
+
+// 만약 원격(깃허브)에 다른 페이지가 있었다면 여기에 추가로 import 하세요.
 
 function App() {
-  return(
-    <Router>
-      <Routes>
-        <Route path="/" element={<Mainpage/>}/>
-      </Routes>
-    </Router>
+  return (
+    <Routes>
+      <Route path="/" element={<LoginForm />} />
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/signup" element={<SignupForm />} />
+      {/* 다른 팀원이 추가한 Route가 있다면 여기에 남겨두세요 */}
+    </Routes>
   );
 }
+
 export default App;
