@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema(
         },
         
         // 유저가 쓴 게시물 개수
-        totalPostCount: {
+        postCount: {
             type: Number,
             default: 0
         },
