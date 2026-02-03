@@ -14,4 +14,6 @@ router.get('/list', controller.getPosts);
 
 router.get('/user', protect, controller.getUserPosts);
 
+router.patch('/like', protect, controller.toggleBoardLike );
+
 module.exports = router;
