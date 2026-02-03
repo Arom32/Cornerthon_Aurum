@@ -1,2 +1,19 @@
-node_modules
+# 의존성 라이브러리 (용량이 크고 npm install로 다시 설치 가능)
+node_modules/
+dist/
+build/
+
+# 환경 설정 파일 (보안 및 개인 설정)
 .env
+.env.local
+
+# VS Code 설정 (개인별 에디터 설정)
+.vscode/
+
+# 운영체제 생성 파일
+.DS_Store
+Thumbs.db
+
+# 패키지 매니저 잠금 파일 (PR을 깔끔하게 유지하고 싶을 때 제외)
+package-lock.json
+yarn.lock
