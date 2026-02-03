@@ -43,7 +43,7 @@ cron.schedule('0 0 1 * *', async () => {
         await User.updateMany({}, { monthlyReviewCount: 0 })
         res.json('월간 랭킹 리셋 완료')
     } catch (err) {
-        console.error('월간 리셋 중 에러 발생:', err)
+        res.json('월간 리셋 중 에러 발생:', err)
     }
 })
 
