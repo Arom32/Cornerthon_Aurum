@@ -1,0 +1,134 @@
+/* main-performance.css */
+@charset "UTF-8";
+
+/* 추천 공연 섹션 */
+.recommend-section {
+    padding: 40px 80px 60px 80px; /* 상단 여백 줄임 */
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 100px;
+    margin-left: 0; /* 왼쪽 정렬 */
+}
+
+/* 추천 공연 그리드 - 4개 고정 */
+.section-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    min-height: 280px; /* 최소 높이 지정으로 카드 공간 확보 */
+}
+
+/* 중간 카테고리 바 */
+.middle-category {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 30px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin: 100px 0 80px 0;
+}
+
+.middle-category a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #7B30FD;
+    transition: color 0.2s;
+}
+
+.middle-category a:hover {
+    color: #5a1fd1;
+}
+
+/* 전체 공연 섹션 */
+.all-performance {
+    padding: 0 80px 80px 80px;
+}
+
+/* 전체 공연 그리드 - 유동적 */
+.all-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    min-height: 280px; /* 최소 높이 지정 */
+}
+
+/* 공통 카드 스타일 */
+.image-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 280px; /* 카드 최소 높이 */
+    background-color: #7B30FD;
+    overflow: hidden;
+}
+
+.image-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(123, 48, 253, 0.2);
+}
+
+.image-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+    background-color: #7B30FD;
+    display: block; /* 이미지가 없어도 배경색 보임 */
+    color: transparent; 
+    text-indent: -9999px;
+}
+
+.image-card p {
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    color: #333;
+}
+
+/* 스켈레톤 (로딩) 스타일 - 단순 보라색 */
+.image-card-skeleton {
+    width: 100%;
+    height: 280px;
+    background-color: #7B30FD;
+}
+/* 반응형 */
+@media (max-width: 1200px) {
+    .section-grid,
+    .all-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .recommend-section,
+    .all-performance {
+        padding: 30px 40px;
+    }
+    
+    .section-grid,
+    .all-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .middle-category {
+        gap: 30px;
+        font-size: 14px;
+        margin: 50px 0 40px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-grid,
+    .all-grid {
+        grid-template-columns: 1fr;
+    }
+}

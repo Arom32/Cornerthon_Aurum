@@ -1,0 +1,89 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; 
+import './community-deal.css';
+import Header from '../Header/Header.jsx';
+const Communitydeal = () => {
+    
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                //주소 부분에 실제 백엔드 주소 넣으면 됩니다.
+                const response = await fetch('주소');
+                const result = await response.json();
+
+                console.log(result);
+                if (result.success && Array.isArray(result.data)) {
+                    const writingData = result.data.map(post => ({
+                        id: post._id,
+                        title: post.prnm
+                    }));
+                    // 위에서 선언한 setPosts를 사용합니다.
+                    setPosts(writingData);
+                }
+            } catch (error) {
+                console.error('데이터 연결 실패', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []); // 빈 배열은 컴포넌트가 처음 나타날 때 한 번만 실행됨을 의미합니다.
+
+    // 데이터 로딩 중일 때 처리
+    if (loading) return <div>로딩 중</div>;
+
+    return (
+        <div className="container">
+           <Header/>
+            {/* 자유게시판 */}
+            <article className='free-community'>
+                <div className='free-title'>후기게시판</div>
+                <p>공연을 관람한 후 다양한 후기를 나눠보세요.</p>
+                <div className='action-bar'>
+                    <Link to='/writing'>글쓰기</Link>
+                    <div className='search-bar'>
+                        <input type='text' placeholder='검색어를 입력하세요'/>
+                        <button className='serch'>검색</button>
+                    </div>
+                </div>
+                {/* 번호,제목등등 */}
+                <table clasName='free-section'>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>등록일</th>
+                        </tr>
+                    </thead>
+                </table>
+                {/* 그 글쓰기 파트 */}
+                <tbody>
+                {posts.length > 0 ? (
+                posts.map((post, index) => (
+                    <tr key={post.id || index}>
+                        {/* 번호: 데이터에 없으면 index+1 로 표시 가능 */}
+                        <td>{post.id || index + 1}</td>
+                        <td className='post-title'>
+                            <Link to={`/community/${post.id}`}>{post.title}</Link>
+                        </td>
+                        {/* 등록일(데이터에 해당 필드가 있어야함) */}
+                        <td>{post.date}</td>
+                    </tr>
+                ))
+                ) : (
+                <tr>
+                    <td colSpan="4" className="no-data">등록된 게시글이 없습니다.</td>
+                </tr>
+                )}
+            </tbody>
+            </article>
+            
+        </div>
+    );
+};
+
+export default Communitydeal;

@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import './main-page.css';
-
-const BACK_URL = import.meta.env.VITE_BACK_URL
-
+import Header from '../Header/Header.jsx';
+// 상단 import 아래에 추가
+const BACK_URL = import.meta.env.VITE_BACK_URL || "http://localhost:5000";
 const Mainpage = () => {
     //백엔드에서 받아올 공연 데이터 (state)
     const [performance ,setPerformance]= useState([]);
@@ -37,19 +37,7 @@ const Mainpage = () => {
 
     return(
         <div className="container">
-            {/* 상단 헤더 */}
-            <header className="header">
-                <div className="logo">AURUM</div>
-                <div className="search-bar">
-                    <input type="text" placeholder="검색어를 입력하세요"/>
-                </div>
-                <nav className="section">
-                    <Link to="/login">로그인</Link>
-                    <Link to="/signup">회원가입</Link>
-                    <Link to="/mypage">my page</Link>
-                    
-                </nav>
-            </header>
+           <Header />
             {/* 메인 컨텐츠 */}
             <main className="main-content">
                 {/* 왼쪽 로고,설명,스타트 버튼 */}
@@ -58,19 +46,28 @@ const Mainpage = () => {
                     <p className="explanation">
                         "An integrated cultural arts platform for discovering information and connecting through shared experiences."
                     </p>
-                    <button className="start-btn">start</button>
+                    <Link to ="/option">start</Link>
                 </div>
                 {/* 오른쪽 추천 공연 4개 */}
                 <div className="right-content">
                     <div className="image-grid">
-                        {performance.slice(0,4).map((item)=>(
+                        {performance.length > 0 ? (performance.slice(0, 4).map((item) => (
                             <div key={item.id} className="image-card">
-                                <img src={item.imgUrl} alt={item.title}/>
+                                <img src={item.imgUrl} alt={item.title} />
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </main>
+                        ))
+                ) : (
+                    // 데이터 없음->보라색 4개 카드 보임
+                    <>
+                        <div className="image-card skeleton"></div>
+                        <div className="image-card skeleton"></div>
+                        <div className="image-card skeleton"></div>
+                        <div className="image-card skeleton"></div>
+                    </>
+                )}
+            </div>
+        </div>
+    </main>
         </div>
     )
 };

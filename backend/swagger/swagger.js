@@ -11,7 +11,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Cornerthon Aurumn API',
+      title: 'Cornerthon Aurum API',
       version: '1.0.0',
     },
     components: {

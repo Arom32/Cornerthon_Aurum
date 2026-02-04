@@ -1,11 +1,11 @@
-require("dotenv").config()
+require("dotenv").config({ quiet: true })
 const express = require('express');
-
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
-const app = express();
 const dbConnect = require("./config/dbConnect")
+const app = express();
 const port = process.env.PORT;
+const { updatePrfList } = require('./services/performanceSync');
 
 // CORS 설정
 app.use(cors());
@@ -37,8 +37,13 @@ app.get('/', (req, res) => {
 const performanceRouter = require('./routes/performanceRoutes');
 app.use('/api/performances', performanceRouter);
 
+// 게시물 관련 라우트
 const boardRouter = require('./routes/boardRoutes');
 app.use('/api/boards', boardRouter);
+
+// 댓글 관련 라우트
+const commentRouter = require('./routes/commentRoutes');
+app.use('/api/comments', commentRouter);
 
 // 유저 관련 라우트
 const userRouter = require('./routes/userRoutes');
@@ -47,7 +52,27 @@ app.use('/api/user', userRouter);
 const userTitleRouter = require('./routes/userTitleRoutes');
 app.use('/api/titles', userTitleRouter);
 
-app.listen(port, () => {
-  console.log(`[BE] Server is running on http://localhost:${port}`);
-  console.log(`[BE] Swagger Docs available at http://localhost:${port}/api-docs`);
-});
+if(false){ // 서버 새로 열 때 외부 데이터로 리로드 , debug 용
+  try {
+      console.log('\n[BE] Initial data collection starting...');
+      updatePrfList(); 
+} catch (err) {
+      console.error('[BE] Initial collection failed:', err.message);
+}}
+
+
+
+dbConnect()
+  .then(() => {
+    console.log('[BE] MongoDB Connected Successfully');
+    
+    // DB 연결이 성공해야만 서버를 시작함
+    app.listen(port, () => {
+      console.log(`\n[BE] Server is running on http://localhost:${port}`);
+      console.log(`[BE] Swagger Docs available at http://localhost:${port}/api-docs\n`);
+    });
+  })
+  .catch((err) => {
+    console.error('[BE] MongoDB Connection Failed:', err);
+    process.exit(1); // 연결 실패 시 프로세스 종료
+  });

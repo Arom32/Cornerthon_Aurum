@@ -1,8 +1,11 @@
 import React,{useState,useEffect} from 'react'
 import {Link,useNavigate} from 'react-router-dom';
-import './performance-musical.css';
+import './performance-display.css';
+import Header from '../Header/Header.jsx';
+import CategoryBar from '../CategoryBar/CategoryBar.jsx';
 
-const Musical = () => {
+
+const Display = () => {
     //백엔드에서 받아올 공연 데이터 (state)
     const [performance ,setPerformance]= useState([]);
         // 백엔드 api 호출
@@ -19,7 +22,7 @@ const Musical = () => {
                             
                 // api 데이터를 서비스에 맞게
                 const performanceData = data
-                    .filter(post => post.category === '뮤지컬') // -이 부분은 카테고리별로 들어가서 할 예정 
+                    .filter(post => post.category === '전시') // -이 부분은 카테고리별로 들어가서 할 예정 
                     .map(post => ({
                         id: post.id,
                         imgUrl: post.url,
@@ -32,36 +35,18 @@ const Musical = () => {
     }, []); //페이지 로드시 1회 실행
    return(
         <div clasName = "container">
-            {/* 상단 헤더  */}
-            <header className="header-top">
-                <div className="logo">AURUM</div>
-                <div className="search-bar">
-                    <input type="text" placeholder='검색어를 입력하세요'/>
-                </div>
-                <ul className="section">
-                    <Link to ="/login">로그인</Link>
-                    <Link to ="/signup">회원가입</Link>
-                    <Link to ="/mypage">mypage</Link>
-                </ul>
-                {/* 헤더2 */}
-                <nav className="category-bar">
-                    <Link to = "/concert">콘서트</Link>
-                    <Link to = "/musical">뮤지컬</Link>
-                    <Link to = "/play-acting">연극</Link>
-                    <Link to = "/festival">페스티벌</Link>
-                    <Link to = "/display">전시</Link>
-                </nav>   
-            </header>
-            {/* 공연 종류-뮤지컬 */}
-            <section className="kind-musical">뮤지컬</section>
-            {/* 공연 종류 밑에 있는 설명-뮤지컬 */}
-            <nav className="ex-musical">오늘의 뮤지컬 정보를 안내해드립니다.</nav>
-            {/* 공연 종류별로 공연 정보 - 뮤지컬 */}
-            <nav className="all-musical">
+            <Header/>
+            <CategoryBar/>
+            {/* 공연 종류-전시 */}
+            <section className="kind-display">전시</section>
+            {/* 공연 종류 밑에 있는 설명-전시 */}
+            <nav className="ex-display">오늘의 전시 정보를 안내해드립니다.</nav>
+            {/* 공연 종류별로 공연 정보 - 전시 */}
+            <nav className="all-display">
                 <div className="all-grid">
                     {/* map을 사용해서 performance 를 맵으로 바꾸면 전체 가능*/}
                     {performance
-                        .filter(item=>item.category==='뮤지컬')
+                        .filter(item=>item.category==='전시')
                         .map((item)=>(
                             <article key={'all-${item.id}'} className="image-card" onClick={()=>NavigationHistoryEntry('/detail/${item.id}')}>
                                 {/* onClick-상세 페이지 이동 */}
@@ -75,5 +60,5 @@ const Musical = () => {
         </div>
    )
 };
-export default Musical;
+export default Display;
 

@@ -1,0 +1,16 @@
+/* 공연 종류 이름-페스티벌 */
+.kind-festival{
+    font-size:90px;
+    font-weight:700;
+    color:#7B30FD;
+    line-height:1;
+    margin:0;
+    margin-bottom:20px;
+    text-align: center;
+}
+.ex-festival{
+    font-size:18px;
+    color:#666;
+    text-align:center;
+    margin-bottom:40px;
+}
