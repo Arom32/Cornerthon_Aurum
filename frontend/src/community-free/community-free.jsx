@@ -2,12 +2,19 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; 
 import './community-free.css';
 import Header from '../Header/Header.jsx';
+
+/*모달 컴포넌트 임포트*/
+// 7번 라인 부근 수정
+import ModalFreeBoard from '../free-bulletin-board/modal-free-bulletin-board';
+
 const BACK_URL = import.meta.env.VITE_BACK_URL
 
 const Communityfree = () => {
     
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,7 +28,7 @@ const Communityfree = () => {
                 });
 
                 //주소 부분에 실제 백엔드 주소 넣으면 됩니다.
-                const response = await fetch(`${BACK_URL}/api/boards/list?${params.toString()}`);
+                const response = await fetch(`http://localhost:5000/api/boards/list?${params.toString()}`);
                 const result = await response.json();
 
                 console.log(result);
@@ -57,7 +64,13 @@ const Communityfree = () => {
                 <div className='free-title'>자유게시판</div>
                 <p>다양한 소통을 자유롭게 나눠보세요.</p>
                 <div className='action-bar'>
-                    <Link to='/writing'>글쓰기</Link>
+                    <button 
+                        className="write-btn" 
+                        onClick={() => setIsModalOpen(true)}
+                        style={{ cursor: 'pointer', padding: '10px 20px', backgroundColor: '#6e45e2', color: '#fff', border: 'none', borderRadius: '5px' }}
+                    >
+                        글쓰기
+                    </button>
                     <div className='search-bar'>
                         <input type='text' placeholder='검색어를 입력하세요'/>
                         <button className='serch'>검색</button>
@@ -97,6 +110,15 @@ const Communityfree = () => {
                 </table>
                 
             </article>
+            
+            {/* 4. 모달 조건부 렌더링 */}
+           {/* Communityfree.jsx 하단 */}
+            {isModalOpen && (
+            <ModalFreeBoard 
+            isOpen={isModalOpen} // 이 속성이 전달되어야 모달이 보입니다.
+            onClose={() => setIsModalOpen(false)} 
+    />
+)}
             
         </div>
     );
