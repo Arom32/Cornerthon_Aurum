@@ -21,7 +21,7 @@ paths:
               type: object
               required: [username, password1, password2]
               properties:
-                username: { type: string, example: "gemini_user" }
+                username: { type: string, example: "userid" }
                 password1: { type: string, format: password, example: "password123" }
                 password2: { type: string, format: password, example: "password123" }
       responses:
@@ -42,7 +42,7 @@ paths:
               type: object
               required: [username, password]
               properties:
-                username: { type: string, example: "gemini_user" }
+                username: { type: string, example: "userid" }
                 password: { type: string, format: password, example: "password123" }
       responses:
         200:
@@ -109,6 +109,28 @@ paths:
       responses:
         200:
           description: "랭킹 데이터 반환"
+
+  /api/user/leveling:
+    post:
+      security:
+        - bearerAuth: []
+      summary: "레벨"
+      tags: [User]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [amount,]
+              properties:
+                amount: { type: integer, example: "10" }
+      responses:
+        200:
+          description: "경험치 상승 성공"
+        
+      
+      
 
 components:
   securitySchemes:

@@ -5,15 +5,16 @@ const protect = require("../middleWares/authMiddleware")
 
 router.post('/', protect, controller.createPost);
 
-
 router.patch('/:id', protect, controller.updatePost);
 
 router.delete('/:id', protect, controller.deletePost);
 
+router.get('/:id/comments', controller.getBoardComments);
+
+router.patch('/:id/like', protect, controller.toggleBoardLike );
+
 router.get('/list', controller.getPosts);
 
 router.get('/user', protect, controller.getUserPosts);
-
-router.patch('/like', protect, controller.toggleBoardLike );
 
 module.exports = router;
