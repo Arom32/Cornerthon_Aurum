@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react'; // useState 추가
 import { Routes, Route } from 'react-router-dom';
 import Mainpage from './main-page/main-page.jsx';
 import Mainoption from './main-option/main-option.jsx';
@@ -20,34 +20,36 @@ import TradeBulletinBoard from './trade-bulletin-board/trade-bulletin-board.jsx'
 import './App.css';
 
 function App() {
+  // 1. 모든 페이지가 공유할 로그인 아이디 상태
+  const [userId, setUserId] = useState('');
+
   return (
     <Routes>
-      {/* 1. 메인 및 기본 기능 */}
-      <Route path="/" element={<Mainpage />} />
-      <Route path="/option" element={<Mainoption />} />
-      <Route path="/performance" element={<Mainperformance />} />
+      {/* 2. 각 컴포넌트에 userId와 setUserId를 Props로 전달 */}
+      <Route path="/" element={<Mainpage userId={userId} />} />
+      <Route path="/option" element={<Mainoption userId={userId} />} />
+      <Route path="/performance" element={<Mainperformance userId={userId} />} />
       
-      {/* 2. 로그인, 회원가입, 마이페이지 */}
-      <Route path="/login" element={<LoginForm />} />
+      {/* LoginForm은 아이디를 '저장'해야 하므로 setUserId를 넘겨줌 */}
+      <Route path="/login" element={<LoginForm setUserId={setUserId} />} />
       <Route path="/signup" element={<SignupForm />} />
-      <Route path="/mypage" element={<Mypage />} />
+      
+      {/* Mypage는 저장된 아이디를 '보여줘야' 하므로 userId를 넘겨줌 */}
+      <Route path="/mypage" element={<Mypage userId={userId} />} />
 
-      {/* 3. 공연 카테고리 */}
-      <Route path="/concert" element={<Performanceconcert />} />
-      <Route path="/musical" element={<Performancemusical />} />
-      <Route path="/playacting" element={<Performanceplayacting />} />
-      <Route path="/festival" element={<Performancefestival />} />
-      <Route path="/display" element={<Performancedisplay />} />
+      <Route path="/concert" element={<Performanceconcert userId={userId} />} />
+      <Route path="/musical" element={<Performancemusical userId={userId} />} />
+      <Route path="/playacting" element={<Performanceplayacting userId={userId} />} />
+      <Route path="/festival" element={<Performancefestival userId={userId} />} />
+      <Route path="/display" element={<Performancedisplay userId={userId} />} />
 
-      {/* 4. 커뮤니티 및 게시판 */}
-      <Route path="/community" element={<Communitymain />} />
-      <Route path="/free" element={<Communityfree />} />
-      <Route path="/deal" element={<Communitydeal />} />
-      <Route path="/free-bulletin-board" element={<FreeBulletinBoard />} />
-      <Route path="/trade-bulletin-board" element={<TradeBulletinBoard />} />
+      <Route path="/community" element={<Communitymain userId={userId} />} />
+      <Route path="/free" element={<Communityfree userId={userId} />} />
+      <Route path="/deal" element={<Communitydeal userId={userId} />} />
+      <Route path="/free-bulletin-board" element={<FreeBulletinBoard userId={userId} />} />
+      <Route path="/trade-bulletin-board" element={<TradeBulletinBoard userId={userId} />} />
 
-      {/* 5. 글쓰기 */}
-      <Route path="/writing" element={<Writing />} />
+      <Route path="/writing" element={<Writing userId={userId} />} />
     </Routes>
   );
 }
