@@ -1,10 +1,13 @@
 import React,{useState,useEffect} from 'react'; 
 import {Link,useNavigate} from 'react-router-dom';
 import './main-performance.css';
+<<<<<<< HEAD
 import Header from '../Header/Header.jsx';
 import CategoryBar from '../CategoryBar/CategoryBar.jsx';
 
 const BACK_URL = import.meta.env.VITE_BACK_URL
+=======
+>>>>>>> 5fd2a3e2c3fbac80a24fcff0b69226e19928b5df
 
 const Mainperformance = () =>{
     //백엔드에서 받아올 공연 데이터 (state)

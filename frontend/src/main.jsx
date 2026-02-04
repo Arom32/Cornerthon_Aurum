@@ -5,8 +5,8 @@ import App from './App'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter> {/* 여기서 한 번만 감싸주세요! */}
+     {/* 여기서 한 번만 감싸주세요! */}
       <App />
-    </BrowserRouter>
+    
   </React.StrictMode>
 )

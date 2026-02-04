@@ -70,7 +70,7 @@ function LoginForm() {
 
           <div className="signup-link">
             <span>계정이 없으신가요? </span>
-            <a href="#" style={{ color: '#62C370', fontWeight: '600', textDecoration: 'none' }}>회원가입</a>
+            <a href="#" style={{ color: '#5235A8;', fontWeight: '600', textDecoration: 'none' }}>회원가입</a>
           </div>
         </form>
       </div>

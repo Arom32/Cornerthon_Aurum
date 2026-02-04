@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'; // Router(BrowserRouter) 삭제
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Router(BrowserRouter) 삭제
 import Mainpage from './main-page/main-page.jsx';
 import Mainoption from './main-option/main-option.jsx';
 import Mainperformance from './main-performance/main-performance.jsx';
@@ -13,6 +13,9 @@ import Communitydeal from './community-deal/community-deal.jsx';
 import Writing from './writing/writing.jsx';
 import LoginForm from "./login/login.jsx"; 
 import SignupForm from "./signup/signup.jsx"; 
+import Mypage from "./mypage/mypage.jsx";
+import FreeBulletinBoard from './free-bulletin-board/free-bulletin-board.jsx';
+import TradeBulletinBoard from './trade-bulletin-board/trade-bulletin-board.jsx';
 import './App.css';
 
 function App() {
@@ -34,13 +37,16 @@ function App() {
         <Route path="/community" element={<Communitymain/>}/>
         <Route path="/free" element={<Communityfree/>}/>
         <Route path="/deal" element={<Communitydeal/>}/>
+        <Route path="/free-bulletin-board" element={<FreeBulletinBoard />} />
+        <Route path="/trade-bulletin-board" element={<TradeBulletinBoard />} />
         {/* 글쓰기 */}
         <Route path="/writing" element={<Writing/>}/>
         {/* 로그인 및 회원가입 */}
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
-    </Routes>
-  );
-}
+        <Route path="/mypage" element={<Mypage />} />
 
+    </Routes>
+    );
+}
 export default App;

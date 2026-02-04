@@ -9,20 +9,21 @@
         
         /*회원가입 박스 바깥 테두리*/
         .inbox{
-            padding-top: 150px;
+            margin-top:50px;
+            margin-bottom:50px;
+
             box-sizing: border-box;
-            width: 700px;
-            max-width:95%;
-            height: 900px;
+            width: 450px;
+            height:auto;
+            max-width:90%;
             border-radius: 25px;
             box-shadow: 0 0 3px #4E4E4E;
-            max-width:1440px;
         }
 
         .login-box{
-            margin-top: 50px;
+            margin-top: 10px;
             width:100%;
-            padding: 40px;
+            padding: 20px 40px;
             background-color: #FFFFFF;
             box-sizing: border-box;
             border-radius: 25px;
@@ -83,7 +84,7 @@
         }
 
         .login-link a {
-            color: #62C370;
+            color: #5235A8;
             text-decoration: none;
             font-weight: 600;
         }
@@ -106,21 +107,42 @@
             color: #4E4E4E;
         }
 
-        /* 자동 로그인 체크박스 스타일 */
+        /* 자동 로그인 & 체크박스 전체 */
         .auto-login {
             display: flex;
             align-items: center;
             cursor: pointer;
+            
         }
     
         
         /* 커스텀 체크박스 스타일 (원형 느낌) */
         .auto-login input[type="checkbox"] {
+            margin-top: 6px;
+            -webkit-appearance: none;
+            appearance: none;
             width: 24px;
             height: 24px;
             margin-right: 10px;
-            accent-color: #62C370; 
+            accent-color: #5235A8; 
             cursor: pointer;
+            border-radius: 50%;
+            border: 1px solid #4E4E4E;
+            
+        }
+
+        /* 체크되었을 때의 스타일 */
+        .auto-login input[type="checkbox"]:checked {
+         background-color: #5235A8; /* 안쪽이 채워지는 색상 */
+        }
+        
+        /* (선택) 체크되었을 때 내부에 체크 표시(V) 넣기 */
+        .auto-login input[type="checkbox"]:checked::after {
+        margin-left: 5px;
+        content: '✔';
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
         }
 
         /* 비밀번호 찾기 링크 스타일 */
