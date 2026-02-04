@@ -1,0 +1,66 @@
+/* 전체 컨테이너: 상단 여백과 중앙 정렬 */
+.detail-page-container {
+  width: 100%;
+  max-width: 1100px; /* 너무 넓어지지 않게 제한 */
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* 메인 섹션: 포스터와 정보를 가로로 배치하고 높이 정렬 */
+.detail-main-section {
+  display: flex;
+  gap: 50px; /* 포스터와 글자 사이 간격 */
+  align-items: flex-start;
+  margin-top: 40px;
+}
+
+/* 포스터 영역: 크기를 400px 내외로 고정하여 잘림 방지 */
+.poster-area {
+  flex: 0 0 400px; /* 너비를 400px로 고정 */
+}
+
+.poster-img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 살짝 그림자 추가 */
+}
+
+/* 텍스트 정보 영역 */
+.info-text-section {
+  flex: 1;
+  padding-top: 10px;
+}
+
+.info-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* 테이블 정보 스타일링 */
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.info-table tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-table th {
+  text-align: left;
+  padding: 15px 0;
+  width: 120px;
+  color: #888;
+  font-size: 16px;
+}
+
+.info-table td {
+  padding: 15px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}
