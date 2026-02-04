@@ -7,7 +7,7 @@ const dbConnect = async () => {
         console.log("[BE] MongoDB Connected Successfully")
 
     } catch(err) {
-        console.log("error")
+        console.log("error :", err)
     }
 }
 
