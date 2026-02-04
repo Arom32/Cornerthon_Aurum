@@ -79,7 +79,8 @@
 .profile-main {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 40px;
+  width:100%;
 }
 
 .avatar-wrapper {
@@ -125,13 +126,16 @@
   color: #555;
 }
 
-/* 통계/액션 바 */
+/* 통계/액션 바 (리뷰/포인트 버튼임) */
 .stats-row {
   display: flex;
   background-color: #f8f8f8;
   border-radius: 10px;
-  padding: 12px 0;
+  padding: 16px 30px;
+  gap: 40px;
   text-align: center;
+  width: fit-content;
+  white-space: nowrap
 }
 
 .stat-item {
