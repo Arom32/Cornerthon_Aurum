@@ -1,27 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import './performance-detail-Page.css';
+import { useParams } from 'react-router-dom';
+import './performance-detail-page.css';
 import Header from '../Header/Header.jsx';
 import CategoryBar from '../CategoryBar/CategoryBar.jsx';
 
+const BACK_URL = import.meta.env.VITE_BACK_URL;
+
 const PerformanceDetailPage = () => {
+  // 1. 여기서 URL의 :id(예: PF284146)를 자동으로 가져옵니다.
+  const { id } = useParams(); 
   const [performanceInfo, setPerformanceInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchDetail = async () => {
+      try {
+        setLoading(true);
+        // 2. 질문하신 fetch 로직이 이미 여기에 async/await 형태로 구현되어 있습니다.
+        const response = await fetch(`${BACK_URL}/api/performances/${id}`);
+        const result = await response.json();
 
-    /*ㅈㅈㅈㅈㅈㅈㅈㅈㅈㅈㅈ임시API호출*/
-    fetch('http://localhost:3000/api/performances/PF284135') 
-      .then((response) => response.json())
-      .then((result) => {
-        // [수정] 백엔드 데이터 구조가 { success: true, data: { ... } } 이므로 
-        // result.data를 상태에 저장해야 합니다.
-        if (result.success) {
+        if (result.success && result.data) {
           setPerformanceInfo(result.data);
         }
-      })
-      .catch((err) => console.error("API 데이터 호출 실패:", err));
-  }, []);
+      } catch (err) {
+        console.error("데이터 호출 실패:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!performanceInfo) return <div>공연 정보를 불러오는 중...</div>;
+    if (id) fetchDetail();
+  }, [id]); // id가 바뀔 때마다 실행
+
+  // 로딩 및 데이터 없음 처리
+  if (loading) return <div className="loading">공연 정보를 불러오는 중...</div>;
+  if (!performanceInfo) return <div className="error">공연 정보가 없습니다.</div>;
 
   return (
     <div className="detail-page-container">
@@ -31,40 +45,35 @@ const PerformanceDetailPage = () => {
       <div className="detail-content-wrapper">
         <div className="detail-main-section">
           <div className="poster-area">
-            {/* [수정] imageUrl 대신 poster 필드 연결 */}
-            {performanceInfo.poster ? (
-              <img src={performanceInfo.poster} alt="공연 포스터" className="poster-img" />
-            ) : (
-              <div className="poster-placeholder"></div>
-            )}
+            <img 
+              src={performanceInfo.poster} 
+              alt={performanceInfo.prfnm} 
+              className="poster-img" 
+            />
           </div>
 
           <div className="info-text-section">
-            {/* [수정] title 대신 prfnm 연결 */}
-            <h2 className="info-title"> {performanceInfo.prfnm} </h2>
+            <h2 className="info-title">{performanceInfo.prfnm}</h2>
+            <p className="genre-tag">#{performanceInfo.genrenm}</p>
             <div className="title-underline"></div>
             
             <table className="info-table">
               <tbody>
                 <tr>
                   <th>장소</th>
-                  {/* [수정] location 대신 fcltynm 연결 */}
                   <td>{performanceInfo.fcltynm}</td>
                 </tr>
                 <tr>
                   <th>기간</th>
-                  {/* [수정] period 대신 날짜 필드 연결 */}
                   <td>{performanceInfo.prfpdfrom} ~ {performanceInfo.prfpdto}</td>
                 </tr>
                 <tr>
                   <th>공연 상태</th>
-                  {/* [수정] time 대신 prfstate 연결 */}
                   <td>{performanceInfo.prfstate}</td>
                 </tr>
                 <tr>
-                  <th>공연 지역</th>
-                  {/* [수정] limit 대신 area 연결 */}
-                  <td>{performanceInfo.area}</td>
+                  <th>조회수</th>
+                  <td>{performanceInfo.viewCount}회</td>
                 </tr>
               </tbody>
             </table>
