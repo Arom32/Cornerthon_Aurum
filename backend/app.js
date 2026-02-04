@@ -1,11 +1,11 @@
-require("dotenv").config()
+require("dotenv").config({ quiet: true })
 const express = require('express');
-
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
-const app = express();
 const dbConnect = require("./config/dbConnect")
+const app = express();
 const port = process.env.PORT;
+const { updatePrfList } = require('./services/performanceSync');
 
 // CORS 설정
 app.use(cors());
@@ -52,7 +52,16 @@ app.use('/api/user', userRouter);
 const userTitleRouter = require('./routes/userTitleRoutes');
 app.use('/api/titles', userTitleRouter);
 
+if(false){ // 서버 새로 열 때 외부 데이터로 리로드 , debug 용
+  try {
+      console.log('\n[BE] Initial data collection starting...');
+      updatePrfList(); 
+} catch (err) {
+      console.error('[BE] Initial collection failed:', err.message);
+}}
+
 app.listen(port, () => {
-  console.log(`[BE] Server is running on http://localhost:${port}`);
-  console.log(`[BE] Swagger Docs available at http://localhost:${port}/api-docs`);
+  
+  console.log(`\n[BE] Server is running on http://localhost:${port}`);
+  console.log(`[BE] Swagger Docs available at http://localhost:${port}/api-docs\n`);
 });

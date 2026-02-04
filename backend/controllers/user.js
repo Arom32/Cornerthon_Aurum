@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcrypt")
 const User = require("../models/User") // 유저 db 가져오기
-require("dotenv").config()
+require("dotenv").config({ quiet: true })
 jwtSecret = process.env.JWT_SECRET // .env 안의 비밀키 가져오기
 jwt = require("jsonwebtoken")
 
