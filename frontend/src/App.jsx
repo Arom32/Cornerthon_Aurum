@@ -20,6 +20,15 @@ import './App.css';
 
 function App() {
   return (
+fe/free-bulletin-board
+      <Routes>
+        {/* 메인 및 기본 기능 */}
+        <Route path="/" element={<Mainpage />} />
+        <Route path="/option" element={<Mainoption />} />
+        <Route path="/performance" element={<Mainperformance />} />
+        
+        {/* 로그인, 회원가입, 마이페이지 */}
+
     // <Router> 태그가 여기에 절대 있으면 안 됩니다. 
     // 오직 <Routes>만 있어야 합니다.
     <Routes>
@@ -42,11 +51,32 @@ function App() {
         {/* 글쓰기 */}
         <Route path="/writing" element={<Writing/>}/>
         {/* 로그인 및 회원가입 */}
+ main
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/mypage" element={<Mypage />} />
 
+ fe/free-bulletin-board
+        {/* 게시판 및 커뮤니티 */}
+        <Route path="/free-bulletin-board" element={<FreeBulletinBoard />} />
+        <Route path="/community" element={<Communitymain />} />
+        <Route path="/free" element={<Communityfree />} />
+        <Route path="/deal" element={<Communitydeal />} />
+
+        {/* 공연 관련 카테고리 */}
+        <Route path="/concert" element={<Performanceconcert />} />
+        <Route path="/musical" element={<Performancemusical />} />
+        <Route path="/playacting" element={<Performanceplayacting />} />
+        <Route path="/festival" element={<Performancefestival />} />
+        <Route path="/display" element={<Performancedisplay />} />
+
+        {/* 글쓰기 */}
+        <Route path="/writing" element={<Writing />} />
+      </Routes>
+  );
+
     </Routes>
     );
+main
 }
 export default App;
