@@ -2,27 +2,28 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 
-// 환경 변수 (필요 시 사용)
+
 const BACK_URL = import.meta.env.VITE_BACK_URL;
 
 function LoginForm({ setUserId }) {
-  // 1. 상태 관리
-  const [userIdInput, setUserIdInput] = useState(''); // 입력창용 로컬 상태
+  const [userIdInput, setUserIdInput] = useState(''); 
   const [userPw, setUserPw] = useState('');
   const [idError, setIdError] = useState('');
   const [pwError, setPwError] = useState('');
 
   const navigate = useNavigate();
 
-  // 2. 로그인 제출 핸들러
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 에러 초기화
+
     setIdError('');
+
     setPwError('');
 
-    // 유효성 검사
+
     if (!userIdInput) {
       setIdError('아이디를 입력해주세요.');
       return;
@@ -33,7 +34,7 @@ function LoginForm({ setUserId }) {
     }
 
     try {
-      // 실제 백엔드 통신 로직
+
       const response = await fetch('http://localhost:5000/api/user/login', {
         method: 'POST',
         headers: {
@@ -54,12 +55,14 @@ function LoginForm({ setUserId }) {
 
       if (result.success) {
         alert('로그인에 성공했습니다!');
-        
-        // 부모(App.js)의 전역 상태 업데이트
+
         setUserId(userIdInput); 
-        
-        // 페이지 이동
+
+
+
+    
         navigate('/'); 
+
       } else {
         alert(result.message || '로그인 정보를 확인해주세요.');
       }
