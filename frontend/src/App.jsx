@@ -27,8 +27,8 @@ function App() {
     <Routes>
       {/* 2. 각 컴포넌트에 userId와 setUserId를 Props로 전달 */}
       <Route path="/" element={<Mainpage userId={userId} />} />
-      <Route path="/option" element={<Mainoption userId={userId} />} />
-      <Route path="/performance" element={<Mainperformance userId={userId} />} />
+      <Route path="/main-option" element={<Mainoption userId={userId} />} />
+      <Route path="/main-performance" element={<Mainperformance userId={userId} />} />
       
       {/* LoginForm은 아이디를 '저장'해야 하므로 setUserId를 넘겨줌 */}
       <Route path="/login" element={<LoginForm setUserId={setUserId} />} />
@@ -43,9 +43,9 @@ function App() {
       <Route path="/festival" element={<Performancefestival userId={userId} />} />
       <Route path="/display" element={<Performancedisplay userId={userId} />} />
 
-      <Route path="/community" element={<Communitymain userId={userId} />} />
-      <Route path="/free" element={<Communityfree userId={userId} />} />
-      <Route path="/deal" element={<Communitydeal userId={userId} />} />
+      <Route path="/community-main" element={<Communitymain userId={userId} />} />
+      <Route path="/community-free" element={<Communityfree userId={userId} />} />
+      <Route path="/community-deal" element={<Communitydeal userId={userId} />} />
       <Route path="/free-bulletin-board" element={<FreeBulletinBoard userId={userId} />} />
       <Route path="/trade-bulletin-board" element={<TradeBulletinBoard userId={userId} />} />
 
