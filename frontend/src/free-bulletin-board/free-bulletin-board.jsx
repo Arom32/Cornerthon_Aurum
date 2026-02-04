@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './free-bulletin-board.css';
 import { Link } from 'react-router-dom';
+import ModalFreeBoard from './modal-free-bulletin-board';
 
 const FreeBoard = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 데이터 불러오기 함수 (fetch 사용) 그 axios 깔아야해서 그냥 fetch로 했음
   const getPostData = async () => {
@@ -75,7 +78,7 @@ const FreeBoard = () => {
       </header>
 
       <div className="board-controls">
-        <button className="write-btn">글쓰기</button>
+        <button className="write-btn" onClick={() => setIsModalOpen(true)}> 글쓰기</button>
         <div className="search-area">
           <input type="text" className="search-input" placeholder="검색어를 입력하세요" />
           <button className="search-btn">검색 <svg 
@@ -128,6 +131,11 @@ const FreeBoard = () => {
         </table>
       </div>
     </div>
+
+    <ModalFreeBoard 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </div>
   );
 };
