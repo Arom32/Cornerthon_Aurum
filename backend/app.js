@@ -60,8 +60,19 @@ if(false){ // 서버 새로 열 때 외부 데이터로 리로드 , debug 용
       console.error('[BE] Initial collection failed:', err.message);
 }}
 
-app.listen(port, () => {
-  
-  console.log(`\n[BE] Server is running on http://localhost:${port}`);
-  console.log(`[BE] Swagger Docs available at http://localhost:${port}/api-docs\n`);
-});
+
+
+dbConnect()
+  .then(() => {
+    console.log('[BE] MongoDB Connected Successfully');
+    
+    // DB 연결이 성공해야만 서버를 시작함
+    app.listen(port, () => {
+      console.log(`\n[BE] Server is running on http://localhost:${port}`);
+      console.log(`[BE] Swagger Docs available at http://localhost:${port}/api-docs\n`);
+    });
+  })
+  .catch((err) => {
+    console.error('[BE] MongoDB Connection Failed:', err);
+    process.exit(1); // 연결 실패 시 프로세스 종료
+  });
