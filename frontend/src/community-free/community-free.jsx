@@ -31,18 +31,20 @@ const Communityfree = () => {
                 const response = await fetch(`http://localhost:5000/api/boards/list?${params.toString()}`);
                 const result = await response.json();
 
+                
                 console.log(result);
                 if (result.success && Array.isArray(result.data)) {
                     const writingData = result.data.map(post => ({
-                        id : post.id,
-                        title: post.title,
-                        creator : post.creator.username,
-                        date : post.createdAt ? new Date(post.createdAt).toISOString().split('T')[0] : '-'
+                    id : post._id,
+                    title: post.title,
+                    creator : post.creator.username,
+                    date : post.createdAt ? new Date(post.createdAt).toISOString().split('T')[0] : '-',
+                    likes: post.countLikes,
                     }
                 ));
                     // 위에서 선언한 setPosts를 사용합니다.
                     setPosts(writingData);
-                }
+            }
             } catch (error) {
                 console.error('데이터 연결 실패', error);
             } finally {
@@ -80,31 +82,32 @@ const Communityfree = () => {
                 <table className='free-section'>
                     <thead>
                         <tr>
-                            <th>번호</th>
-                            <th>작성자</th>
-                            <th>제목</th>
-                            <th>등록일</th>
+                        <th className="col-id">번호</th>
+                        <th className="col-author">작성자</th>
+                        <th className="col-title">제목</th>
+                        <th className="col-likes">좋아요</th>
+                        <th className="col-date">등록일</th>
                         </tr>
                     </thead>
-                    {/* 그 글쓰기 파트 */}
                     <tbody>
-                        {posts.length > 0 ? (
+                        {loading ? (
+                        <tr><td colSpan="5" className="status-msg">로딩 중...</td></tr>
+                        ) : posts.length > 0 ? (
                         posts.map((post, index) => (
-                        <tr key={index}>
-                        {/* 번호: 데이터에 없으면 index+1 로 표시 가능 */}
-                            <td>{ index + 1}</td>
-                            <td>{ post.creator }</td>
-                            <td className='post-title'>
-                                <Link to={`/community/${post.id}`}>{post.title}</Link>
+                            <tr key={post.id} className={post.isNotice ? 'notice-row' : ''}>
+                            <td className="col-id">
+                                {post.isNotice ? <span className="notice-badge">공지</span> : index+1}
                             </td>
-                            {/* 등록일(데이터에 해당 필드가 있어야함) */}
-                        <td>{post.date}</td>
-                        </tr>
-                    ))
+                            <td className='col-author'>{post.creator}</td>
+                            <td className="col-title text-left ">
+                                <a href={`/board/${post.id}`} className="post-link">{post.title}</a>
+                            </td>
+                            <td className="col-likes">{post.likes}</td>
+                            <td className="col-date">{post.date}</td>
+                            </tr>
+                        ))
                         ) : (
-                        <tr>
-                            <td colSpan="4" className="no-data">등록된 게시글이 없습니다.</td>
-                        </tr>
+                        <tr><td colSpan="5" className="status-msg">등록된 게시글이 없습니다.</td></tr>
                         )}
                     </tbody>
                 </table>
