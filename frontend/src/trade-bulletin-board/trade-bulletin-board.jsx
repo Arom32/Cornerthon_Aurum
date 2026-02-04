@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './trade-bulletin-board.css';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
 import Header from '../Header/Header.jsx';
-=======
-import ModalTradeBoard from './modal-trade-bulletin-board';
->>>>>>> 38dc127abc5302186a04516ae262dd8652fd11cb
 
 const TradeBoard = () => {
   const [posts, setPosts] = useState([]);
