@@ -1,0 +1,403 @@
+body{
+  background-color: #ffffff;
+  margin:0;
+  padding:0;
+}
+
+
+.container{
+  width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    /* 좌우 중앙 정렬 */
+    margin:auto 0;  
+    font-family: Pretendard;
+    box-sizing: border-box;
+    flex-direction: column;
+    display:flex;
+}
+
+/* 헤더 영역 */
+.header {
+   width:100%;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 20px 80px;
+    border-bottom: 1px solid #eee; 
+    box-sizing: border-box;
+    background-color: white;
+}
+
+
+
+.search-bar input{
+    border-radius: 25px;
+    background-color: #D9D9D9;
+    width: 100%;
+    border: none;
+    padding: 10px 20px;
+    font-size:14px;
+    box-sizing:border-box;
+}
+
+.header .search-bar input {
+  width: 400px;
+
+  padding: 8px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.header .search-bar input:focus {
+  border-color: #7B61FF;
+}
+
+/* 로고 스타일 */
+.logo {
+
+    font-size: 40px;
+    font-weight: bold;
+    color:black;
+    text-decoration: none;
+}
+
+.search-bar{
+    /* 검색창이 차지하는 비율 */
+    position: relative;  /* 이 줄만 추가 */
+    flex:0.9; 
+    margin:0 40px;
+}
+
+.header .search-bar svg {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;  /* none → auto로 변경 (클릭 가능하게) */
+  color: #666;
+  cursor: pointer;  /* 이 줄 추가 - 손 모양 커서 */
+  transition: color 0.2s;  /* 호버 효과를 위한 전환 */
+}
+
+
+/* 헤더 네비게이션 */
+.section {
+  display: flex;
+  gap: 20px;
+  white-space: nowrap;
+}
+
+.section a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.section a:hover {
+  color: #5D3FD3;
+}
+
+.free-bulletin-board-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #f5f5f5;
+}
+/* 전체 컨테이너 */
+.board-container {
+  margin-top: 20px;
+  padding: 0 15px;
+}
+
+/* 헤더 영역 */
+.board-header {
+  margin-top:40px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/*자유게시판 글씨 스타일*/
+.main-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #5D3FD3; /* 메인 보라색 */
+  margin: 0 0 10px 0;
+  letter-spacing: -1px;
+}
+
+/* 궁금한 모든 것을 물어보세요.*/
+.sub-title {
+  color: #666;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin:0;
+}
+
+/* 상단 버튼 및 검색바 레이아웃 */
+.board-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 0 auto 20px auto;
+  width: 100%;       /* 부모 너비에 맞게 조절 */
+  max-width: 1200px; /* 너무 퍼지지 않게 적절한 최대 너비 설정 (권장) */
+
+}
+
+/* 글쓰기 버튼 */
+.write-btn {
+  background-color: #5D3FD3;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* 검색 버튼 스타일 */
+.search-btn {
+  background-color: #5D3FD3;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+
+.write-btn:hover {
+  background-color: #6148df;
+}
+
+/* 검색 영역 */
+.search-area {
+  display: flex;
+  gap: 8px;
+}
+
+/*검색창 스타일*/
+.search-input {
+  width: 240px;
+  padding: 10px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.9rem;
+  background-color: #fff;
+}
+
+.search-input:focus {
+  border-color: #7B61FF;
+}
+
+
+.search-btn:hover {
+  background-color: #6148df;
+}
+
+/* 테이블 스타일 */
+.table-responsive {
+  width: 100%;
+  border-top: 2px solid #333;
+
+}
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* 테이블 헤더 제목 */
+.board-table th.col-title {
+  text-align: center;
+  padding-left: 10px;  /* 헤더 "제목" 글자 위치 */
+}
+
+.board-table th {
+  padding: 15px 15px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #ddd;
+  font-weight: 700;
+  color: #333;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.board-table td {
+  padding: 15px 10px;
+  text-align: center;
+}
+
+.board-table tbody tr {
+  border-bottom: 1px solid #e8e8e8;
+  transition: background-color 0.2s;
+}
+
+.board-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.board-table tbody tr:last-child {
+  border-bottom: none;
+}
+/* 제목 열 왼쪽 정렬 및 링크 스타일 */
+.text-left {
+  text-align: left !important;
+  padding-left: 40px !important;
+}
+
+.post-link {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.2s;
+}
+
+.post-link:hover {
+  color: #7B61FF;
+  text-decoration: underline;
+}
+
+/* 공지사항 행 스타일 */
+.notice-row {
+  background-color: #f9faff;
+}
+
+.notice-row .post-link {
+  color: #4A4AE2;
+  font-weight: 500;
+}
+
+.notice-badge {
+  display: inline-block;
+  border: 1px solid #4A4AE2;
+  color: #4A4AE2;
+  padding: 2px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #fff;
+}
+
+/* 등록일 컬러 포인트 */
+.col-date {
+  color: #4A4AE2;
+  font-weight: 500;
+}
+
+/* 열 너비 고정 */
+
+/*번호*/
+.col-id { width: 10%; }
+/*제목 */
+.col-title { width: 60%; }
+/*등록일*/
+.col-date { width: 15%; }
+/*조회수*/
+.col-view { width: 15%; }
+
+/* 데이터 로딩/비었을 때 메시지 */
+.status-msg {
+  padding: 50px 0 !important;
+  color: #999;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* 반응형 (모바일 대응) */
+@media (max-width: 768px) {
+  .container{
+    padding: 10px;
+  }
+
+  /* 헤더 반응형 */
+  .header {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .header .search-bar {
+    width: 100%;
+  }
+
+  .header .search-bar input {
+    width: 100%;
+  }
+
+   .section {
+    width: 100%;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+
+  .main-title {
+    padding-top: 100px;
+    font-size: 2rem;
+  }
+
+  .sub-title {
+    font-size: 1rem;
+  }
+
+  /* 글쓰기 버튼과 미니 검색바 */
+  .board-controls {
+    margin:20px auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .search-area, .search-input {
+    width: 100%;
+  }
+
+  /* 모바일에서 등록일, 조회수 숨기기 (선택 사항) */
+  .col-date,
+  .col-view,
+  .board-table th:nth-child(3),
+  .board-table th:nth-child(4) {
+    display: none;
+  }
+
+  .col-id { width: 20%; }
+  .col-title { width: 80%; }
+
+  /* 테이블 패딩 조정 */
+  .board-table td {
+    padding: 12px 8px;
+  }
+
+  .text-left {
+    padding-left: 10px !important;
+  }
+}
+
+/* 태블릿 대응 */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header {
+    padding: 20px 40px;
+  }
+
+  .header .search-bar input {
+    width: 300px;
+  }a
+
+  .board-container {
+    padding: 0 20px;
+  }
+}
