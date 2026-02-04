@@ -1,0 +1,16 @@
+/* 공연 종류 이름-뮤지컬*/
+.kind-playacting{
+    font-size:90px;
+    font-weight:700;
+    color:#7B30FD;
+    line-height:1;
+    margin:0;
+    margin-bottom:20px;
+    text-align: center;
+}
+.ex-playacting{
+    font-size:18px;
+    color:#666;
+    text-align:center;
+    margin-bottom:40px;
+}

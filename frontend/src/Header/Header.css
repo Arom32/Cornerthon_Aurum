@@ -29,13 +29,17 @@
     flex-shrink: 0; 
     margin-right: 30px;
 }
-
+/* .logo-box{
+    width: auto;   /* 원하는 크기 */
+    /* height: auto;
+} */ */
 /* 검색란 */
 .search-bar {
     flex: 0 0 400px;/* 검색창이 차지할 너비 조절 */
     margin: 0 60px; /* 마이너스 마진 제거 */
     display: flex;
     justify-content: center;
+    
 }
 
 .search-bar input {

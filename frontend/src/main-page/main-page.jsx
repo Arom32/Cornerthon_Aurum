@@ -2,9 +2,8 @@ import React,{useState,useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import './main-page.css';
 import Header from '../Header/Header.jsx';
-
-const BACK_URL = import.meta.env.VITE_BACK_URL
-
+// 상단 import 아래에 추가
+const BACK_URL = import.meta.env.VITE_BACK_URL || "http://localhost:5000";
 const Mainpage = () => {
     //백엔드에서 받아올 공연 데이터 (state)
     const [performance ,setPerformance]= useState([]);
