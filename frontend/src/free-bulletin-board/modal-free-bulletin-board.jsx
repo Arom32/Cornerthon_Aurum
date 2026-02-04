@@ -16,8 +16,8 @@ const ModalFreeBoard = ({ isOpen, onClose }) => {
   };
 
   // 서버 저장 함수
-  const handleFinalSubmit = async (e) => {
-    e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
+ const handleFinalSubmit = async (e) => {
+    e.preventDefault();
 
     if (!title.trim() || !content.trim()) {
       alert("제목과 내용을 모두 입력해주세요.");
@@ -25,17 +25,21 @@ const ModalFreeBoard = ({ isOpen, onClose }) => {
     }
 
     try {
-      // 백엔드가 여기다 실제 API 주소로 교체해주셔야함.
-      const response = await fetch('http://localhost:8080/api/board', { 
+      // 1. 로그인 시 저장해둔 토큰을 가져옵니다.
+      const token = localStorage.getItem('userToken'); 
+
+      // 2. 서버에 저장 요청 (주소 확인: /api/boards)
+      const response = await fetch('http://localhost:5000/api/boards', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          // 3. 401 에러 해결의 핵심! 인증 토큰을 헤더에 담아 보냅니다.
+          'Authorization': `Bearer ${token}` 
         },
         body: JSON.stringify({
           title: title,
           content: content,
-          date: new Date().toLocaleDateString('ko-KR'), // 가독성 좋은 날짜 포맷
-          views: 0
+          category: 'general' // 자유게시판 카테고리 지정
         }),
       });
 
@@ -44,14 +48,17 @@ const ModalFreeBoard = ({ isOpen, onClose }) => {
         onClose(); 
         window.location.reload(); 
       } else {
-        alert("서버 저장에 실패했습니다.");
+        // 401 에러 등이 발생했을 때 서버가 주는 메시지를 확인합니다.
+        const errorData = await response.json().catch(() => ({}));
+        console.log("서버 에러 응답:", errorData);
+        alert(`저장 실패: ${errorData.message || '로그인 세션이 만료되었거나 권한이 없습니다.'}`);
       }
     } catch (error) {
       console.error("에러 발생:", error);
-      alert("서버와 통신할 수 없습니다. API 주소를 확인해주세요.");
+      alert("서버와 통신할 수 없습니다.");
     }
   };
-
+  
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
