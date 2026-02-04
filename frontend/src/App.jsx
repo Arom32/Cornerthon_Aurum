@@ -15,6 +15,7 @@ import LoginForm from "./login/login.jsx";
 import SignupForm from "./signup/signup.jsx"; 
 import Mypage from "./mypage/mypage.jsx";
 import FreeBulletinBoard from './free-bulletin-board/free-bulletin-board.jsx';
+import TradeBulletinBoard from './trade-bulletin-board/trade-bulletin-board.jsx';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
 
         {/* 게시판 및 커뮤니티 */}
         <Route path="/free-bulletin-board" element={<FreeBulletinBoard />} />
+        <Route path="/trade-bulletin-board" element={<TradeBulletinBoard />} />
         <Route path="/community" element={<Communitymain />} />
         <Route path="/free" element={<Communityfree />} />
         <Route path="/deal" element={<Communitydeal />} />
