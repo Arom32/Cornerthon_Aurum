@@ -1,18 +1,20 @@
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    min-height: 100vh;
 }
 
 .writing-detail {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 60px 100px;
 }
 
 /* 글 섹션 */
 .writing-section {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 .post-title {
@@ -20,122 +22,221 @@
     font-weight: 700;
     color: #1a1a1a;
     margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #000;
     line-height: 1.4;
 }
 
 .divider {
-    border: none;
-    border-top: 2px solid #e0e0e0;
-    margin: 20px 0 30px 0;
+    display: none;
 }
 
 .post-body {
     font-size: 16px;
     line-height: 1.8;
     color: #333;
-    padding: 20px 0;
-    min-height: 200px;
+    padding: 60px;
+    min-height: 400px;
+    background: #e0e0e0;
+    border-radius: 0;
+    margin-bottom: 20px;
     white-space: pre-wrap;
     word-break: break-word;
 }
 
+/* 게시물 수정 관련 */
+.edit-title-input {
+    width: 100%;
+    font-size: 32px;
+    font-weight: 700;
+    padding: 10px;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.edit-content-textarea {
+    width: 100%;
+    min-height: 400px;
+    font-size: 16px;
+    line-height: 1.8;
+    padding: 20px;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    resize: vertical;
+}
+
+.edit-btn, .delete-btn, .save-btn, .cancel-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-btn {
+    background: #4a90e2;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #357abd;
+}
+
+.delete-btn {
+    background: #ff6b6b;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #ee5a5a;
+}
+
+.save-btn {
+    background: #51cf66;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #40c057;
+}
+
+.cancel-btn {
+    background: #adb5bd;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background: #868e96;
+}
+
 /* 좋아요 버튼 */
 .like-section {
-    margin-top: 40px;
-    padding-top: 30px;
-    border-top: 1px solid #e0e0e0;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    margin-bottom: 30px;
 }
 
 .like-btn {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 24px;
+    padding: 0;
     font-size: 16px;
-    font-weight: 600;
-    color: #666;
-    background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    font-weight: 400;
+    color: #333;
+    background: transparent;
+    border: none;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .like-btn:hover {
-    background: #fff0f0;
-    border-color: #ff6b6b;
     color: #ff6b6b;
 }
 
 .heart-icon {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 /* 댓글 섹션 */
 .comment-section {
-    margin-bottom: 40px;
-    padding: 30px 0;
-    border-top: 2px solid #e0e0e0;
+    margin-bottom: 30px;
+    padding: 0;
+    border-top: none;
 }
 
 .comment-title {
     font-size: 20px;
     font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .comment-item {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     padding: 20px;
-    margin-bottom: 16px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 3px solid #4a90e2;
+    margin-bottom: 10px;
+    background: #e8e8e8;
+    border-radius: 0;
+    border-left: none;
 }
 
 .comment-author {
     font-size: 14px;
     font-weight: 600;
-    color: #4a90e2;
+    color: #333;
 }
 
 .comment-text {
     font-size: 15px;
     color: #333;
     line-height: 1.6;
+    margin-top: 5px;
+}
+
+.comment-edit-btn, .comment-delete-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.comment-edit-btn {
+    background: #4a90e2;
+    color: white;
+}
+
+.comment-edit-btn:hover {
+    background: #357abd;
+}
+
+.comment-delete-btn {
+    background: #ff6b6b;
+    color: white;
+}
+
+.comment-delete-btn:hover {
+    background: #ee5a5a;
 }
 
 .no-comment {
     text-align: center;
     color: #999;
     font-size: 15px;
-    padding: 40px 0;
+    padding: 60px 0;
 }
 
 /* 댓글 입력 */
 .reply-section {
-    position: sticky;
-    bottom: 0;
+    position: static;
     background: white;
-    padding: 20px 0;
-    border-top: 2px solid #e0e0e0;
+    padding: 0;
+    border-top: none;
+    margin-bottom: 60px;
 }
 
 .comment-form {
     display: flex;
-    gap: 12px;
-    align-items: center;
+    gap: 0;
+    align-items: stretch;
 }
 
 .comment-input {
     flex: 1;
-    padding: 14px 20px;
+    padding: 15px 20px;
     font-size: 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    border: 1px solid #ddd;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
     outline: none;
     transition: border-color 0.3s ease;
 }
@@ -149,13 +250,13 @@
 }
 
 .comment-submit-btn {
-    padding: 14px 28px;
+    padding: 15px 30px;
     font-size: 15px;
     font-weight: 600;
     color: white;
     background: #4a90e2;
     border: none;
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0;
     cursor: pointer;
     transition: background 0.3s ease;
     white-space: nowrap;
@@ -170,9 +271,21 @@
 }
 
 /* 반응형 디자인 */
+@media (max-width: 1400px) {
+    .writing-detail {
+        padding: 60px 80px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .writing-detail {
+        padding: 40px 60px;
+    }
+}
+
 @media (max-width: 768px) {
     .writing-detail {
-        padding: 20px 16px;
+        padding: 30px 40px;
     }
 
     .post-title {
@@ -180,16 +293,8 @@
     }
 
     .post-body {
-        font-size: 15px;
-    }
-
-    .comment-form {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .comment-input,
-    .comment-submit-btn {
-        width: 100%;
+        font-size: 14px;
+        min-height: 250px;
+        padding: 30px;
     }
 }

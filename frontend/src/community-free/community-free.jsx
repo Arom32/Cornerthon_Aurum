@@ -100,7 +100,7 @@ const Communityfree = () => {
                             </td>
                             <td className='col-author'>{post.creator}</td>
                             <td className="col-title text-left ">
-                                <a href={`/board/${post.id}`} className="post-link">{post.title}</a>
+                                <Link to={`/writing/${post.id}`} className="post-link">{post.title}</Link>
                             </td>
                             <td className="col-likes">{post.likes}</td>
                             <td className="col-date">{post.date}</td>

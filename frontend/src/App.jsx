@@ -56,7 +56,7 @@ function App() {
       <Route path="/free-bulletin-board" element={<FreeBulletinBoard userId={userId} />} />
       <Route path="/trade-bulletin-board" element={<TradeBulletinBoard userId={userId} />} />
 
-      <Route path="/writing" element={<Writing userId={userId} />} />
+      <Route path="/writing/:id" element={<Writing userId={userId} />} />
     </Routes>
   );
 }
