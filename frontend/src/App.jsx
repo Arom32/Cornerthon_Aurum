@@ -46,10 +46,9 @@ function App() {
       <Route path="/community-main" element={<Communitymain userId={userId} />} />
       <Route path="/community-free" element={<Communityfree userId={userId} />} />
       <Route path="/community-deal" element={<Communitydeal userId={userId} />} />
+      <Route path="/writing/:id" element={<Writing userId={userId} />} />
       <Route path="/free-bulletin-board" element={<FreeBulletinBoard userId={userId} />} />
       <Route path="/trade-bulletin-board" element={<TradeBulletinBoard userId={userId} />} />
-
-      <Route path="/writing" element={<Writing userId={userId} />} />
     </Routes>
   );
 }
