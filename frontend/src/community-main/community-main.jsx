@@ -13,7 +13,7 @@ const communitymain = () => {
                  {/* 다른 게시판으로 넘어 가는 것 */}
                 <div className='group-botton'>
                     <Link to ='/community-free'>자유게시판</Link>
-                    <Link to ='/community-deal'> 거래게시판</Link>
+                    <Link to ='/community-deal'> 후기게시판</Link>
                 </div>
             </nav>
                
