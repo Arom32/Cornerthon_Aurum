@@ -69,3 +69,18 @@
     font-weight: 500;
     color: black;
 }
+
+/* 유저 이름 스타일 */
+.user-id-display {
+    font-size: 18px;
+    font-weight: 600;
+    color: #5235A8; /* 메인 포인트 색상이 있다면 적용 */
+    margin-right: 5px; /* 글자 사이 간격 조정 */
+}
+
+/* 마이페이지 링크와 정렬 맞추기 */
+.section {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 추가 */
+    gap: 30px;
+}

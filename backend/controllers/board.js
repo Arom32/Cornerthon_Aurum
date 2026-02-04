@@ -144,8 +144,6 @@ async function getPosts(req, res){
             ];
         }
 
-
-
         //  DB 조회 / 페이징
         const skipCount = (Number(page) - 1) * Number(limit);
         const boards = await Board.find(query)
@@ -153,7 +151,6 @@ async function getPosts(req, res){
             .sort(getBoardSortOption(sort)) 
             .skip(skipCount)
             .limit(Number(limit));
-        res.status(200).json({ boards });
 
         const totalCount = await Board.countDocuments(query);
         res.json({
@@ -166,7 +163,7 @@ async function getPosts(req, res){
             }
         });
     } catch (err) {
-        res.status(500).json({ message: "게시글 목록 조회 실패", error: err.message });
+        return res.status(500).json({ message: "게시글 목록 조회 실패", error: err.message });
     }
 } 
 
