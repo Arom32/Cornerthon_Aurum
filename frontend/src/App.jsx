@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Router(BrowserRouter) 삭제
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Mainpage from './main-page/main-page.jsx';
 import Mainoption from './main-option/main-option.jsx';
 import Mainperformance from './main-performance/main-performance.jsx';
@@ -20,33 +21,35 @@ import './App.css';
 
 function App() {
   return (
-    // <Router> 태그가 여기에 절대 있으면 안 됩니다. 
-    // 오직 <Routes>만 있어야 합니다.
     <Routes>
-        {/* 메인 기능 */}
-        <Route path="/" element={<Mainpage/>}/>
-        <Route path="/option" element={<Mainoption/>}/>
-        <Route path="/performance" element={<Mainperformance/>}/>
-        {/* 공연 기능 */}
-        <Route path="/concert" element={<Performanceconcert/>}/>
-        <Route path="/musical" element={<Performancemusical/>}/>
-        <Route path="/playacting" element={<Performanceplayacting/>}/>
-        <Route path="/festival" element={<Performancefestival/>}/>
-        <Route path="/display" element={<Performancedisplay/>}/>
-        {/* 커뮤니티 */}
-        <Route path="/community" element={<Communitymain/>}/>
-        <Route path="/free" element={<Communityfree/>}/>
-        <Route path="/deal" element={<Communitydeal/>}/>
-        <Route path="/free-bulletin-board" element={<FreeBulletinBoard />} />
-        <Route path="/trade-bulletin-board" element={<TradeBulletinBoard />} />
-        {/* 글쓰기 */}
-        <Route path="/writing" element={<Writing/>}/>
-        {/* 로그인 및 회원가입 */}
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/signup" element={<SignupForm />} />
-        <Route path="/mypage" element={<Mypage />} />
+      {/* 1. 메인 및 기본 기능 */}
+      <Route path="/" element={<Mainpage />} />
+      <Route path="/option" element={<Mainoption />} />
+      <Route path="/performance" element={<Mainperformance />} />
+      
+      {/* 2. 로그인, 회원가입, 마이페이지 */}
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/signup" element={<SignupForm />} />
+      <Route path="/mypage" element={<Mypage />} />
 
+      {/* 3. 공연 카테고리 */}
+      <Route path="/concert" element={<Performanceconcert />} />
+      <Route path="/musical" element={<Performancemusical />} />
+      <Route path="/playacting" element={<Performanceplayacting />} />
+      <Route path="/festival" element={<Performancefestival />} />
+      <Route path="/display" element={<Performancedisplay />} />
+
+      {/* 4. 커뮤니티 및 게시판 */}
+      <Route path="/community" element={<Communitymain />} />
+      <Route path="/free" element={<Communityfree />} />
+      <Route path="/deal" element={<Communitydeal />} />
+      <Route path="/free-bulletin-board" element={<FreeBulletinBoard />} />
+      <Route path="/trade-bulletin-board" element={<TradeBulletinBoard />} />
+
+      {/* 5. 글쓰기 */}
+      <Route path="/writing" element={<Writing />} />
     </Routes>
-    );
+  );
 }
+
 export default App;

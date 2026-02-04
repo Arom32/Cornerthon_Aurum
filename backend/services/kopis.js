@@ -58,17 +58,17 @@ async function fetchFromApi(state, stdate, eddate) {
 
 // DB 저장
 async function saveToDB(items) {
-  let count = 0;
-  for (const item of items) {
-    try {
-      const endDate = new Date(item.prfpdto.replace(/\./g, '-'));
-      const status = isBefore(endDate, new Date()) ? 'ARCHIVED' : 'ACTIVE';
+  if (items.length === 0) return 0;
 
-      await Performance.findOneAndUpdate(
-        { mt20id: item.mt20id },
-        {
+  const ops = items.map(item => {
+    const endDate = new Date(item.prfpdto.replace(/\./g, '-'));
+    const status = isBefore(endDate, new Date()) ? 'ARCHIVED' : 'ACTIVE';
+
+    return {
+      updateOne: {
+        filter: { mt20id: item.mt20id },
+        update: {
           $set: {
-            mt20id: item.mt20id,
             prfnm: item.prfnm,
             prfpdfrom: item.prfpdfrom,
             prfpdto: item.prfpdto,
@@ -76,26 +76,31 @@ async function saveToDB(items) {
             poster: item.poster,
             genrenm: item.genrenm,
             prfstate: item.prfstate,
-            area : item.area,
+            area: item.area,
             status: status,
             updatedAt: new Date()
           }
         },
-        { upsert: true, new: true, setDefaultsOnInsert: true }
-      );
-      count++;
-    } catch (e) {
-      console.error(`DB 저장 실패 (${item.prfnm}):`, e.message);
-    }
+        upsert: true
+      }
+    };
+  });
+
+  try {
+    const result = await Performance.bulkWrite(ops, { ordered: false });
+    return result.upsertedCount + result.modifiedCount
+
+  } catch (e) {
+    console.error('BulkWrite 실패:', e.message);
+    return 0;
   }
-  return count;
 }
-// --------------------------------------------------------------
+
 
 //상세 정보 업데이트 (2단계 수집) - 공연 하나 
 async function updateDetailInfo(limitCount = 100) {
   try {
-    // 1. 상세 정보가 없는(mt10id- 공연시설 정보가 없는) 공연 찾기 
+    // 상세 정보가 없는(mt10id- 공연시설 정보가 없는) 공연 찾기 
     // 상태가 ACTIVE인 것만 조회하여 불필요한 API 호출 방지
     const targets = await Performance.find({ 
       mt10id: { $exists: false },
@@ -110,28 +115,30 @@ async function updateDetailInfo(limitCount = 100) {
     console.log(`[System] ${targets.length}개의 상세 정보 업데이트 시작...`);
     let updatedCount = 0;
 
-    for (const doc of targets) {
-      const detailData = await fetchDetailFromApi(doc.mt20id);
-      
-      if (detailData) {
-        // XML 데이터 매핑 및 업데이트
-        await Performance.updateOne(
-          { _id: doc._id },
-          {
-            $set: {
-              mt10id: detailData.mt10id,        // 공연시설 ID
-              pcseguidace: detailData.pcseguidance, // 티켓 가격
-              sty: detailData.sty,  // 줄거리 (배열일 수 있어 처리 필요)
-              prfrunstime: detailData.prfrunstime, // 공연 시간
-              updatedAt: new Date()
-            }
-          }
-        );
-        updatedCount++;
-        // 부하 방지 대기시간
-        await new Promise(r => setTimeout(r, 100)); 
-      }
+    const ops = [];
+    for(const doc of targets) {
+        const detailData = await fetchDetailFromApi(doc.mt20id);
+        if (detailData) {
+            ops.push({
+                updateOne: {
+                    filter: { _id: doc._id },
+                    update: {
+                        $set: {
+                            mt10id: detailData.mt10id,
+                            pcseguidance: detailData.pcseguidance,
+                            sty: typeof detailData.sty === 'object' ? JSON.stringify(detailData.sty) : detailData.sty,
+                            prfrunstime: detailData.prfrunstime,
+                            updatedAt: new Date()
+                        }
+                    }
+                }
+            });
+            updatedCount ++;
+        }
+
     }
+
+if (ops.length > 0) await Performance.bulkWrite(ops);
 
     console.log(`[System] ${updatedCount}개의 상세 정보 업데이트 완료`);
     return updatedCount;

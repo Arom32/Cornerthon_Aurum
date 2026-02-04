@@ -4,9 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import './main-performance.css';
 
+
 import Header from '../Header/Header.jsx';
-
-
 const BACK_URL = import.meta.env.VITE_BACK_URL;
 
 const Mainperformance = () => {

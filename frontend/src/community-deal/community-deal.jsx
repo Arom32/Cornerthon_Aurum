@@ -41,9 +41,8 @@ const Communitydeal = () => {
            <Header/>
             {/* 자유게시판 */}
             <article className='free-community'>
-                <div className='free-title'>거래게시판</div>
-                <p>아름다운 문화 공간를 함께 만드는 공간입니다.
-                     소중한 물건들을 안전하게 거래하세요.</p>
+                <div className='free-title'>후기게시판</div>
+                <p>공연을 관람한 후 다양한 후기를 나눠보세요.</p>
                 <div className='action-bar'>
                     <Link to='/writing'>글쓰기</Link>
                     <div className='search-bar'>

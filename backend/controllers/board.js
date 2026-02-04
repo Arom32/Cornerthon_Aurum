@@ -2,6 +2,7 @@
 
 const Board = require('../models/Board');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 
 const { 
     validatedCategory,
@@ -193,7 +194,7 @@ async function toggleBoardLike(req, res) {
             return res.status(401).json({ message: "로그인 필요" });
         }
 
-        const { id } = req.params; // 게시물 ID
+        const { id } = req.body; // 게시물 ID
         const userId = req.user.id;
 
         const board = await Board.findById(id);
@@ -241,6 +242,55 @@ async function toggleBoardLike(req, res) {
     }
 }
 
+/** [GET] 특정 게시물의 모든 댓글 및 대댓글 조회
+ * @param {Object} req.params.id - 게시물 ID
+ */
+async function getBoardComments(req, res) {
+    try {
+        const { id } = req.params; // boardId
+
+        // 해당 게시물의 모든 댓글 조회
+        // createdAt 순으로 정렬하여 부모 댓글이 항상 자식보다 먼저 오도록 함
+        const comments = await Comment.find({ boardId: id })
+            .populate('creator', 'username') // 작성자 이름 포함
+            .sort({ createdAt: 1 }) 
+            .lean(); // 데이터 변환 용이성을 위해 plain object로 변환
+
+        if (!comments || comments.length === 0) {
+            return res.status(200).json({ comments: [] });
+        }
+
+        // 계층 구조(Tree Structure) 변환 로직
+        const commentMap = {};
+        const rootComments = [];
+
+        // 모든 댓글을 Map에 저장
+        comments.forEach(comment => {
+            comment.replies = []; // 대댓글을 담을 배열 추가
+            commentMap[comment._id.toString()] = comment;
+        });
+
+        // 부모 ID 유무에 따라 트리 구성
+        comments.forEach(comment => {
+            if (comment.parentCommentId) {
+                // 부모 댓글이 Map에 존재하면 해당 부모의 replies 배열에 추가
+                const parent = commentMap[comment.parentCommentId.toString()];
+                if (parent) {
+                    parent.replies.push(comment);
+                }
+            } else {
+                // 부모가 없으면 루트 댓글(일반 댓글)
+                rootComments.push(comment);
+            }
+        });
+
+        res.status(200).json({ comments: rootComments });
+    } catch (err) {
+        res.status(500).json({ message: "댓글 조회 중 오류 발생", error: err.message });
+    }
+}
+
+
 module.exports = {
     createPost,
     updatePost,
@@ -248,4 +298,5 @@ module.exports = {
     getPosts,
     getUserPosts,
     toggleBoardLike,
+    getBoardComments,
 };

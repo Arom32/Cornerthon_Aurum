@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './trade-bulletin-board.css';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import Header from '../Header/Header.jsx';
+=======
+import ModalTradeBoard from './modal-trade-bulletin-board';
+>>>>>>> 38dc127abc5302186a04516ae262dd8652fd11cb
 
 const TradeBoard = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 데이터 불러오기 함수 (fetch 사용) 그 axios 깔아야해서 그냥 fetch로 했음
   const getPostData = async () => {
@@ -50,7 +56,7 @@ const TradeBoard = () => {
       </header>
 
       <div className="board-controls">
-        <button className="write-btn">글쓰기</button>
+        <button className="write-btn" onClick={() => setIsModalOpen(true)}> 글쓰기</button>
         <div className="search-area">
           <input type="text" className="search-input" placeholder="검색어를 입력하세요" />
           <button className="search-btn">검색 <svg 
@@ -103,6 +109,12 @@ const TradeBoard = () => {
         </table>
       </div>
     </div>
+
+    <ModalTradeBoard 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
+
     </div>
   );
 };
