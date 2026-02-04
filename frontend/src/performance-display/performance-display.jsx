@@ -15,14 +15,15 @@ const Display = () => {
         const fetchData = async () => {
             try {
                 const response = await fetch(`${BACK_URL}/api/performances`);
-                const data = await response.json();
-                            
+                const result = await response.json();
+                const data = result.data;
+                             
                 const performanceData = data
                     .filter(post => post.category === '전시') // 카테고리 필터 수정
                     .map(post => ({
                         id: post.id,
-                        imgUrl: post.url,
-                        title: post.title
+                        imgUrl: post.poster,
+                        title: post.prfnm
                     }));
                 setPerformance(performanceData);
                 setLoading(false); // 데이터 로딩 완료 시 해제

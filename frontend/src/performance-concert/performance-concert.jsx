@@ -17,15 +17,16 @@ const Concert = () => {
             try {
               
                 const response = await fetch(`${BACK_URL}/api/performances`);
-                const data = await response.json();
+                const result = await response.json();
+                const data = result.data;  // 배열 추출
+             
                             
-                
                 const performanceData = data
                     .filter(post => post.category === '콘서트') // 카테고리 필터: 콘서트
                     .map(post => ({
                         id: post.id,
-                        imgUrl: post.url,
-                        title: post.title
+                        imgUrl: post.poster,
+                        title: post.prfnm
                     }));
                 setPerformance(performanceData);
                 setLoading(false); 

@@ -15,11 +15,13 @@ const Mainperformance = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        
         const fetchData = async () => {
             try {
                 //  여기에 공연 랭킹 탑텐 API 주소 입력
                 const rankingResponse = await fetch(`${BACK_URL}/api/performances/ranking`); // 추천 공연
-                const rankingData = await rankingResponse.json();
+                const rankingResult = await rankingResponse.json();
+                const rankingData = rankingResult.data;
                 
                 const recommendData = rankingData.map(post => ({
                     id: post._id,
@@ -29,12 +31,13 @@ const Mainperformance = () => {
                 
                 // 여기에 공연 상세 조회 API 주소 입력
                 const allResponse = await fetch(`${BACK_URL}/api/performances`); // 전체 공연
-                const allData = await allResponse.json();
+                const allResult = await allResponse.json();
+                const allData = allResult.data;
                 
                 const allPerformanceData = allData.map(post => ({
                     id: post._id,
                     imgUrl: post.poster,
-                    title: post.prfrm
+                    title: post.prfnm
                 }));
         
                 setRecommendPerformance(recommendData);
