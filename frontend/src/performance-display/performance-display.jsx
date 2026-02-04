@@ -1,6 +1,9 @@
 import React,{useState,useEffect} from 'react'
 import {Link,useNavigate} from 'react-router-dom';
 import './performance-display.css';
+import Header from '../Header/Header.jsx';
+import CategoryBar from '../CategoryBar/CategoryBar.jsx';
+
 
 const Display = () => {
     //백엔드에서 받아올 공연 데이터 (state)
@@ -32,26 +35,8 @@ const Display = () => {
     }, []); //페이지 로드시 1회 실행
    return(
         <div clasName = "container">
-            {/* 상단 헤더  */}
-            <header className="header-top">
-                <div className="logo">AURUM</div>
-                <div className="search-bar">
-                    <input type="text" placeholder='검색어를 입력하세요'/>
-                </div>
-                <ul className="section">
-                    <Link to ="/login">로그인</Link>
-                    <Link to ="/signup">회원가입</Link>
-                    <Link to ="/mypage">mypage</Link>
-                </ul>
-                {/* 헤더2 */}
-                <nav className="category-bar">
-                    <Link to = "/concert">콘서트</Link>
-                    <Link to = "/musical">뮤지컬</Link>
-                    <Link to = "/play-acting">연극</Link>
-                    <Link to = "/festival">페스티벌</Link>
-                    <Link to = "/display">전시</Link>
-                </nav>   
-            </header>
+            <Header/>
+            <CategoryBar/>
             {/* 공연 종류-전시 */}
             <section className="kind-display">전시</section>
             {/* 공연 종류 밑에 있는 설명-전시 */}
