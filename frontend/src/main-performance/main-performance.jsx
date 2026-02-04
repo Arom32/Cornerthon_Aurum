@@ -21,9 +21,7 @@ const Mainperformance = () => {
                 //  여기에 공연 랭킹 탑텐 API 주소 입력
                 const rankingResponse = await fetch(`${BACK_URL}/api/performances/ranking`); // 추천 공연
                 const rankingResult = await rankingResponse.json();
-                const rankingData = rankingResult.data.data;
-                console.log(rankingResult.data.data);
-                console.log(Array.isArray(rankingResult.data.data)); // true 나와야 정상
+                const rankingData = rankingResult.data;
                 
                 const recommendData = rankingData.map(post => ({
                     id: post._id,
@@ -34,7 +32,7 @@ const Mainperformance = () => {
                 // 여기에 공연 상세 조회 API 주소 입력
                 const allResponse = await fetch(`${BACK_URL}/api/performances`); // 전체 공연
                 const allResult = await allResponse.json();
-                const allData = allResult.data.data;
+                const allData = allResult.data;
                 
                 const allPerformanceData = allData.map(post => ({
                     id: post._id,
@@ -141,11 +139,11 @@ const Mainperformance = () => {
 
             <nav className="middle-category">
 
-                <Link to="/performance-concert">콘서트</Link>
-                <Link to="/performance-musical">뮤지컬</Link>
-                <Link to="/performance-playacting">연극</Link>
-                <Link to="/performance-festival">페스티벌</Link>
-                <Link to="/performance-display">전시</Link>
+                <Link to="/concert">콘서트</Link>
+                <Link to="/musical">뮤지컬</Link>
+                <Link to="/playacting">연극</Link>
+                <Link to="/festival">페스티벌</Link>
+                <Link to="/display">전시</Link>
             </nav>
 
             <section className="all-performance">
