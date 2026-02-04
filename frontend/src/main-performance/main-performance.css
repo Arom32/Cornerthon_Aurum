@@ -1,106 +1,180 @@
-/* main-performance.css */
-@charset "UTF-8";
-
-/* 추천 공연 섹션 */
-.recommend-section {
-    padding: 40px 80px 60px 80px; /* 상단 여백 줄임 */
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 20px 70px;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    position: relative;
 }
 
+/* Force scrollbar to always be visible */
+html {
+    overflow-y: scroll;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove all focus outlines */
+.container *:focus,
+.container *:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Section Titles */
 .section-title {
     font-size: 24px;
-    font-weight: 600;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 0;
     color: #333;
-    margin-bottom: 100px;
-    margin-left: 0; /* 왼쪽 정렬 */
 }
 
-/* 추천 공연 그리드 - 4개 고정 */
+/* 추천 공연 Section */
+.recommend-section {
+    margin-bottom: 40px;
+    width: 100%;
+}
+
 .section-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    min-height: 280px; /* 최소 높이 지정으로 카드 공간 확보 */
+    gap: 16px;
+    max-width: 900px;
+    width: 900px;
+    position: relative;
+    left: 0;
 }
 
-/* 중간 카테고리 바 */
-.middle-category {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-    padding: 30px 0;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    margin: 100px 0 80px 0;
-}
-
-.middle-category a {
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    color: #7B30FD;
-    transition: color 0.2s;
-}
-
-.middle-category a:hover {
-    color: #5a1fd1;
-}
-
-/* 전체 공연 섹션 */
-.all-performance {
-    padding: 0 80px 80px 80px;
-}
-
-/* 전체 공연 그리드 - 유동적 */
-.all-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    min-height: 280px; /* 최소 높이 지정 */
-}
-
-/* 공통 카드 스타일 */
+/* Image Card */
 .image-card {
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    min-height: 280px; /* 카드 최소 높이 */
-    background-color: #7B30FD;
-    overflow: hidden;
+    transition: transform 0.2s ease;
+    max-width: 200px;
+    outline: none;
+    display: block;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .image-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(123, 48, 253, 0.2);
+}
+
+.image-card:focus,
+.image-card:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .image-card img {
     width: 100%;
-    height: 280px;
+    aspect-ratio: 3/4;
     object-fit: cover;
-    border-radius: 12px;
-    background-color: #7B30FD;
-    display: block; /* 이미지가 없어도 배경색 보임 */
-    color: transparent; 
-    text-indent: -9999px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    outline: none;
+    display: block;
+}
+
+.image-card img:focus,
+.image-card img:active {
+    outline: none !important;
 }
 
 .image-card p {
-    margin-top: 12px;
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
+    font-size: 13px;
     color: #333;
+    margin: 0;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-/* 스켈레톤 (로딩) 스타일 - 단순 보라색 */
+/* Purple Skeleton Card */
 .image-card-skeleton {
     width: 100%;
-    height: 280px;
-    background-color: #7B30FD;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+    border-radius: 8px;
+    animation: pulse 1.5s ease-in-out infinite;
+    outline: none;
 }
-/* 반응형 */
-@media (max-width: 1200px) {
+
+.image-card-skeleton:focus,
+.image-card-skeleton:active {
+    outline: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Middle Category Bar */
+.middle-category {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 0;
+    margin: 40px 0;
+}
+
+.middle-category a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    outline: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.middle-category a:hover {
+    background-color: #8b5cf6;
+    color: #ffffff;
+}
+
+.middle-category a:focus,
+.middle-category a:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* All Performance Section */
+.all-performance {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.all-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 900px;
+    width: 900px;
+    position: relative;
+    left: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
     .section-grid,
     .all-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -108,27 +182,45 @@
 }
 
 @media (max-width: 768px) {
-    .recommend-section,
-    .all-performance {
-        padding: 30px 40px;
+    .container {
+        padding: 15px;
     }
-    
+
+    .section-title {
+        font-size: 20px;
+    }
+
     .section-grid,
     .all-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+        gap: 15px;
     }
-    
+
     .middle-category {
-        gap: 30px;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 15px 10px;
+    }
+
+    .middle-category a {
         font-size: 14px;
-        margin: 50px 0 40px 0;
+        padding: 6px 15px;
     }
 }
 
 @media (max-width: 480px) {
     .section-grid,
     .all-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .image-card p {
+        font-size: 12px;
+    }
+
+    .middle-category a {
+        font-size: 13px;
+        padding: 5px 12px;
     }
 }
