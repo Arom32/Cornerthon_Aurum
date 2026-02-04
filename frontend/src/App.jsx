@@ -18,7 +18,6 @@ import FreeBulletinBoard from './free-bulletin-board/free-bulletin-board.jsx';
 
 function App() {
   return (
-    <Router>
       <Routes>
         {/* 메인 및 기본 기능 */}
         <Route path="/" element={<Mainpage />} />
@@ -46,7 +45,6 @@ function App() {
         {/* 글쓰기 */}
         <Route path="/writing" element={<Writing />} />
       </Routes>
-    </Router>
   );
 }
 
