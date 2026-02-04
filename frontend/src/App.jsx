@@ -19,6 +19,10 @@ import FreeBulletinBoard from './free-bulletin-board/free-bulletin-board.jsx';
 import TradeBulletinBoard from './trade-bulletin-board/trade-bulletin-board.jsx';
 import './App.css';
 
+ {/*나중에 삭제해야함*/}
+import PerformanceDetailPage from './performance-detail-page/performance-detail-page'; // 경로 확인 필수!
+
+
 function App() {
   return (
     <Routes>
@@ -45,6 +49,9 @@ function App() {
       <Route path="/deal" element={<Communitydeal />} />
       <Route path="/free-bulletin-board" element={<FreeBulletinBoard />} />
       <Route path="/trade-bulletin-board" element={<TradeBulletinBoard />} />
+      
+      {/*나중에 삭제해야함*/}
+      <Route path="/performance-detail-page" element={<PerformanceDetailPage />} />
 
       {/* 5. 글쓰기 */}
       <Route path="/writing" element={<Writing />} />

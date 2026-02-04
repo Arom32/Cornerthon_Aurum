@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './login.css'; // CSS 파일이 같은 폴더에 있다고 가정합니다.
 
+const BACK_URL = import.meta.env.VITE_BACK_URL
+
 function LoginForm() {
   // 아이디와 비밀번호 상태 관리
   const [userId, setUserId] = useState('');
@@ -8,28 +10,55 @@ function LoginForm() {
   const [idError, setIdError] = useState('');
   const [pwError, setPwError] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // 페이지 새로고침 방지
+ const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // 간단한 유효성 검사 로직
+    // 1. 에러 상태 초기화 (중요!)
+    setIdError('');
+    setPwError('');
+
+    // 2. 유효성 검사
     if (!userId) {
       setIdError('아이디를 입력해주세요.');
-    } else {
-      setIdError('');
+      return;
     }
-
     if (!userPw) {
       setPwError('비밀번호를 입력해주세요.');
-    } else {
-      setPwError('');
+      return;
     }
 
-    if (userId && userPw) {
-      console.log('로그인 시도:', { userId, userPw });
-      // 여기에 API 호출 로직을 넣으시면 됩니다.
+    try {
+      const response = await fetch('http://localhost:5000/api/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: userId,
+          password: userPw,
+        }),
+      });
+
+      // HTTP 상태 코드가 200~299가 아닐 경우 처리
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || '로그인 서버 에러');
+      }
+
+      const result = await response.json();
+
+      // 백엔드 응답 구조에 맞게 조건문 수정
+      if (result.success) {
+        alert('로그인에 성공했습니다!');
+        // 토큰 저장 로직 (예: localStorage.setItem('token', result.token))
+      } else {
+        alert(result.message || '로그인 정보를 확인해주세요.');
+      }
+    } catch (error) {
+      console.error('로그인 통신 에러:', error);
+      alert(error.message || '서버와 통신 중 에러가 발생했습니다.');
     }
   };
-
   return (
     <div className="inbox">
       <div className="login-box">
@@ -70,7 +99,7 @@ function LoginForm() {
 
           <div className="signup-link">
             <span>계정이 없으신가요? </span>
-            <a href="#" style={{ color: '#5235A8;', fontWeight: '600', textDecoration: 'none' }}>회원가입</a>
+            <a href="#" style={{ color: '#5235A8', fontWeight: '600', textDecoration: 'none' }}>회원가입</a>
           </div>
         </form>
       </div>
