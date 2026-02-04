@@ -6,7 +6,7 @@ import './main-performance.css';
 
 import Header from '../Header/Header.jsx';
 
-const BACK_URL = "http://localhost:5000";
+const BACK_URL = import.meta.env.VITE_BACK_URL
 
 const Mainperformance = () => {
     const [recommendPerformance, setRecommendPerformance] = useState([]); // 추천 공연용
@@ -17,24 +17,24 @@ const Mainperformance = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // TODO: 여기에 공연 랭킹 탑텐 API 주소 입력
+                //  여기에 공연 랭킹 탑텐 API 주소 입력
                 const rankingResponse = await fetch(`${BACK_URL}/api/performances/ranking`); // 추천 공연
                 const rankingData = await rankingResponse.json();
                 
                 const recommendData = rankingData.map(post => ({
-                    id: post.id,
-                    imgUrl: post.url,
-                    title: post.title
+                    id: post._id,
+                    imgUrl: post.poster,
+                    title: post.prfnm
                 }));
                 
-                // TODO: 여기에 공연 상세 조회 API 주소 입력
+                // 여기에 공연 상세 조회 API 주소 입력
                 const allResponse = await fetch(`${BACK_URL}/api/performances`); // 전체 공연
                 const allData = await allResponse.json();
                 
                 const allPerformanceData = allData.map(post => ({
-                    id: post.id,
-                    imgUrl: post.url,
-                    title: post.title
+                    id: post._id,
+                    imgUrl: post.poster,
+                    title: post.prfrm
                 }));
         
                 setRecommendPerformance(recommendData);
