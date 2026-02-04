@@ -1,0 +1,43 @@
+@charset "UTF-8";
+.community-section{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    box-sizing: border-box;
+    width:100%;
+    padding:60px 60px;
+    margin-top: -120px; 
+
+}
+.community-title{
+    font-size:90px;
+    font-weight: 730;
+    color: #7B30FD;
+    line-height: 1;
+    font-family: Pretendard;
+    margin: 0; 
+    margin-bottom: 20px;
+}
+.community-section p {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.group-botton{
+    display: flex;
+    gap: 20px;
+}
+.group-botton a {
+    padding: 14px 40px;
+    border: 2px solid #7B30FD;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s;
+    background-color: white;
+    color: #7B30FD;
+}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; 
 import './community-free.css';
-
+import Header from '../Header/Header.jsx';
 const Communityfree = () => {
     
     const [posts, setPosts] = useState([]);
@@ -38,18 +38,7 @@ const Communityfree = () => {
 
     return (
         <div className="container">
-            {/* 상단 헤더 */}
-            <header className='header'>
-                <div className='logo'>AURUM</div>
-                <div className='search-bar'>
-                    <input type='text' placeholder='검색어를 입력하세요'/>
-                </div>
-                <nav className='section'>
-                    <Link to='/logon'>로그인</Link>
-                    <Link to='/signup'>회원가입</Link>
-                    <Link to='/mypage'>mypage</Link>
-                </nav>
-            </header>
+           <Header/>
             {/* 자유게시판 */}
             <article className='free-community'>
                 <div className='free-title'>자유게시판</div>
@@ -71,6 +60,7 @@ const Communityfree = () => {
                         </tr>
                     </thead>
                 </table>
+                {/* 그 글쓰기 파트 */}
                 <tbody>
                 {posts.length > 0 ? (
                 posts.map((post, index) => (

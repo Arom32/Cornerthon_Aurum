@@ -1,6 +1,13 @@
 import React,{useState,useEffect} from 'react'; 
 import {Link,useNavigate} from 'react-router-dom';
 import './main-performance.css';
+<<<<<<< HEAD
+import Header from '../Header/Header.jsx';
+import CategoryBar from '../CategoryBar/CategoryBar.jsx';
+
+const BACK_URL = import.meta.env.VITE_BACK_URL
+=======
+>>>>>>> 5fd2a3e2c3fbac80a24fcff0b69226e19928b5df
 
 const Mainperformance = () =>{
     //백엔드에서 받아올 공연 데이터 (state)
@@ -36,18 +43,7 @@ const Mainperformance = () =>{
     // all-전체 영역
     return(
         <div className="container">
-            {/* 상단 헤더 */}
-            <header className="header">
-                <div className="logo">AURUM</div>
-                <div className="search-bar">
-                    <input type="text" placeholder="검색어를 입력하세요"/>
-                </div>
-                <nav className="section">
-                    <Link to ="/login">로그인</Link>
-                    <Link to ="/signup">회원가입</Link>
-                    <Link to ="/mypage">mypage</Link>
-                </nav>
-            </header>
+            <Header/>
             {/* 추천 공연  */}
             <section className="recommend-section">
                 <h2 className="section-title">추천 공연</h2>
@@ -63,11 +59,11 @@ const Mainperformance = () =>{
             {/* 가운데 카테고리 영역 */}
             <nav className="middle-category">
                 <Link to="/all">전체</Link>
-                <LInk to="/concert">콘서트</LInk>
-                <LInk to="/musical">뮤지컬</LInk>
-                <LInk to="/play-acting">연극</LInk>
-                <LInk to="/festival">페스티벌</LInk>
-                <LInk to="/display">전시</LInk>
+                <Link to="/concert">콘서트</Link>
+                <Link to="/musical">뮤지컬</Link>
+                <Link to="/playacting">연극</Link>
+                <Link to="/festival">페스티벌</Link>
+                <Link to="/display">전시</Link>
             </nav>
             {/* 전체 공연 모음 영역 */}
             {/* 핉터 된 부분은 map 영역안에서의 performance부분 이름을 바꿔서 사용 */}
