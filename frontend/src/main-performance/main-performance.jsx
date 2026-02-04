@@ -141,11 +141,11 @@ const Mainperformance = () => {
 
             <nav className="middle-category">
 
-                <Link to="/concert">콘서트</Link>
-                <Link to="/musical">뮤지컬</Link>
-                <Link to="/playacting">연극</Link>
-                <Link to="/festival">페스티벌</Link>
-                <Link to="/display">전시</Link>
+                <Link to="/performance-concert">콘서트</Link>
+                <Link to="/performance-musical">뮤지컬</Link>
+                <Link to="/performance-playacting">연극</Link>
+                <Link to="/performance-festival">페스티벌</Link>
+                <Link to="/performance-display">전시</Link>
             </nav>
 
             <section className="all-performance">
