@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; 
 import './community-free.css';
 import Header from '../Header/Header.jsx';
+const BACK_URL = import.meta.env.VITE_BACK_URL
+
 const Communityfree = () => {
     
     const [posts, setPosts] = useState([]);
@@ -10,16 +12,27 @@ const Communityfree = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+
+                setLoading(true);
+                const params = new URLSearchParams({
+                    page: 1,
+                    limit: 20,
+                    category: 'general' // 자유게시판이므로 general 필터링
+                });
+
                 //주소 부분에 실제 백엔드 주소 넣으면 됩니다.
-                const response = await fetch('주소');
+                const response = await fetch(`${BACK_URL}/api/boards/list?${params.toString()}`);
                 const result = await response.json();
 
                 console.log(result);
                 if (result.success && Array.isArray(result.data)) {
                     const writingData = result.data.map(post => ({
-                        id: post._id,
-                        title: post.prnm
-                    }));
+                        id : post.id,
+                        title: post.title,
+                        creator : post.creator.username,
+                        date : post.createdAt ? new Date(post.createdAt).toISOString().split('T')[0] : '-'
+                    }
+                ));
                     // 위에서 선언한 setPosts를 사용합니다.
                     setPosts(writingData);
                 }
@@ -51,10 +64,11 @@ const Communityfree = () => {
                     </div>
                 </div>
                 {/* 번호,제목등등 */}
-                <table clasName='free-section'>
+                <table className='free-section'>
                     <thead>
                         <tr>
                             <th>번호</th>
+                            <th>작성자</th>
                             <th>제목</th>
                             <th>등록일</th>
                         </tr>
@@ -63,9 +77,10 @@ const Communityfree = () => {
                     <tbody>
                         {posts.length > 0 ? (
                         posts.map((post, index) => (
-                        <tr key={post.id || index}>
+                        <tr key={index}>
                         {/* 번호: 데이터에 없으면 index+1 로 표시 가능 */}
-                            <td>{post.id || index + 1}</td>
+                            <td>{ index + 1}</td>
+                            <td>{ post.creator }</td>
                             <td className='post-title'>
                                 <Link to={`/community/${post.id}`}>{post.title}</Link>
                             </td>
@@ -75,7 +90,7 @@ const Communityfree = () => {
                     ))
                         ) : (
                         <tr>
-                            <td colSpan="3" className="no-data">등록된 게시글이 없습니다.</td>
+                            <td colSpan="4" className="no-data">등록된 게시글이 없습니다.</td>
                         </tr>
                         )}
                     </tbody>
