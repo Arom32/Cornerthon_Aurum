@@ -51,7 +51,7 @@ const TradeBoard = () => {
     <Header/>
     <div className="board-container">
       <header className="board-header">
-        <h1 className="main-title">거래 게시판</h1>
+        <h1 className="main-title">리뷰 게시판</h1>
         <p className="sub-title">궁금한 모든것을 물어보세요.</p>
       </header>
 
