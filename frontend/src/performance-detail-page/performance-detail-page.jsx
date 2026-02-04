@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './performance-detail-page.css'; // 이 파일이 옆에 있어야 합니다.
+import './performance-detail-Page.css';
 import Header from '../Header/Header.jsx';
 import CategoryBar from '../CategoryBar/CategoryBar.jsx';
 
@@ -7,9 +7,13 @@ const PerformanceDetailPage = () => {
   const [performanceInfo, setPerformanceInfo] = useState(null);
 
   useEffect(() => {
+
+    /*ㅈㅈㅈㅈㅈㅈㅈㅈㅈㅈㅈ임시API호출*/
     fetch('http://localhost:3000/api/performances/PF284135') 
       .then((response) => response.json())
       .then((result) => {
+        // [수정] 백엔드 데이터 구조가 { success: true, data: { ... } } 이므로 
+        // result.data를 상태에 저장해야 합니다.
         if (result.success) {
           setPerformanceInfo(result.data);
         }
@@ -27,6 +31,7 @@ const PerformanceDetailPage = () => {
       <div className="detail-content-wrapper">
         <div className="detail-main-section">
           <div className="poster-area">
+            {/* [수정] imageUrl 대신 poster 필드 연결 */}
             {performanceInfo.poster ? (
               <img src={performanceInfo.poster} alt="공연 포스터" className="poster-img" />
             ) : (
@@ -35,6 +40,7 @@ const PerformanceDetailPage = () => {
           </div>
 
           <div className="info-text-section">
+            {/* [수정] title 대신 prfnm 연결 */}
             <h2 className="info-title"> {performanceInfo.prfnm} </h2>
             <div className="title-underline"></div>
             
@@ -42,18 +48,22 @@ const PerformanceDetailPage = () => {
               <tbody>
                 <tr>
                   <th>장소</th>
+                  {/* [수정] location 대신 fcltynm 연결 */}
                   <td>{performanceInfo.fcltynm}</td>
                 </tr>
                 <tr>
                   <th>기간</th>
+                  {/* [수정] period 대신 날짜 필드 연결 */}
                   <td>{performanceInfo.prfpdfrom} ~ {performanceInfo.prfpdto}</td>
                 </tr>
                 <tr>
                   <th>공연 상태</th>
+                  {/* [수정] time 대신 prfstate 연결 */}
                   <td>{performanceInfo.prfstate}</td>
                 </tr>
                 <tr>
                   <th>공연 지역</th>
+                  {/* [수정] limit 대신 area 연결 */}
                   <td>{performanceInfo.area}</td>
                 </tr>
               </tbody>
