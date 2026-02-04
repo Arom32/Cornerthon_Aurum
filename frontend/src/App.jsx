@@ -8,6 +8,7 @@ import Performancemusical from './performance-musical/performance-musical.jsx';
 import Performanceplayacting from './performance-playacting/performance-playacting.jsx';
 import Performancefestival from './performance-festival/performance-festival.jsx';
 import Performancedisplay from './performance-display/performance-display.jsx';
+import PerformanceList from './performance-list/performance-list.jsx';
 import Communitymain from './community-main/community-main.jsx';
 import Communityfree from './community-free/community-free.jsx';
 import Communitydeal from './community-deal/community-deal.jsx';
@@ -37,7 +38,8 @@ function App() {
       {/* Mypage는 저장된 아이디를 '보여줘야' 하므로 userId를 넘겨줌 */}
       <Route path="/mypage" element={<Mypage userId={userId} />} />
 
-      <Route path="/concert" element={<Performanceconcert userId={userId} />} />
+      <Route path="/concert" element={<PerformanceList userId={userId} />} />
+      {/* <Route path="/concert" element={<Performanceconcert userId={userId} />} /> */}
       <Route path="/musical" element={<Performancemusical userId={userId} />} />
       <Route path="/playacting" element={<Performanceplayacting userId={userId} />} />
       <Route path="/festival" element={<Performancefestival userId={userId} />} />

@@ -42,7 +42,7 @@ const MainPage = ({ userId }) => {
                     <p className="explanation">
                         "An integrated cultural arts platform for discovering information and connecting through shared experiences."
                     </p>
-                    <Link to="/main-option" className="start-button">start</Link>
+                    <Link to="/option" className="start-button">start</Link>
                 </div>
 
                 <div className="right-content">

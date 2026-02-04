@@ -27,13 +27,13 @@ function validatedCategory(category) {
 function getBoardSortOption(sort) {
     switch (sort) {
         case 'newest':
-            return { createdAt: -1 };
+            return { createdAt: -1, _id: 1 };
         case 'oldest':
-            return { createdAt: 1 };
+            return { createdAt: 1, _id: 1 };
         case 'popular':
-            return { countLikes: -1 };
+            return { countLikes: -1, _id: 1 };
         default:
-            return { createdAt: -1 }; // 기본 정렬 기준
+            return { createdAt: -1, _id: 1 }; // 기본 정렬 기준
     }
 }
 
