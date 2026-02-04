@@ -59,27 +59,28 @@ const Communityfree = () => {
                             <th>등록일</th>
                         </tr>
                     </thead>
-                </table>
-                {/* 그 글쓰기 파트 */}
-                <tbody>
-                {posts.length > 0 ? (
-                posts.map((post, index) => (
-                    <tr key={post.id || index}>
+                    {/* 그 글쓰기 파트 */}
+                    <tbody>
+                        {posts.length > 0 ? (
+                        posts.map((post, index) => (
+                        <tr key={post.id || index}>
                         {/* 번호: 데이터에 없으면 index+1 로 표시 가능 */}
-                        <td>{post.id || index + 1}</td>
-                        <td className='post-title'>
-                            <Link to={`/community/${post.id}`}>{post.title}</Link>
-                        </td>
-                        {/* 등록일(데이터에 해당 필드가 있어야함) */}
+                            <td>{post.id || index + 1}</td>
+                            <td className='post-title'>
+                                <Link to={`/community/${post.id}`}>{post.title}</Link>
+                            </td>
+                            {/* 등록일(데이터에 해당 필드가 있어야함) */}
                         <td>{post.date}</td>
-                    </tr>
-                ))
-                ) : (
-                <tr>
-                    <td colSpan="4" className="no-data">등록된 게시글이 없습니다.</td>
-                </tr>
-                )}
-            </tbody>
+                        </tr>
+                    ))
+                        ) : (
+                        <tr>
+                            <td colSpan="3" className="no-data">등록된 게시글이 없습니다.</td>
+                        </tr>
+                        )}
+                    </tbody>
+                </table>
+                
             </article>
             
         </div>

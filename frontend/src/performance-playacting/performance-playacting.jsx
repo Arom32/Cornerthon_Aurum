@@ -37,11 +37,11 @@ const Playacting = () => {
             <Header/>
             <CategoryBar/>
             {/* 공연 종류-연극 */}
-            <section className="kind-musical">연극</section>
+            <section className="kind-playacting">연극</section>
             {/* 공연 종류 밑에 있는 설명-연극 */}
-            <nav className="ex-musical">오늘의 연극 정보를 안내해드립니다.</nav>
+            <nav className="ex-playacting">오늘의 연극 정보를 안내해드립니다.</nav>
             {/* 공연 종류별로 공연 정보 - 연극*/}
-            <nav className="all-musical">
+            <nav className="all-playacting">
                 <div className="all-grid">
                     {/* map을 사용해서 performance 를 맵으로 바꾸면 전체 가능*/}
                     {performance

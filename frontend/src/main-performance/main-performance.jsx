@@ -1,84 +1,107 @@
-import React,{useState,useEffect} from 'react'; 
-import {Link,useNavigate} from 'react-router-dom';
+// main-performance.jsx
+import React, { useState, useEffect } from 'react'; 
+import { Link, useNavigate } from 'react-router-dom';
+
 import './main-performance.css';
-<<<<<<< HEAD
+
 import Header from '../Header/Header.jsx';
-import CategoryBar from '../CategoryBar/CategoryBar.jsx';
 
-const BACK_URL = import.meta.env.VITE_BACK_URL
-=======
->>>>>>> 5fd2a3e2c3fbac80a24fcff0b69226e19928b5df
 
-const Mainperformance = () =>{
-    //백엔드에서 받아올 공연 데이터 (state)
-    const [performance ,setPerformance]= useState([]);
-        // 백엔드 api 호출
-    const navigate= useNavigate(); // 카테고리에서 누르면 그 페이지로 이동
+const BACK_URL = import.meta.env.VITE_BACK_URL;
+
+const Mainperformance = () => {
+    const [performance, setPerformance] = useState([]);
+    const [loading, setLoading] = useState(true); // 로딩 상태 추가
+    const navigate = useNavigate();
+
     useEffect(() => {
-        // 백엔드 주소 fetch('http~')
-        //async-백엔드에서 데이터 가져오는 일(비동기 작업)
-        // try: 이 안의 코드를 일단 실행,보호막 쳐두기     
-        const fetchData = async() => {
-            try{
-                //주소 부분 실제로 백엔드 주소 넣으면 됩니다
-                const response = await fetch('주소');
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${BACK_URL}/api/performances`); 
                 const data = await response.json();
-                        
-                // api 데이터를 서비스에 맞게
+                
                 const performanceData = data.map(post => ({
-                    // .filter(post => post.category === '페스티벌') // -이 부분은 카테고리별로 들어가서 할 예정 
+
                     id: post.id,
                     imgUrl: post.url,
                     title: post.title
                 }));
         
                 setPerformance(performanceData);
-            } catch(error){console.error("데이터 연결 실패",error);}
-            };
+                setLoading(false); // 로딩 완료
+            } catch (error) {
+                console.error("데이터 연결 실패", error);
+                setLoading(false); // 에러 발생해도 로딩 종료
+            }
+        };
         fetchData();
-    }, []); //페이지 로드시 1회 실행
-    // 추천 공연 4개만 나오도록 고정 
-    const recommend = performance.slice(0,4);
-    // rec-추천 영역
-    // all-전체 영역
-    return(
+    }, []);
+
+    const recommend = performance.slice(0, 4);
+
+    // 스켈레톤 카드 렌더링 함수
+    const renderSkeletons = (count) => {
+        return Array.from({ length: count }).map((_, index) => (
+            <div key={`skeleton-${index}`} className="image-card">
+                <div className="image-card-skeleton"></div>
+            </div>
+        ));
+    };
+
+    return (
         <div className="container">
-            <Header/>
-            {/* 추천 공연  */}
+            <Header />
+            
+            {/* 추천 공연 섹션 */}
             <section className="recommend-section">
                 <h2 className="section-title">추천 공연</h2>
                 <div className="section-grid">
-                    {recommend.map((item)=>(
-                        <div key={'rec-${item.id}'} className="image-card">
-                            <img src={item.imgUrl} alt={item.title}/>
-                            <p>{item.title}</p>   
-                        </div>
-                    ))}
+                    {loading 
+                        ? renderSkeletons(4) 
+                        : recommend.map((item) => (
+                            <div 
+                                key={`rec-${item.id}`} 
+                                className="image-card"
+                                onClick={() => navigate(`/detail/${item.id}`)}
+                            >
+                                <img src={item.imgUrl} alt={item.title} />
+                                <p>{item.title}</p>   
+                            </div>
+                        ))
+                    }
                 </div>
             </section>
-            {/* 가운데 카테고리 영역 */}
+
+            {/* 카테고리 네비게이션 */}
             <nav className="middle-category">
-                <Link to="/all">전체</Link>
+                
                 <Link to="/concert">콘서트</Link>
                 <Link to="/musical">뮤지컬</Link>
                 <Link to="/playacting">연극</Link>
                 <Link to="/festival">페스티벌</Link>
                 <Link to="/display">전시</Link>
             </nav>
-            {/* 전체 공연 모음 영역 */}
-            {/* 핉터 된 부분은 map 영역안에서의 performance부분 이름을 바꿔서 사용 */}
+
+            {/* 전체 공연 섹션 */}
             <section className="all-performance">
                 <div className="all-grid">
-                    {/* map을 사용해서 performance 를 맵으로 바꾸면 전체 가능*/}
-                    {performance.map((item)=>(
-                        <div key={'all-${item}'} className="image-card">
-                            <img src={item.imgUrl} alt = {img .title}/>
-                            <p>{item.title}</p>
-                        </div>
-                    ))}
+                    {loading 
+                        ? renderSkeletons(8) 
+                        : performance.map((item) => (
+                            <div 
+                                key={`all-${item.id}`} 
+                                className="image-card"
+                                onClick={() => navigate(`/detail/${item.id}`)}
+                            >
+                                <img src={item.imgUrl} alt={item.title} />
+                                <p>{item.title}</p>
+                            </div>
+                        ))
+                    }
                 </div>        
             </section>
         </div>
     );
 };
+
 export default Mainperformance;
