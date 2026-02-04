@@ -37,8 +37,13 @@ app.get('/', (req, res) => {
 const performanceRouter = require('./routes/performanceRoutes');
 app.use('/api/performances', performanceRouter);
 
+// 게시물 관련 라우트
 const boardRouter = require('./routes/boardRoutes');
 app.use('/api/boards', boardRouter);
+
+// 댓글 관련 라우트
+const commentRouter = require('./routes/commentRoutes');
+app.use('/api/comments', commentRouter);
 
 // 유저 관련 라우트
 const userRouter = require('./routes/userRoutes');
