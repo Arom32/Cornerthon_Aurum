@@ -1,27 +1,20 @@
+import React from 'react';
 import {Link} from 'react-router-dom';
 import './main-option.css';
-
+import Header from '../Header/Header.jsx';
+// 사진
+import Group33 from '../assets/Group 33.svg';
+import Group51 from '../assets/Group 51.svg';
 const Mainoption = () => {
     return(
         <div className='container'>
-            {/* 상단 헤더 */}
-            <header className='header'>
-                <div className='logo'>AURUM</div>
-                <div className='search-bar'>
-                    <input type='text' placeholder='검색어를 입력하세요'/>
-                </div>
-                <nav className='section'>
-                    <Link to='/login'>로그인</Link>
-                    <Link to='/signup'>회원가입</Link>
-                    <LInk to='/mypage'>mypage</LInk>
-                </nav>
-            </header>
+             <Header />
             {/* 기능 선택 */}
             <div className='main-function'>
-                <Link to='/information' className ='info-card-link'>
+                <Link to='/performance' className ='info-card-link'>
                     <div className='information'>
                         <div className='icon-box'>
-                            {/* 아이콘 이미지 or svg 삽입 */}
+                            <img src={Group51} alt="문화예술 아이콘" />
                         </div>
                         <span>문화 예술 공연 정보</span>
                     </div>
@@ -29,7 +22,7 @@ const Mainoption = () => {
                 <Link to='/community' className ='info-card-link'>
                     <div className='community'>
                         <div className='icon-box'>
-                            {/* 아이콘 이미지 or svg 삽입 */}
+                           <img src={Group33} alt="커뮤니티 아이콘" />
                         </div>
                         <span>커뮤니티</span>
                     </div>

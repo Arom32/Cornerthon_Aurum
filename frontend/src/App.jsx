@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom'; // Router(BrowserRouter) 삭제
 import Mainpage from './main-page/main-page.jsx';
 import Mainoption from './main-option/main-option.jsx';
 import Mainperformance from './main-performance/main-performance.jsx';
@@ -13,11 +13,13 @@ import Communitydeal from './community-deal/community-deal.jsx';
 import Writing from './writing/writing.jsx';
 import LoginForm from "./login/login.jsx"; 
 import SignupForm from "./signup/signup.jsx"; 
+import './App.css';
 
 function App() {
-  return(
-    <Router>
-      <Routes>
+  return (
+    // <Router> 태그가 여기에 절대 있으면 안 됩니다. 
+    // 오직 <Routes>만 있어야 합니다.
+    <Routes>
         {/* 메인 기능 */}
         <Route path="/" element={<Mainpage/>}/>
         <Route path="/option" element={<Mainoption/>}/>
@@ -34,11 +36,10 @@ function App() {
         <Route path="/deal" element={<Communitydeal/>}/>
         {/* 글쓰기 */}
         <Route path="/writing" element={<Writing/>}/>
-        {/* 로그인및 회원가입 */}
+        {/* 로그인 및 회원가입 */}
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
-      </Routes>
-    </Router>
+    </Routes>
   );
 }
 

@@ -1,0 +1,63 @@
+@charset "UTF-8";
+/* main-option.css - padding-top 조정 필요 없음 (이미 120px로 설정됨) */
+.main-function {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    padding: 120px 40px 80px 40px; /* 이미 올바르게 설정됨 */
+    box-sizing: border-box;
+    min-height: calc(100vh - 100px);
+}
+/* 카드 링크 */
+.info-card-link {
+    text-decoration: none;
+    color: black;
+}
+
+/* 공통 카드 스타일 */
+.information,
+.community {
+    background-color: #7B30FD;
+    border-radius: 16px;
+    width: 380px;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.information:hover,
+.community:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(123, 48, 253, 0.3);
+}
+
+/* 아이콘 박스 */
+.icon-box {
+    width: 120px;
+    height: 120px;
+    background-color:#7B30FD;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon-box img {
+    width: 170%;      /* 박스 안에서 적당한 크기 유지 */
+    height: auto;    /* 비율 유지 */
+    display: block;  /* 불필요한 공백 제거 */
+}
+
+/* 카드 텍스트 */
+.information span,
+.community span {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    align-items: center;
+}
