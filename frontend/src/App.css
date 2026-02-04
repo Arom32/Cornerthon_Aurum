@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+/* 전체 컨테이너 */
+.container {
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Pretendard;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}

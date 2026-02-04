@@ -1,0 +1,266 @@
+/* FreeBoard.css */
+
+body {
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0; /* margin: auto 0에서 불필요한 설정 수정 */
+  font-family: Pretendard, sans-serif;
+  box-sizing: border-box;
+  flex-direction: column;
+  display: flex;
+}
+
+/* 헤더 영역 */
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  border-bottom: 1px solid #eee;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.header .search-bar {
+  position: relative;
+  flex: 0.9;
+  margin: 0 40px;
+}
+
+.header .search-bar input {
+  width: 100%; /* 고정 너비 400px 대신 유연하게 수정 */
+  max-width: 400px;
+  padding: 8px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.header .search-bar input:focus {
+  border-color: #7B61FF;
+}
+
+.header .search-bar svg {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+/* 로고 스타일 */
+.logo {
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+/* 헤더 네비게이션 */
+.section {
+  display: flex;
+  gap: 20px;
+  white-space: nowrap;
+}
+
+.section a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.section a:hover {
+  color: #5D3FD3;
+}
+
+/* 게시판 메인 컨테이너 */
+.board-container {
+  margin-top: 20px;
+  padding: 0 15px;
+  width: 100%;
+  max-width: 1200px; /* 게시판 본문 너비 제한 */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.board-header {
+  margin-top: 40px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.main-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #5D3FD3;
+  margin: 0 0 10px 0;
+  letter-spacing: -1px;
+}
+
+.sub-title {
+  color: #666;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* 컨트롤러 (버튼 및 검색) */
+.board-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.write-btn, .search-btn {
+  background-color: #5D3FD3;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.write-btn:hover, .search-btn:hover {
+  background-color: #6148df;
+}
+
+.search-area {
+  display: flex;
+  gap: 8px;
+}
+
+.search-input {
+  width: 240px;
+  padding: 10px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+/* 테이블 영역 */
+.table-responsive {
+  width: 100%;
+  border-top: 2px solid #333;
+}
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.board-table th {
+  padding: 15px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #ddd;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+}
+
+.board-table td {
+  padding: 15px 10px;
+  text-align: center;
+}
+
+.board-table tbody tr {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.board-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.text-left {
+  text-align: left !important;
+  padding-left: 40px !important;
+}
+
+.post-link {
+  text-decoration: none;
+  color: #333;
+}
+
+.post-link:hover {
+  color: #7B61FF;
+  text-decoration: underline;
+}
+
+/* 공지사항 전용 스타일 */
+.notice-row {
+  background-color: #f9faff;
+}
+
+.notice-badge {
+  display: inline-block;
+  border: 1px solid #4A4AE2;
+  color: #4A4AE2;
+  padding: 2px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #fff;
+}
+
+/* 컬럼 너비 */
+.col-id { width: 10%; }
+.col-title { width: 60%; }
+.col-date { width: 15%; color: #4A4AE2; font-weight: 500; }
+.col-view { width: 15%; }
+
+/* 반응형 모바일 */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .header .search-bar {
+    margin: 0;
+    width: 100%;
+  }
+
+  .main-title {
+    font-size: 2rem;
+  }
+
+  .board-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .search-area {
+    width: 100%;
+  }
+
+  .search-input {
+    flex: 1;
+  }
+
+  /* 모바일에서 날짜/조회수 숨김 */
+  .col-date, .col-view {
+    display: none;
+  }
+  
+  .col-id { width: 20%; }
+  .col-title { width: 80%; }
+}

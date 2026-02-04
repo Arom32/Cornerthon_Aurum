@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './free-bulletin-board.css';
 import { Link } from 'react-router-dom';
-import ModalFreeBoard from './modal-free-bulletin-board';
+import ModalFreeBoard from './modal-free-bulletin-board.jsx';
 
 const FreeBoard = () => {
   const [posts, setPosts] = useState([]);
