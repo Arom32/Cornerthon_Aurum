@@ -1,3 +1,5 @@
+/* FreeBoard.css */
+
 body{
   background-color: #ffffff;
   margin:0;
@@ -147,7 +149,7 @@ body{
   margin: 0 auto 20px auto;
   width: 100%;       /* 부모 너비에 맞게 조절 */
   max-width: 1200px; /* 너무 퍼지지 않게 적절한 최대 너비 설정 (권장) */
-
+  
 }
 
 /* 글쓰기 버튼 */
@@ -212,7 +214,7 @@ body{
 .table-responsive {
   width: 100%;
   border-top: 2px solid #333;
-
+  
 }
 
 .board-table {
@@ -353,7 +355,7 @@ body{
   .sub-title {
     font-size: 1rem;
   }
-
+  
   /* 글쓰기 버튼과 미니 검색바 */
   .board-controls {
     margin:20px auto;
@@ -361,11 +363,11 @@ body{
     align-items: flex-start;
     gap: 15px;
   }
-
+  
   .search-area, .search-input {
     width: 100%;
   }
-
+  
   /* 모바일에서 등록일, 조회수 숨기기 (선택 사항) */
   .col-date,
   .col-view,
@@ -373,7 +375,7 @@ body{
   .board-table th:nth-child(4) {
     display: none;
   }
-
+  
   .col-id { width: 20%; }
   .col-title { width: 80%; }
 

@@ -13,30 +13,40 @@ import Communitydeal from './community-deal/community-deal.jsx';
 import Writing from './writing/writing.jsx';
 import LoginForm from "./login/login.jsx"; 
 import SignupForm from "./signup/signup.jsx"; 
+import Mypage from "./mypage/mypage.jsx";
+import FreeBulletinBoard from './free-bulletin-board/free-bulletin-board.jsx';
+import TradeBulletinBoard from './trade-bulletin-board/trade-bulletin-board.jsx';
 
 function App() {
-  return(
+  return (
     <Router>
       <Routes>
-        {/* 메인 기능 */}
-        <Route path="/" element={<Mainpage/>}/>
-        <Route path="/option" element={<Mainoption/>}/>
-        <Route path="/performance" element={<Mainperformance/>}/>
-        {/* 공연 기능 */}
-        <Route path="/concert" element={<Performanceconcert/>}/>
-        <Route path="/musical" element={<Performancemusical/>}/>
-        <Route path="/playacting" element={<Performanceplayacting/>}/>
-        <Route path="/festival" element={<Performancefestival/>}/>
-        <Route path="/display" element={<Performancedisplay/>}/>
-        {/* 커뮤니티 */}
-        <Route path="/community" element={<Communitymain/>}/>
-        <Route path="/free" element={<Communityfree/>}/>
-        <Route path="/deal" element={<Communitydeal/>}/>
-        {/* 글쓰기 */}
-        <Route path="/writing" element={<Writing/>}/>
-        {/* 로그인및 회원가입 */}
+        {/* 메인 및 기본 기능 */}
+        <Route path="/" element={<Mainpage />} />
+        <Route path="/option" element={<Mainoption />} />
+        <Route path="/performance" element={<Mainperformance />} />
+        
+        {/* 로그인, 회원가입, 마이페이지 */}
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
+        <Route path="/mypage" element={<Mypage />} />
+
+        {/* 게시판 및 커뮤니티 */}
+        <Route path="/free-bulletin-board" element={<FreeBulletinBoard />} />
+        <Route path="/trade-bulletin-board" element={<TradeBulletinBoard />} />
+        <Route path="/community" element={<Communitymain />} />
+        <Route path="/free" element={<Communityfree />} />
+        <Route path="/deal" element={<Communitydeal />} />
+
+        {/* 공연 관련 카테고리 */}
+        <Route path="/concert" element={<Performanceconcert />} />
+        <Route path="/musical" element={<Performancemusical />} />
+        <Route path="/playacting" element={<Performanceplayacting />} />
+        <Route path="/festival" element={<Performancefestival />} />
+        <Route path="/display" element={<Performancedisplay />} />
+
+        {/* 글쓰기 */}
+        <Route path="/writing" element={<Writing />} />
       </Routes>
     </Router>
   );

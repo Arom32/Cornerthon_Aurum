@@ -132,4 +132,4 @@ const TradeBoard = () => {
   );
 };
 
-export default FreeBoard;
+export default TradeBoard;
