@@ -38,11 +38,11 @@ function parseGenreFilter(genre) {
  */
 function getSortOption(sort) {
     switch (sort) {
-        case 'views': return { viewCount: -1 };
-        case 'likes': return { likeCount: -1 };
-        case 'rating': return { averageRating: -1 };
-        case 'end': return { prfpdto: 1 };
-        default: return { prfpdfrom: -1 };
+        case 'views': return { viewCount: -1,_id: 1 };
+        case 'likes': return { likeCount: -1, _id: 1 };
+        case 'rating': return { averageRating: -1, _id: 1 };
+        case 'end': return { prfpdto: 1, _id: 1 };
+        default: return { prfpdfrom: -1, _id: 1 };
     }
 }
 

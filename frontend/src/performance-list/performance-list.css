@@ -1,0 +1,181 @@
+@charset "UTF-8";
+
+/* 1. 전체 컨테이너 및 레이아웃 */
+.container {
+    padding-top: 160px; /* 헤더 + 카테고리바 공간 확보 */
+    min-height: 100vh;
+    background-color: #fff;
+}
+
+.all-performance {
+    padding: 0 80px 80px 80px;
+}
+
+.all-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+}
+
+/* 2. 타이틀 및 컨트롤 영역 */
+.section-title {
+    width: 100%;
+    font-size: 80px;
+    font-weight: 700;
+    color: #7B30FD;
+    line-height: 1.2;
+    margin: 10px 0 20px 0;
+    text-align: center !important;
+    text-transform: capitalize;
+}
+
+.list-controls {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    margin-bottom: 40px;
+}
+
+.list-controls select {
+    margin-left: 0; /* 왼쪽 끝에 붙도록 설정 */
+    margin-top: 20px;
+    padding: 8px 12px;
+    border: 1px solid #7B30FD;
+    border-radius: 8px;
+    color: #7B30FD;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+/* 3. 카드 공통 스타일 */
+/* 카드 스타일 수정 */
+.image-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    display: flex;
+    flex-direction: column; /* 이미지가 위, 텍스트가 아래로 오도록 */
+    height: auto; /* 높이 고정 절대 금지 */
+    overflow: visible; /* 자식 요소(텍스트)가 보이도록 */
+}
+
+/* 텍스트 스타일 전면 수정 */
+.card-title {
+    display: block !important;
+    visibility: visible !important;
+    margin-top: 0px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #333 !important; /* 배경색과 겹치는지 확인 */
+    text-align: center;
+    line-height: 1.4;
+    
+    /* 문제가 되는 부분들 해제 */
+    white-space: normal !important; /* 줄바꿈 허용 */
+    overflow: visible !important; /* 숨김 해제 */
+    text-overflow: clip !important; /* 말줄임표 해제 후 확인 */
+}
+
+
+/* 5. 스켈레톤 UI 전용 (시머 애니메이션 포함) */
+.skeleton-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.image-card-skeleton {
+    width: 100%;
+    height: 380px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-text {
+    border-radius: 4px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-title {
+    width: 90%;
+    height: 18px;
+    margin: 15px auto 0 auto;
+}
+
+.skeleton-info {
+    width: 60%;
+    height: 14px;
+    margin: 8px auto 0 auto;
+}
+
+/* 6. 페이지네이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+    gap: 20px;
+}
+
+.pagination button {
+    padding: 10px 20px;
+    border: 1px solid #7B30FD;
+    background-color: white;
+    color: #7B30FD;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: #7B30FD;
+    color: white;
+}
+
+.pagination button:disabled {
+    border-color: #ccc;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.page-info {
+    font-size: 16px;
+    color: #333;
+}
+
+/* 7. 기타 */
+.no-data {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 100px 0;
+    color: #999;
+    font-size: 18px;
+}
+
+/* 8. 반응형 레이아웃 */
+@media (max-width: 1200px) {
+    .all-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .all-performance { padding: 0 40px 60px 40px; }
+    .all-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .section-title { font-size: 50px; }
+    .image-card img, .image-card-skeleton { height: 300px; }
+}
+
+@media (max-width: 480px) {
+    .all-grid { grid-template-columns: 1fr; }
+}
