@@ -1,0 +1,62 @@
+/* 전체 컨테이너 */
+.detail-page-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.detail-main-section {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+  margin-top: 40px;
+}
+
+.poster-area {
+  flex: 0 0 400px;
+}
+
+.poster-img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.info-text-section {
+  flex: 1;
+  padding-top: 10px;
+}
+
+.info-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.info-table tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-table th {
+  text-align: left;
+  padding: 15px 0;
+  width: 120px;
+  color: #888;
+  font-size: 16px;
+}
+
+.info-table td {
+  padding: 15px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}

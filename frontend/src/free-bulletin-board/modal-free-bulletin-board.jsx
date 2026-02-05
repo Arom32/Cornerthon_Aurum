@@ -16,42 +16,61 @@ const ModalFreeBoard = ({ isOpen, onClose }) => {
   };
 
   // 서버 저장 함수
-  const handleFinalSubmit = async (e) => {
-    e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
+ const handleFinalSubmit = async (e) => {
+    e.preventDefault();
 
     if (!title.trim() || !content.trim()) {
-      alert("제목과 내용을 모두 입력해주세요.");
-      return;
+        alert("제목과 내용을 모두 입력해주세요.");
+        return;
+    }
+
+    // userToken → accessToken으로 변경
+    const token = localStorage.getItem('accessToken'); 
+    
+    if (!token) {
+        alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
+        window.location.href = '/login';
+        return;
     }
 
     try {
-      // 백엔드가 여기다 실제 API 주소로 교체해주셔야함.
-      const response = await fetch('http://localhost:8080/api/board', { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title: title,
-          content: content,
-          date: new Date().toLocaleDateString('ko-KR'), // 가독성 좋은 날짜 포맷
-          views: 0
-        }),
-      });
+        const response = await fetch('http://localhost:5000/api/boards', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` 
+            },
+            body: JSON.stringify({
+                title: title,
+                content: content,
+                category: 'general'
+            }),
+        });
 
-      if (response.ok) {
-        alert("게시글이 성공적으로 등록되었습니다!");
-        onClose(); 
-        window.location.reload(); 
-      } else {
-        alert("서버 저장에 실패했습니다.");
-      }
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("게시글이 성공적으로 등록되었습니다!");
+            setTitle('');
+            setContent('');
+            setSaveCount(0);
+            onClose();
+        } else {
+            console.error("서버 에러 응답:", data);
+            
+            if (response.status === 401) {
+                alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+                localStorage.removeItem('accessToken'); // 변경
+                window.location.href = '/login';
+            } else {
+                alert(`저장 실패: ${data.message || '알 수 없는 오류가 발생했습니다.'}`);
+            }
+        }
     } catch (error) {
-      console.error("에러 발생:", error);
-      alert("서버와 통신할 수 없습니다. API 주소를 확인해주세요.");
+        console.error("에러 발생:", error);
+        alert("서버와 통신할 수 없습니다. 네트워크 연결을 확인해주세요.");
     }
-  };
-
+};
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>

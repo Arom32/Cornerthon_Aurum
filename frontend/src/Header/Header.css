@@ -19,6 +19,8 @@
     gap:30px;
 }
 
+
+
 /* 아우룸 로고 */
 .logo {
     font-size: 40px;
@@ -29,13 +31,17 @@
     flex-shrink: 0; 
     margin-right: 30px;
 }
-
+/* .logo-box{
+    width: auto;   /* 원하는 크기 */
+    /* height: auto;
+} */ */
 /* 검색란 */
 .search-bar {
     flex: 0 0 400px;/* 검색창이 차지할 너비 조절 */
     margin: 0 60px; /* 마이너스 마진 제거 */
     display: flex;
     justify-content: center;
+    
 }
 
 .search-bar input {
@@ -59,9 +65,31 @@
     flex-shrink: 0;
 }
 
-.section a {
+.section a, 
+.section .logout-button {
     text-decoration: none;
     font-size: 18px;
     font-weight: 500;
     color: black;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit; /* 부모 폰트 상속 */
+    transition: color 0.2s ease;
+}
+
+/* 유저 이름 스타일 */
+.user-id-display {
+    font-size: 18px;
+    font-weight: 600;
+    color: #5235A8; /* 메인 포인트 색상이 있다면 적용 */
+    margin-right: 5px; /* 글자 사이 간격 조정 */
+}
+
+/* 마이페이지 링크와 정렬 맞추기 */
+.section {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 추가 */
+    gap: 30px;
 }

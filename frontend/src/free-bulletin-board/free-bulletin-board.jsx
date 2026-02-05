@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './free-bulletin-board.css';
 import { Link } from 'react-router-dom';
+
+import Header from '../Header/Header.jsx';
+
 import ModalFreeBoard from './modal-free-bulletin-board';
 
 const FreeBoard = () => {
@@ -44,33 +47,7 @@ const FreeBoard = () => {
 
   return (
     <div className="container">
-    <header className="header">
-    <div className="logo" > 
-  <span>AURUM</span>
-                </div>
-                <div className="search-bar">
-  <input type="text" placeholder="검색어를 입력하세요" />
-  <svg 
-    width="18" 
-    height="18" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round"
-  >
-    <circle cx="11" cy="11" r="8"></circle>
-    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-  </svg>
-</div>
-                <nav className="section">
-                    <Link to="/login">로그인</Link>
-                    <Link to="/signup">회원가입</Link>
-                    <Link to="/mypage">my page</Link>
-                    
-                </nav>
-            </header>
+    <Header/>
     <div className="board-container">
       <header className="board-header">
         <h1 className="main-title">자유 게시판</h1>

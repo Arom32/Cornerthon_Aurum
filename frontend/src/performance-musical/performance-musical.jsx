@@ -1,63 +1,101 @@
-import React,{useState,useEffect} from 'react'
-import {Link,useNavigate} from 'react-router-dom';
-import './performance-musical.css';
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import './performance-musical.css'; // CSS 파일명 수정
 import Header from '../Header/Header.jsx';
 import CategoryBar from '../CategoryBar/CategoryBar.jsx';
 
+const BACK_URL = "http://localhost:5000"; 
+
 const Musical = () => {
-    //백엔드에서 받아올 공연 데이터 (state)
-    const [performance ,setPerformance]= useState([]);
-        // 백엔드 api 호출
-    const navigate= useNavigate(); // 카테고리에서 누르면 그 페이지로 이동
+    const [performance, setPerformance] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+    
     useEffect(() => {
-        // 백엔드 주소 fetch('http~')
-        //async-백엔드에서 데이터 가져오는 일(비동기 작업)
-        // try: 이 안의 코드를 일단 실행,보호막 쳐두기     
-        const fetchData = async() => {
-            try{
-                //주소 부분 실제로 백엔드 주소 넣으면 됩니다
-                const response = await fetch('주소');
-                const data = await response.json();
+        const fetchData = async () => {
+            try {
+                // .env에 설정한 백엔드 주소로 요청
+                const response = await fetch(`${BACK_URL}/api/performances`);
+                const result = await response.json();
+                const data = result.data;
                             
-                // api 데이터를 서비스에 맞게
                 const performanceData = data
-                    .filter(post => post.category === '뮤지컬') // -이 부분은 카테고리별로 들어가서 할 예정 
+                    .filter(post => post.category === '뮤지컬') // 카테고리 필터 수정
                     .map(post => ({
                         id: post.id,
-                        imgUrl: post.url,
-                        title: post.title
+                        imgUrl: post.poster,
+                        title: post.prfnm
                     }));
                 setPerformance(performanceData);
-            } catch(error){console.error("데이터 연결 실패",error);}
-            };
+                setLoading(false); // 데이터 로딩 완료 시 해제
+            } catch(error) {
+                console.error("데이터 연결 실패", error);
+                setLoading(false);
+            }
+        };
         fetchData();
-    }, []); //페이지 로드시 1회 실행
-   return(
-        <div clasName = "container">
-            <Header/>
-            <CategoryBar/>
-            {/* 공연 종류-뮤지컬 */}
+    }, []);
+
+    // 보라색 스켈레톤 카드 생성
+    const renderSkeletons = (count) => {
+        return Array.from({ length: count }).map((_, index) => (
+            <div key={`skeleton-${index}`} className="image-card">
+                <div className="image-card-skeleton"></div>
+            </div>
+        ));
+    };
+
+    // 뮤지컬 카드 렌더링 - 최소 4개 고정
+    const renderMusicalCards = () => {
+        if (loading) {
+            return renderSkeletons(4);
+        }
+        
+        const minCards = 4;
+        const totalCards = Math.max(performance.length, minCards);
+        const cards = [];
+
+        for (let i = 0; i < totalCards; i++) {
+            if (performance[i]) {
+                cards.push(
+                    <article 
+                        key={`musical-${performance[i].id}`} 
+                        className="image-card" 
+                        onClick={() => navigate(`/detail/${performance[i].id}`)}
+                    >
+                        <img src={performance[i].imgUrl} alt={performance[i].title}/>
+                        <p>{performance[i].title}</p>
+                    </article>
+                );
+            } else {
+                cards.push(
+                    <div key={`skeleton-${i}`} className="image-card">
+                        <div className="image-card-skeleton"></div>
+                    </div>
+                );
+            }
+        }
+        return cards;
+    };
+
+    return (
+        <div className="container">
+            <Header />
+            <CategoryBar />
+            
+            {/* 공연 종류 - 뮤지컬 */}
             <section className="kind-musical">뮤지컬</section>
-            {/* 공연 종류 밑에 있는 설명-뮤지컬 */}
-            <nav className="ex-musical">오늘의 뮤지컬 정보를 안내해드립니다.</nav>
-            {/* 공연 종류별로 공연 정보 - 뮤지컬 */}
+            
+            {/* 공연 설명 */}
+            <nav className="ex-musical">오늘의 뮤지컬 정보를 안내해 드리립니다.</nav>
+            
+            {/* 뮤지컬 목록 섹션 */}
             <nav className="all-musical">
                 <div className="all-grid">
-                    {/* map을 사용해서 performance 를 맵으로 바꾸면 전체 가능*/}
-                    {performance
-                        .filter(item=>item.category==='뮤지컬')
-                        .map((item)=>(
-                            <article key={'all-${item.id}'} className="image-card" onClick={()=>NavigationHistoryEntry('/detail/${item.id}')}>
-                                {/* onClick-상세 페이지 이동 */}
-                                <img src={item.imgUrl} alt = {img .title}/>
-                                <p>{item.title}</p>
-                            </article>
-                        ))
-                    }
+                    {renderMusicalCards()}
                 </div>
             </nav>
         </div>
-   )
+    );
 };
 export default Musical;
-
