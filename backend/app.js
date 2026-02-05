@@ -7,10 +7,17 @@ const app = express();
 const port = process.env.PORT;
 const { updatePrfList } = require('./services/performanceSync');
 
+const frontendPort = process.env.FRONTEND_PORT || 5173 || 5174;
+
 // CORS 설정
 const corsOptions = {
+  
   // 프론트엔드 주소를 명확히 입력 (마지막 '/' 제외)
-  origin: `http://localhost:${process.env.FRONTEND_PORT}` || 'http://localhost:5173', 
+  origin: [
+    'http://localhost:'+frontendPort,
+    'http://localhost:5173',
+    'http://localhost:5174',
+  ],
   // 자격 증명(Cookie, Authorization Header 등) 허용
   credentials: true, 
   methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH', 'OPTIONS'], // 허용 메서드 명시
