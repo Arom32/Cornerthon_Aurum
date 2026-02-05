@@ -28,7 +28,7 @@ function App() {
       // 앱 실행 시 서버에 프로필 요청 (쿠키 전송)
       const checkLogin = async () => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_BACK_URL || 'http://localhost:5000'}/api/user/profile`, {
+          const response = await fetch(`${import.meta.env.VITE_BACK_URL || 'http://localhost:5000'}/api/user/mypage`, {
             method: 'GET',
             credentials: 'include', // 중요: 쿠키 포함
           });
