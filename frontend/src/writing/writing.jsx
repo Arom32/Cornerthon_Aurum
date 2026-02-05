@@ -6,7 +6,11 @@ const Writing = () => {
     const { id } = useParams();
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]); 
+<<<<<<< Updated upstream
     const [newComment, setNewComment] = useState("");
+=======
+    const [replyTo, setReplyTo] = useState(null); // 답글 대상 댓글 ID
+>>>>>>> Stashed changes
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
