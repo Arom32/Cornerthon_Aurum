@@ -15,10 +15,13 @@ const PerformanceDetailPage = () => {
     const fetchDetail = async () => {
       try {
         setLoading(true);
-        // Swagger에서 제공된 API 엔드포인트로 호출
-        const response = await fetch(`${BACK_URL}/api/performances/${id}`);
-        const result = await response.json();
 
+        const response = await fetch(`${BACK_URL}/api/performances/${id}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+      
         // [중요 수정] Swagger 응답 구조가 { success: true, data: [...] } 형식이므로 
         // 상세 페이지에서는 배열의 첫 번째 요소를 꺼내서 저장해야 합니다.
         if (result.success && result.data) {
