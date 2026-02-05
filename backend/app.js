@@ -8,7 +8,16 @@ const port = process.env.PORT;
 const { updatePrfList } = require('./services/performanceSync');
 
 // CORS 설정
-app.use(cors());
+const corsOptions = {
+  // 프론트엔드 주소를 명확히 입력 (마지막 '/' 제외)
+  origin: `http://localhost:${process.env.FRONTEND_PORT}` || 'http://localhost:5173', 
+  // 자격 증명(Cookie, Authorization Header 등) 허용
+  credentials: true, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH', 'OPTIONS'], // 허용 메서드 명시
+  allowedHeaders: ['Content-Type', 'Authorization']
+};  
+
+app.use(cors(corsOptions));
 
 // 미들웨어 설정
 app.use(express.json());
