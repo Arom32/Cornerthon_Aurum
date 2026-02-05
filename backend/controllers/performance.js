@@ -1,4 +1,6 @@
 const Performance = require('../models/Performance');
+const mongoose = require('mongoose');
+
 const { 
     validateFilter,
     parseGenreFilter, 
@@ -91,8 +93,12 @@ async function getDetail(req, res) {
     try {
         const { id } = req.params;
 
+        const query = mongoose.Types.ObjectId.isValid(id) 
+            ? { _id: id } 
+            : { mt20id: id };
+
         const performance = await Performance.findOneAndUpdate(
-            { mt20id: id },
+            query,
             { $inc: { viewCount: 1 } }, // 해당 공연의 조회수 증가
             { new: true }
         );

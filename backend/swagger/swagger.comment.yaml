@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: Comment API
+  version: 1.0.0
+  description: "댓글 작성, 수정, 삭제 관리 API"
+
+tags:
+  - name: Comments
+    description: "댓글 및 대댓글 관리 (CUD)"
+
+paths:
+  /api/comments:
+    post:
+      summary: "댓글 및 대댓글 작성"
+      tags: [Comments]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentInput'
+      responses:
+        201:
+          description: "작성 성공"
+
+  /api/comments/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema: { type: string }
+    put:
+      summary: "댓글 수정"
+      tags: [Comments]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content: { type: string }
+      responses:
+        200:
+          description: "수정 성공"
+    delete:
+      summary: "댓글 삭제"
+      tags: [Comments]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "삭제 성공"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    CommentInput:
+      type: object
+      required: [content, boardId]
+      properties:
+        content: { type: string }
+        boardId: { type: string }
+        parentCommentId: { type: string, nullable: true }

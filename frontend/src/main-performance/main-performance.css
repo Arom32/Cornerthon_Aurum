@@ -1,0 +1,226 @@
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 20px 70px;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Force scrollbar to always be visible */
+html {
+    overflow-y: scroll;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove all focus outlines */
+.container *:focus,
+.container *:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Section Titles */
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 0;
+    color: #333;
+}
+
+/* 추천 공연 Section */
+.recommend-section {
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.section-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 900px;
+    width: 900px;
+    position: relative;
+    left: 0;
+}
+
+/* Image Card */
+.image-card {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    max-width: 200px;
+    outline: none;
+    display: block;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.image-card:hover {
+    transform: translateY(-5px);
+}
+
+.image-card:focus,
+.image-card:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.image-card img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    outline: none;
+    display: block;
+}
+
+.image-card img:focus,
+.image-card img:active {
+    outline: none !important;
+}
+
+.image-card p {
+    font-size: 13px;
+    color: #333;
+    margin: 0;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Purple Skeleton Card */
+.image-card-skeleton {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+    border-radius: 8px;
+    animation: pulse 1.5s ease-in-out infinite;
+    outline: none;
+}
+
+.image-card-skeleton:focus,
+.image-card-skeleton:active {
+    outline: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Middle Category Bar */
+.middle-category {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 0;
+    margin: 40px 0;
+}
+
+.middle-category a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    outline: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.middle-category a:hover {
+    background-color: #8b5cf6;
+    color: #ffffff;
+}
+
+.middle-category a:focus,
+.middle-category a:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* All Performance Section */
+.all-performance {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.all-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 900px;
+    width: 900px;
+    position: relative;
+    left: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .section-grid,
+    .all-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .section-title {
+        font-size: 20px;
+    }
+
+    .section-grid,
+    .all-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .middle-category {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 15px 10px;
+    }
+
+    .middle-category a {
+        font-size: 14px;
+        padding: 6px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-grid,
+    .all-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .image-card p {
+        font-size: 12px;
+    }
+
+    .middle-category a {
+        font-size: 13px;
+        padding: 5px 12px;
+    }
+}

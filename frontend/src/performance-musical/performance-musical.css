@@ -1,0 +1,111 @@
+/* performance-musical.css */
+@charset "UTF-8";
+
+/* 전체 컨테이너 */
+.container {
+    padding-top: 160px; /* 헤더(100px) + 카테고리바(60px) */
+    min-height: 100vh;
+}
+
+/* 공연 종류 이름 - 뮤지컬 */
+.kind-musical {
+    font-size: 90px;
+    font-weight: 700;
+    color: #7B30FD;
+    line-height: 1;
+    margin: 0;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 공연 설명 */
+.ex-musical {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+/* 전체 뮤지컬 섹션 */
+.all-musical {
+    padding: 0 80px 80px 80px;
+}
+
+/* 뮤지컬 그리드 - 4개 고정 최소 표시 */
+.all-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+/* 카드 스타일 */
+.image-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.image-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(123, 48, 253, 0.2);
+}
+
+.image-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+    background-color: #7B30FD;
+    display: block;
+}
+
+.image-card p {
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    color: #333;
+}
+
+/* 스켈레톤 (보라색 카드) */
+.image-card-skeleton {
+    width: 100%;
+    height: 280px;
+    border-radius: 12px;
+    background-color: #7B30FD;
+}
+
+/* 반응형 */
+@media (max-width: 1200px) {
+    .all-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .all-musical {
+        padding: 0 40px 60px 40px;
+    }
+    
+    .all-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .kind-musical {
+        font-size: 60px;
+        margin-top: 40px;
+    }
+    
+    .ex-musical {
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .all-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -12,8 +12,8 @@ const communitymain = () => {
                 <p>다양한 커뮤니티 안에서 많은 소통을 나눠보세요.</p>
                  {/* 다른 게시판으로 넘어 가는 것 */}
                 <div className='group-botton'>
-                    <Link to ='/botton-free'>자유게시판</Link>
-                    <Link to ='/botton-deal'> 거래게시판</Link>
+                    <Link to ='/community-free'>자유게시판</Link>
+                    <Link to ='/community-deal'> 후기게시판</Link>
                 </div>
             </nav>
                

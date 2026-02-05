@@ -11,7 +11,7 @@ const Mainoption = () => {
              <Header />
             {/* 기능 선택 */}
             <div className='main-function'>
-                <Link to='/performance' className ='info-card-link'>
+                <Link to='/main-performance' className ='info-card-link'>
                     <div className='information'>
                         <div className='icon-box'>
                             <img src={Group51} alt="문화예술 아이콘" />
@@ -19,7 +19,7 @@ const Mainoption = () => {
                         <span>문화 예술 공연 정보</span>
                     </div>
                 </Link>
-                <Link to='/community' className ='info-card-link'>
+                <Link to='/community-main' className ='info-card-link'>
                     <div className='community'>
                         <div className='icon-box'>
                            <img src={Group33} alt="커뮤니티 아이콘" />

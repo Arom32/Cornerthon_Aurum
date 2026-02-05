@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
-import './signup.css'; // 같은 폴더의 CSS를 불러옵니다.
+import './signup.css';
 
 const Signup = () => {
-  // 입력값 상태 관리
+  // 1. 초기값 설정: 이메일은 완전히 제거하고, 빈 문자열('')로 초기화하여 경고 방지
   const [formData, setFormData] = useState({
-    usermail: '',
     userid: '',
     userpw: '',
     userpw_re: ''
   });
 
-  // 에러 메시지 상태 관리
   const [errors, setErrors] = useState({
-    email: '',
     id: '',
     pw: '',
     pwRe: ''
   });
 
-  // 입력값이 변경될 때 호출되는 함수
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({
@@ -27,18 +23,13 @@ const Signup = () => {
     });
   };
 
-  // 폼 제출 시 호출되는 함수
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    let newErrors = { email: '', id: '', pw: '', pwRe: '' };
+    let newErrors = { id: '', pw: '', pwRe: '' };
     let isValid = true;
 
-    // 간단한 유효성 검사 예시
-    if (!formData.usermail.includes('@')) {
-      newErrors.email = '올바른 이메일 형식을 입력해주세요.';
-      isValid = false;
-    }
+    // 유효성 검사
     if (formData.userid.length < 4) {
       newErrors.id = '아이디는 4글자 이상이어야 합니다.';
       isValid = false;
@@ -55,8 +46,41 @@ const Signup = () => {
     setErrors(newErrors);
 
     if (isValid) {
-      alert('회원가입 성공!');
-      console.log('제출된 데이터:', formData);
+      try {
+        // 2. Swagger 규격에 맞춘 데이터 전송 (username, password1, password2)
+        const response = await fetch('http://localhost:5000/api/user/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: formData.userid,
+            password1: formData.userpw,
+            password2: formData.userpw_re
+          }),
+        });
+
+        const contentType = response.headers.get("content-type");
+        
+        // 서버 응답 처리
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.message || '회원가입 실패');
+          }
+
+          alert('회원가입 성공! 로그인 페이지로 이동합니다.');
+          window.location.href = '/login'; 
+        } else {
+          // JSON이 아닌 HTML(에러페이지)이 온 경우 - 500 에러 발생 시 여기로 들어옵니다.
+          throw new Error('서버 내부 오류(500)가 발생했습니다. 백엔드 터미널 로그를 확인해 주세요.');
+        }
+
+      } catch (error) {
+        console.error('Fetch 에러:', error);
+        alert(error.message);
+      }
     }
   };
 
@@ -65,17 +89,7 @@ const Signup = () => {
       <div className="signup-box">
         <form id="signup-form" onSubmit={handleSubmit}>
           
-          <div className="form-group">
-            <label htmlFor="usermail">이메일</label>
-            <input 
-              type="text" 
-              id="usermail" 
-              value={formData.usermail}
-              onChange={handleChange}
-            />
-            <p className="error-message">{errors.email}</p>
-          </div>
-
+          {/* 아이디 입력 */}
           <div className="form-group">
             <label htmlFor="userid">아이디</label>
             <input 
@@ -83,10 +97,12 @@ const Signup = () => {
               id="userid" 
               value={formData.userid}
               onChange={handleChange}
+              placeholder="4글자 이상 입력"
             />
             <p className="error-message">{errors.id}</p>
           </div>
 
+          {/* 비밀번호 입력 */}
           <div className="form-group">
             <label htmlFor="userpw">비밀번호</label>
             <input 
@@ -94,10 +110,12 @@ const Signup = () => {
               id="userpw" 
               value={formData.userpw}
               onChange={handleChange}
+              placeholder="6글자 이상 입력"
             />
             <p className="error-message">{errors.pw}</p>
           </div>
 
+          {/* 비밀번호 재확인 입력 */}
           <div className="form-group">
             <label htmlFor="userpw_re">비밀번호 재확인</label>
             <input 
@@ -105,6 +123,7 @@ const Signup = () => {
               id="userpw_re" 
               value={formData.userpw_re}
               onChange={handleChange}
+              placeholder="비밀번호 다시 입력"
             />
             <p className="error-message">{errors.pwRe}</p>
           </div>
@@ -113,7 +132,7 @@ const Signup = () => {
 
           <div className="login-link">
             <span>이미 계정이 있으신가요? </span>
-            <a href="/login">로그인</a>
+            <a href="/login" style={{ color: '#6e45e2', fontWeight: 'bold' }}>로그인</a>
           </div>
 
         </form>
