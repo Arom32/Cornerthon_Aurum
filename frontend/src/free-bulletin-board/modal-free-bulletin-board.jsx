@@ -20,45 +20,57 @@ const ModalFreeBoard = ({ isOpen, onClose }) => {
     e.preventDefault();
 
     if (!title.trim() || !content.trim()) {
-      alert("제목과 내용을 모두 입력해주세요.");
-      return;
+        alert("제목과 내용을 모두 입력해주세요.");
+        return;
+    }
+
+    // userToken → accessToken으로 변경
+    const token = localStorage.getItem('accessToken'); 
+    
+    if (!token) {
+        alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
+        window.location.href = '/login';
+        return;
     }
 
     try {
-      // 1. 로그인 시 저장해둔 토큰을 가져옵니다.
-      const token = localStorage.getItem('userToken'); 
+        const response = await fetch('http://localhost:5000/api/boards', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` 
+            },
+            body: JSON.stringify({
+                title: title,
+                content: content,
+                category: 'general'
+            }),
+        });
 
-      // 2. 서버에 저장 요청 (주소 확인: /api/boards)
-      const response = await fetch('http://localhost:5000/api/boards', { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // 3. 401 에러 해결의 핵심! 인증 토큰을 헤더에 담아 보냅니다.
-          'Authorization': `Bearer ${token}` 
-        },
-        body: JSON.stringify({
-          title: title,
-          content: content,
-          category: 'general' // 자유게시판 카테고리 지정
-        }),
-      });
+        const data = await response.json();
 
-      if (response.ok) {
-        alert("게시글이 성공적으로 등록되었습니다!");
-        onClose(); 
-        window.location.reload(); 
-      } else {
-        // 401 에러 등이 발생했을 때 서버가 주는 메시지를 확인합니다.
-        const errorData = await response.json().catch(() => ({}));
-        console.log("서버 에러 응답:", errorData);
-        alert(`저장 실패: ${errorData.message || '로그인 세션이 만료되었거나 권한이 없습니다.'}`);
-      }
+        if (response.ok) {
+            alert("게시글이 성공적으로 등록되었습니다!");
+            setTitle('');
+            setContent('');
+            setSaveCount(0);
+            onClose();
+        } else {
+            console.error("서버 에러 응답:", data);
+            
+            if (response.status === 401) {
+                alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+                localStorage.removeItem('accessToken'); // 변경
+                window.location.href = '/login';
+            } else {
+                alert(`저장 실패: ${data.message || '알 수 없는 오류가 발생했습니다.'}`);
+            }
+        }
     } catch (error) {
-      console.error("에러 발생:", error);
-      alert("서버와 통신할 수 없습니다.");
+        console.error("에러 발생:", error);
+        alert("서버와 통신할 수 없습니다. 네트워크 연결을 확인해주세요.");
     }
-  };
-  
+};
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>

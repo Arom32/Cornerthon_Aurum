@@ -187,10 +187,10 @@ const Writing = ({ userId }) => {
                                 <span className="comment-author">{comment.creator?.username || '익명'}</span>
                                 <div className="comment-content">
                                     <p className="comment-text">{comment.content}</p>
-                                    <div className="comment-actions">
-                                        <button className="reply-btn" onClick={() => handleReply(comment._id, comment.creator?.username || '익명')}>답글</button>
-                                        <button className="comment-like-btn" onClick={() => toggleCommentLike(comment._id)}>♡ {comment.countLikes || 0}</button>
-                                    </div>
+                                </div>
+                                <div className="comment-actions">
+                                    <button className="reply-btn" onClick={() => handleReply(comment._id, comment.creator?.username || '익명')}>답글</button>
+                                    <button className="comment-like-btn" onClick={() => toggleCommentLike(comment._id)}>♡ {comment.countLikes || 0}</button>
                                 </div>
                             </div>
                         ))}
