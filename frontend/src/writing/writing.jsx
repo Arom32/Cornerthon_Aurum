@@ -11,7 +11,9 @@ const Writing = ({ userId }) => {
     
     // 데이터 상태
     const [post, setPost] = useState(null);
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState([]); 
+    const [newComment, setNewComment] = useState("");
+    const [replyTo, setReplyTo] = useState(null); // 답글 대상 댓글 ID
     const [loading, setLoading] = useState(true);
     
     // 입력 상태
@@ -87,8 +89,26 @@ const Writing = ({ userId }) => {
         }
     };
 
-    // [기능] 댓글/대댓글 작성
-    const handleCommentSubmit = async (e, parentId = null) => {
+    // 댓글 좋아요
+    const toggleCommentLike = async (commentId) => {
+        try {
+            const response = await fetch(`${BACK_URL}/api/comments/${commentId}/like`, {
+                method: 'PATCH',
+                credentials: 'include',
+            });
+            const result = await response.json();
+            if (result.success) {
+                setComments(prev => prev.map(comment => 
+                    comment._id === commentId 
+                        ? { ...comment, countLikes: result.data.countLikes }
+                        : comment
+                ));
+            }
+        } catch (error) { console.error("좋아요 실패"); }
+    };
+
+    // 댓글 작성
+    const Commentwriting = async (e) => {
         e.preventDefault();
         if (!checkAuth()) return;
 
@@ -100,31 +120,28 @@ const Writing = ({ userId }) => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({
-                    boardId: id,
-                    content: content,
-                    parentCommentId: parentId
+                body: JSON.stringify({ 
+                    boardId: id, 
+                    content: newComment,
+                    parentId: replyTo // 답글인 경우 부모 댓글 ID 전송
                 })
             });
 
             if (response.status === 201) {
                 setNewComment("");
-                setReplyContent("");
-                setReplyingTo(null);
-                fetchData(); 
-            } else if (response.status === 401) {
-                alert("로그인이 필요합니다.");
-                navigate('/login');
-            } else {
-                const result = await response.json();
-                alert(result.message);
+                setReplyTo(null); // 답글 모드 해제
             }
         } catch (error) {
             alert("댓글 등록에 실패했습니다.");
         }
     };
 
-    // [기능] 게시글 삭제
+    // 답글 버튼 클릭
+    const handleReply = (commentId, username) => {
+        setReplyTo(commentId);
+        setNewComment(`@${username} `); // 답글 대상 표시
+    };
+
     const deletePost = async () => {
         if (!checkAuth()) return;
         if (!window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) return;
@@ -155,6 +172,7 @@ const Writing = ({ userId }) => {
             <main className='writing-detail'>
                 {/* 게시글 섹션 */}
                 <article className='writing-section'>
+                    {/* 제목과 버튼 영역 */}
                     <div className="title-area">
                         <h1 className="post-title">{post.title}</h1>
                         {/* 작성자 본인에게만 버튼 노출 */}
@@ -166,14 +184,22 @@ const Writing = ({ userId }) => {
                         )}
                     </div>
 
+                    {/* 작성자 및 카테고리 정보 */}
                     <div className="post-meta">
-                        <span className="meta-author">작성자: {post.creator?.username}</span>
-                        <span className="meta-category">카테고리: {post.category}</span>
-                        <span className="meta-date">{new Date(post.createdAt).toLocaleDateString()}</span>
+                        <span className="post-author">
+                            작성자: {post.creator?.username || '익명'}
+                        </span>
+                        <span className="post-category">
+                            {post.category || '일반'}
+                        </span>
                     </div>
 
-                    <div className="post-body">{post.content}</div>
+                    {/* 본문 내용 */}
+                    <div className="post-body">
+                        {post.content}
+                    </div>
 
+                    {/* 좋아요 버튼 */}
                     <div className="like-section">
                         <button className="like-btn" onClick={toggleLike}>
                             좋아요 ♡ {post.countLikes || 0}
@@ -184,63 +210,65 @@ const Writing = ({ userId }) => {
                 {/* 댓글 섹션 */}
                 <section className='comment-section'>
                     <h3 className="comment-title">댓글 ({comments.length})</h3>
-                    
-                    {comments.map((comment) => (
-                        <div key={comment._id} className="comment-group">
-                            <div className="comment-item">
-                                <span className="comment-author">{comment.creator?.username}</span>
-                                <p className="comment-text">{comment.content}</p>
-                                <button 
-                                    className="reply-btn"
-                                    onClick={() => setReplyingTo(replyingTo === comment._id ? null : comment._id)}
-                                >
-                                    답글
-                                </button>
-                            </div>
-
-                            {/* 대댓글 렌더링 */}
-                            {comment.replies && comment.replies.map((reply) => (
-                                <div key={reply._id} className="reply-item">
-                                    <span className="reply-icon">ㄴ</span>
-                                    <div className="reply-content">
-                                        <span className="comment-author">{reply.creator?.username}</span>
-                                        <p className="comment-text">{reply.content}</p>
+                    <div className="comment-list">
+                        {comments.map((comment) => (
+                            <div 
+                                key={comment._id} 
+                                className={`comment-item ${comment.parentId ? 'reply' : ''}`}
+                            >
+                                <span className="comment-author">
+                                    {comment.creator?.username || '익명'}
+                                </span>
+                                <div className="comment-content">
+                                    <p className="comment-text">{comment.content}</p>
+                                    {/* 댓글 액션 버튼 */}
+                                    <div className="comment-actions">
+                                        <button 
+                                            className="reply-btn"
+                                            onClick={() => handleReply(comment._id, comment.creator?.username || '익명')}
+                                        >
+                                            답글
+                                        </button>
+                                        <button 
+                                            className="comment-like-btn"
+                                            onClick={() => toggleCommentLike(comment._id)}
+                                        >
+                                            ♡ {comment.countLikes || 0}
+                                        </button>
                                     </div>
                                 </div>
-                            ))}
-
-                            {/* 대댓글 입력창 (로그인 시에만 열림) */}
-                            {replyingTo === comment._id && (
-                                <form className="reply-form" onSubmit={(e) => handleCommentSubmit(e, comment._id)}>
-                                    <input 
-                                        type="text" 
-                                        value={replyContent}
-                                        onChange={(e) => setReplyContent(e.target.value)}
-                                        placeholder={userId ? "답글을 입력하세요" : "로그인 후 이용 가능합니다"}
-                                        readOnly={!userId}
-                                        onClick={() => !userId && checkAuth()}
-                                    />
-                                    <button type="submit" disabled={!userId}>등록</button>
-                                </form>
-                            )}
-                        </div>
-                    ))}
+                            </div>
+                        ))}
+                    </div>
                 </section>
 
-                {/* 일반 댓글 입력창 */}
+                {/* 댓글 입력창 */}
                 <section className='reply-section'>
                     <form onSubmit={(e) => handleCommentSubmit(e)} className="comment-form">
                         <input 
                             type="text" 
                             className="comment-input" 
-                            placeholder={userId ? "댓글을 입력하세요" : "로그인이 필요한 서비스입니다"} 
+                            placeholder={replyTo ? "답글을 입력하세요..." : "댓글을 입력하세요"} 
                             value={newComment} 
                             onChange={(e) => setNewComment(e.target.value)} 
                             readOnly={!userId}
                             onClick={() => !userId && checkAuth()}
                         />
-                        <button type="submit" className="comment-submit-btn" disabled={!userId}>등록</button>
+                        <button type="submit" className="comment-submit-btn">
+                            {replyTo ? '답글 등록' : '등록'}
+                        </button>
                     </form>
+                    {replyTo && (
+                        <button 
+                            className="cancel-reply-btn"
+                            onClick={() => {
+                                setReplyTo(null);
+                                setNewComment("");
+                            }}
+                        >
+                            답글 취소
+                        </button>
+                    )}
                 </section>
             </main>
         </div>
