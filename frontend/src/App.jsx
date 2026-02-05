@@ -77,7 +77,7 @@ function App() {
       <Route path="/writing/:id" element={<Writing userId={userId} />} />
       <Route path="/free-bulletin-board" element={<FreeBulletinBoard userId={userId} />} />
       <Route path="/trade-bulletin-board" element={<TradeBulletinBoard userId={userId} />} />
- fe/performance-detail-page
+
 
       <Route path="/writing" element={<Writing userId={userId} />} />
       <Route path="/performance/:id" element={<PerformanceDetailPage userId={userId} />} />

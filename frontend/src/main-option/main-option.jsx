@@ -11,7 +11,7 @@ const Mainoption = () => {
              <Header />
             {/* 기능 선택 */}
             <div className='main-function'>
-                <Link to='/performance' className ='info-card-link'>
+                <Link to='/main-performance' className ='info-card-link'>
                     <div className='information'>
                         <div className='icon-box'>
                             <img src={Group51} alt="문화예술 아이콘" />
