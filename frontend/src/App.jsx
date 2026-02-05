@@ -18,6 +18,7 @@ import Mypage from "./mypage/mypage.jsx";
 import FreeBulletinBoard from './free-bulletin-board/free-bulletin-board.jsx';
 import TradeBulletinBoard from './trade-bulletin-board/trade-bulletin-board.jsx';
 import './App.css';
+import PerformanceDetailPage from './performance-detail-page/performance-detail-page.jsx';
 
 function App() {
   // 1. 모든 페이지가 공유할 로그인 아이디 상태
@@ -50,6 +51,7 @@ function App() {
       <Route path="/trade-bulletin-board" element={<TradeBulletinBoard userId={userId} />} />
 
       <Route path="/writing" element={<Writing userId={userId} />} />
+      <Route path="/performance/:id" element={<PerformanceDetailPage userId={userId} />} />
     </Routes>
   );
 }
