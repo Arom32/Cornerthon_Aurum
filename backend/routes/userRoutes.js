@@ -15,7 +15,7 @@ router.route("/login")
 
 // 로그아웃 ( http://localhost:3000/api/user/logout )
 router.route("/logout")
-.get(logoutUser)
+.post(logoutUser)
 
 // 프로필 조회 (칭호, 레벨, 포인트) ( http://localhost:3000/api/user/mypage )
 router.route("/mypage")

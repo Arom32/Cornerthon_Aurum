@@ -74,7 +74,7 @@ const Mainperformance = () => {
                     <div 
                         key={`rec-${recommendPerformance[i].id}`} 
                         className="image-card"
-                        onClick={() => navigate(`/detail/${recommendPerformance[i].id}`)}
+                        onClick={() => navigate(`/performance/${recommendPerformance[i].id}`)}
                     >
                         <img src={recommendPerformance[i].imgUrl} alt={recommendPerformance[i].title} />
                         <p>{recommendPerformance[i].title}</p>   
@@ -107,7 +107,7 @@ const Mainperformance = () => {
                     <div 
                         key={`all-${performance[i].id}`} 
                         className="image-card"
-                        onClick={() => navigate(`/detail/${performance[i].id}`)}
+                        onClick={() => navigate(`/performance/${performance[i].id}`)}
                     >
                         <img src={performance[i].imgUrl} alt={performance[i].title} />
                         <p>{performance[i].title}</p>
