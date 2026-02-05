@@ -19,6 +19,8 @@
     gap:30px;
 }
 
+
+
 /* 아우룸 로고 */
 .logo {
     font-size: 40px;
@@ -63,11 +65,18 @@
     flex-shrink: 0;
 }
 
-.section a {
+.section a, 
+.section .logout-button {
     text-decoration: none;
     font-size: 18px;
     font-weight: 500;
     color: black;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit; /* 부모 폰트 상속 */
+    transition: color 0.2s ease;
 }
 
 /* 유저 이름 스타일 */

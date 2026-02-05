@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // useState 추가
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Mainpage from './main-page/main-page.jsx';
 import Mainoption from './main-option/main-option.jsx';
@@ -23,7 +23,32 @@ import PerformanceDetailPage from './performance-detail-page/performance-detail-
 function App() {
   // 1. 모든 페이지가 공유할 로그인 아이디 상태
   const [userId, setUserId] = useState('');
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+      // 앱 실행 시 서버에 프로필 요청 (쿠키 전송)
+      const checkLogin = async () => {
+        try {
+          const response = await fetch(`${import.meta.env.VITE_BACK_URL || 'http://localhost:5000'}/api/user/mypage`, {
+            method: 'GET',
+            credentials: 'include', // 중요: 쿠키 포함
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            setUserId(result.name); // 서버에서 받은 유저 이름으로 상태 설정
+          }
+        } catch (error) {
+          console.error("인증 확인 실패:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      checkLogin();
+    }, []);
+
+  if (loading) return <div>Loading...</div>;
   return (
     <Routes>
       {/* 2. 각 컴포넌트에 userId와 setUserId를 Props로 전달 */}

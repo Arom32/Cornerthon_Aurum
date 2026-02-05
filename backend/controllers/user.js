@@ -62,7 +62,12 @@ const loginUser = asyncHandler(async (req, res) => {
 
         // 일치하면 이제 토큰 발급
         const token = jwt.sign( { id: user._id }, jwtSecret) 
-        res.cookie("token", token, {httpOnly: true} ) // 응답할 때 쿠키에 토큰 담아서 전송.
+        res.cookie("token", token, {
+            httpOnly: true,
+            path: '/',      // 전체 경로에서 쿠키 유효
+            secure: false,  // 로컬(http) 환경이므로 false, 배포 시(https) true
+            sameSite: 'lax'
+        } ) // 응답할 때 쿠키에 토큰 담아서 전송.
         res.json({ message: "로그인에 성공하였습니다.", token }) // 확인용 한 줄.
     
    

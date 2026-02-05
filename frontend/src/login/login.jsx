@@ -37,22 +37,17 @@ function LoginForm({ setUserId }) {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // 쿠키(Cookie)를 주고받기 위해 필수 설정
         body: JSON.stringify({
           username: userIdInput,
           password: userPw,
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || '로그인 서버 에러');
-      }
-
       const result = await response.json();
 
-      if (result.success) {
+      if (response.ok && result.token) {
         alert('로그인에 성공했습니다!');
-        // 부모 상태 업데이트 및 페이지 이동
         if (setUserId) setUserId(userIdInput);
         navigate('/');
       } else {
