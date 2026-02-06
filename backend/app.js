@@ -65,13 +65,13 @@ app.use('/api/user', userRouter);
 const userTitleRouter = require('./routes/userTitleRoutes');
 app.use('/api/titles', userTitleRouter);
 
-if(false){ // 서버 새로 열 때 외부 데이터로 리로드 , debug 용
-  try {
-      console.log('\n[BE] Initial data collection starting...');
-      updatePrfList(); 
-} catch (err) {
-      console.error('[BE] Initial collection failed:', err.message);
-}}
+// if(false){ // 서버 새로 열 때 외부 데이터로 리로드 , debug 용
+//   try {
+//       console.log('\n[BE] Initial data collection starting...');
+//       updatePrfList(); 
+// } catch (err) {
+//       console.error('[BE] Initial collection failed:', err.message);
+// }}
 
 
 

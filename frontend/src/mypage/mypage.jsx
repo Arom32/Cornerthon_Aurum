@@ -1,14 +1,57 @@
-import React from 'react';
-import CategoryBar from '../CategoryBar/CategoryBar.jsx';
+import React, { useEffect, useState } from 'react';
 import './mypage.css';
 import Header from '../Header/Header.jsx';
+const BACK_URL = import.meta.env.VITE_BACK_URL;
 
 const MyPage = ({ userId }) => {
+  const [userData, setUserData] = useState({
+    name: '',
+    currentTitle: '',
+    ownedTitleNames: [],
+    loading: true
+  });
+
+  useEffect(() => {
+    const getUserProfile = async () => {
+      try {
+        const response = await fetch(BACK_URL+'/api/user/mypage', {
+        method: 'GET',
+        // 중요: 쿠키를 서버에 전송하기 위해 필요한 옵션
+        credentials: 'include', 
+        headers: {
+          'Content-Type': 'application/json'
+        }
+        }); // 유저 칭호 및 정보 엔드포인트
+        
+        if (!response.ok) {
+          throw new Error('데이터를 불러오는데 실패했습니다.');
+        }
+        const data = await response.json();
+        console.log(data)
+
+        setUserData({
+        name: data.name,
+        title: data.title, 
+        loading: false,
+        level: data.level,
+        point: data.point
+        });
+      } catch (error) {
+        console.error("Fetch Error:", error);
+        setUserData(prev => ({ ...prev, loading: false }));
+      }
+    };
+
+    getUserProfile();
+  }, []);
+
+  if (userData.loading) return <div>로딩 중...</div>;
+
+
   return (
     <div className="mypage-wrapper">
       {/* 공통 헤더 불러오기 */}
       <Header userId={userId} />
-      <CategoryBar />
 
       <div className="mypage-container">
         <div className="content-wrapper">
@@ -21,11 +64,15 @@ const MyPage = ({ userId }) => {
                 
               </div>
               <div className="profile-text">
+                <div className='user-title'>
+                    {userData.title}
+                  </div>
                 <div className="user-info-row">
+                  
                   <span className="user-nickname">
-                    {userId ? `${userId}` : "로그인이 필요합니다"}
+                    {userId ? `Lv ${userData.level}.  ${userId}` : "로그인이 필요합니다"}
                   </span>
-                  <button className="edit-btn">프로필수정</button>
+                  {/* <button className="edit-btn">프로필 수정</button> */}
                 </div>
                 <div className="stats-row">
                   <div className="stat-item">

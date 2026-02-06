@@ -8,7 +8,7 @@ import Header from '../Header/Header.jsx';
 
 const BACK_URL = import.meta.env.VITE_BACK_URL
 
-const Mainperformance = () => {
+const Mainperformance = ({userId}) => {
     const [recommendPerformance, setRecommendPerformance] = useState([]); // 추천 공연용
     const [performance, setPerformance] = useState([]); // 전체 공연용
     const [loading, setLoading] = useState(true); 
@@ -126,7 +126,7 @@ const Mainperformance = () => {
 
     return (
         <div className="container">
-            <Header />
+             <Header userId={userId} />
             
 
             <section className="recommend-section">
@@ -138,12 +138,7 @@ const Mainperformance = () => {
 
 
             <nav className="middle-category">
-
-                <Link to="/concert">콘서트</Link>
-                <Link to="/musical">뮤지컬</Link>
-                <Link to="/playacting">연극</Link>
-                <Link to="/festival">페스티벌</Link>
-                <Link to="/display">전시</Link>
+                <Link to="/concert">List</Link>
             </nav>
 
             <section className="all-performance">

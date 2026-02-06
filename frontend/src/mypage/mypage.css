@@ -8,7 +8,7 @@
 /* 겹침 해결을 위한 컨테이너: 상단 CategoryBar 높이만큼 여백 부여 */
 .mypage-container {
   display:flex;
-  padding-top: 160px; /* CategoryBar 높이에 따라 80px~120px 사이로 조절하세요 */
+  padding-top: 100px; /* CategoryBar 높이에 따라 80px~120px 사이로 조절하세요 */
   justify-content: center;
   width: 100%;
   padding-bottom: 60px;

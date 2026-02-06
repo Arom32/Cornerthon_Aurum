@@ -38,7 +38,7 @@ const Header = ({ userId, setUserId }) => {
                 {userId ? (
                     <>
                         <span className="user-id-display">{userId}님</span>
-                        <Link to="/mypage">my page</Link>
+                        <Link to="/mypage">내 페이지</Link>
                         {/* 로그아웃은 동작(Action)이므로 button으로 구현 */}
                         <button 
                             onClick={handleLogout} 

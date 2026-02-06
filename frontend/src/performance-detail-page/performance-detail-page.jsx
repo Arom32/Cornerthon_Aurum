@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './performance-detail-page.css';
 import Header from '../Header/Header.jsx';
-import CategoryBar from '../CategoryBar/CategoryBar.jsx';
+import { Link } from 'react-router-dom';
+
 
 const BACK_URL = import.meta.env.VITE_BACK_URL;
 
-const PerformanceDetailPage = () => {
+const PerformanceDetailPage = ({userId}) => {
   const { id } = useParams(); 
   const [performanceInfo, setPerformanceInfo] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,8 +44,10 @@ const PerformanceDetailPage = () => {
 
   return (
     <div className="detail-page-container">
-      <Header />
-      <CategoryBar />
+       <Header userId={userId} />
+       <nav className="middle-category">
+        <Link to="/concert">List</Link>
+      </nav>
 
       <div className="detail-content-wrapper">
         <div className="detail-main-section">

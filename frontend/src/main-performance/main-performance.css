@@ -124,31 +124,35 @@ body {
 /* Middle Category Bar */
 .middle-category {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     background-color: #f8f9fa;
     border-top: 1px solid #e0e0e0;
     border-bottom: 1px solid #e0e0e0;
-    padding: 15px 0;
+    padding: 0;
     margin: 40px 0;
+    min-height: 10px;
 }
 
 .middle-category a {
     text-decoration: none;
     color: #333;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 8px 20px;
-    border-radius: 20px;
+    font-size: 25px;
+    font-weight: 600;
+    padding: 10px 30px;
+    border-radius: 50px;
     transition: all 0.3s ease;
     outline: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+    display: inline-block;
 }
 
 .middle-category a:hover {
     background-color: #8b5cf6;
     color: #ffffff;
+    transform: scale(1.05);
 }
 
 .middle-category a:focus,
@@ -197,14 +201,12 @@ body {
     }
 
     .middle-category {
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 15px 10px;
+        min-height: 45px;
     }
 
     .middle-category a {
-        font-size: 14px;
-        padding: 6px 15px;
+        font-size: 16px;
+        padding: 8px 25px;
     }
 }
 
@@ -219,8 +221,12 @@ body {
         font-size: 12px;
     }
 
+    .middle-category {
+        min-height: 40px;
+    }
+
     .middle-category a {
-        font-size: 13px;
-        padding: 5px 12px;
+        font-size: 14px;
+        padding: 6px 20px;
     }
 }

@@ -9,7 +9,7 @@ const Writing = ({ userId }) => {
     const { id } = useParams();
     const navigate = useNavigate();
     
-    // 데이터 상태
+    // --- 1. 상태 관리 통합 (중복 제거) ---
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]); 
     const [loading, setLoading] = useState(true);
@@ -55,7 +55,7 @@ const Writing = ({ userId }) => {
         fetchData();
     }, [fetchData]);
 
-    // [기능] 좋아요 토글
+    // [기능] 게시글 좋아요
     const toggleLike = async () => {
         if (!checkAuth()) return;
         try {
@@ -81,7 +81,7 @@ const Writing = ({ userId }) => {
         }
     };
 
-    // 댓글 좋아요
+    // [기능] 댓글 좋아요
     const toggleCommentLike = async (commentId) => {
         try {
             const response = await fetch(`${BACK_URL}/api/comments/${commentId}/like`, {
@@ -127,12 +127,13 @@ const Writing = ({ userId }) => {
         }
     };
 
-    // 답글 버튼 클릭
+    // [기능] 답글 버튼 클릭
     const handleReply = (commentId, username) => {
         setReplyTo(commentId);
         setNewComment(`@${username} `);
     };
 
+    // [기능] 게시글 삭제
     const deletePost = async () => {
         if (!checkAuth()) return;
         if (!window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) return;
@@ -158,7 +159,7 @@ const Writing = ({ userId }) => {
 
     return (
         <div className="container">
-            <Header />
+             <Header userId={userId} />
             <main className='writing-detail'>
                 <article className='writing-section'>
                     <div className="title-area">
@@ -176,9 +177,7 @@ const Writing = ({ userId }) => {
                     </div>
                     <div className="post-body">{post.content}</div>
                     <div className="like-section">
-                        <button className="like-btn" onClick={toggleLike}>
-                            좋아요 ♡ {post.countLikes || 0}
-                        </button>
+                        <button className="like-btn" onClick={toggleLike}>좋아요 ♡ {post.countLikes || 0}</button>
                     </div>
                 </article>
 
