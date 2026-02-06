@@ -24,21 +24,18 @@ const ModalFreeBoard = ({ isOpen, onClose }) => {
         return;
     }
 
-    // userToken → accessToken으로 변경
-    const token = localStorage.getItem('accessToken'); 
-    
-    if (!token) {
-        alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
-        window.location.href = '/login';
-        return;
-    }
+
+    // if (!token) {
+    //     alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
+    //     window.location.href = '/login';
+    //     return;
+    // }
 
     try {
         const response = await fetch('http://localhost:5000/api/boards', { 
-            method: 'POST',
+            method: 'POST',credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` 
             },
             body: JSON.stringify({
                 title: title,
