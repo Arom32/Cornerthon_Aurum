@@ -12,9 +12,11 @@ const Writing = ({ userId }) => {
     // --- 1. 상태 관리 통합 (중복 제거) ---
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]); 
-    const [newComment, setNewComment] = useState(""); // 댓글/답글 입력값
-    const [replyTo, setReplyTo] = useState(null);     // 답글 대상 댓글 ID
     const [loading, setLoading] = useState(true);
+    
+    // 입력 상태
+    const [newComment, setNewComment] = useState(""); 
+    const [replyTo, setReplyTo] = useState(null); // 답글 대상 댓글 ID
 
     // [함수] 로그인 체크 및 유도
     const checkAuth = useCallback(() => {
@@ -97,7 +99,7 @@ const Writing = ({ userId }) => {
         } catch (error) { console.error("좋아요 실패"); }
     };
 
-    // --- 2. 댓글/답글 등록 함수 (이름 통일) ---
+    // 댓글 작성 (함수명 handleCommentSubmit으로 통일)
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
         if (!checkAuth()) return;
@@ -111,14 +113,14 @@ const Writing = ({ userId }) => {
                 body: JSON.stringify({ 
                     boardId: id, 
                     content: newComment,
-                    parentId: replyTo // 답글인 경우 부모 ID, 아니면 null
+                    parentId: replyTo 
                 })
             });
 
             if (response.status === 201) {
                 setNewComment("");
-                setReplyTo(null); 
-                fetchData(); // 등록 후 목록 새로고침
+                setReplyTo(null);
+                fetchData(); // 등록 후 목록 갱신
             }
         } catch (error) {
             alert("댓글 등록에 실패했습니다.");
@@ -128,7 +130,7 @@ const Writing = ({ userId }) => {
     // [기능] 답글 버튼 클릭
     const handleReply = (commentId, username) => {
         setReplyTo(commentId);
-        setNewComment(`@${username} `); 
+        setNewComment(`@${username} `);
     };
 
     // [기능] 게시글 삭제
@@ -187,10 +189,10 @@ const Writing = ({ userId }) => {
                                 <span className="comment-author">{comment.creator?.username || '익명'}</span>
                                 <div className="comment-content">
                                     <p className="comment-text">{comment.content}</p>
-                                </div>
-                                <div className="comment-actions">
-                                    <button className="reply-btn" onClick={() => handleReply(comment._id, comment.creator?.username || '익명')}>답글</button>
-                                    <button className="comment-like-btn" onClick={() => toggleCommentLike(comment._id)}>♡ {comment.countLikes || 0}</button>
+                                    <div className="comment-actions">
+                                        <button className="reply-btn" onClick={() => handleReply(comment._id, comment.creator?.username || '익명')}>답글</button>
+                                        <button className="comment-like-btn" onClick={() => toggleCommentLike(comment._id)}>♡ {comment.countLikes || 0}</button>
+                                    </div>
                                 </div>
                             </div>
                         ))}
