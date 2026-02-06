@@ -9,7 +9,7 @@ import ModalFreeBoard from '../free-bulletin-board/modal-free-bulletin-board';
 
 const BACK_URL = import.meta.env.VITE_BACK_URL
 
-const Communityfree = () => {
+const Communityfree = ({userId}) => {
     
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -60,7 +60,7 @@ const Communityfree = () => {
 
     return (
         <div className="container">
-           <Header/>
+            <Header userId={userId} />
             {/* 자유게시판 */}
             <article className='free-community'>
                 <div className='free-title'>후기게시판</div>

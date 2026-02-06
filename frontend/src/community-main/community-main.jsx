@@ -2,10 +2,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './community-main.css';
 import Header from '../Header/Header.jsx';
-const communitymain = () => {
+const communitymain = ({userId}) => {
     return(
         <div className="container">
-            <Header/>
+             <Header userId={userId} />
             {/* 메인 영역 */}
             <nav className='community-section'>
                 <h1 className="community-title">커뮤니티</h1>

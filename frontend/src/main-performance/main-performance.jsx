@@ -8,7 +8,7 @@ import Header from '../Header/Header.jsx';
 
 const BACK_URL = import.meta.env.VITE_BACK_URL
 
-const Mainperformance = () => {
+const Mainperformance = ({userId}) => {
     const [recommendPerformance, setRecommendPerformance] = useState([]); // 추천 공연용
     const [performance, setPerformance] = useState([]); // 전체 공연용
     const [loading, setLoading] = useState(true); 
@@ -126,7 +126,7 @@ const Mainperformance = () => {
 
     return (
         <div className="container">
-            <Header />
+             <Header userId={userId} />
             
 
             <section className="recommend-section">

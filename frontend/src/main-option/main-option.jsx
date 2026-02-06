@@ -5,10 +5,10 @@ import Header from '../Header/Header.jsx';
 // 사진
 import Group33 from '../assets/Group 33.svg';
 import Group51 from '../assets/Group 51.svg';
-const Mainoption = () => {
+const Mainoption = ({userId}) => {
     return(
         <div className='container'>
-             <Header />
+             <Header userId={userId} />
             {/* 기능 선택 */}
             <div className='main-function'>
                 <Link to='/main-performance' className ='info-card-link'>
@@ -19,7 +19,7 @@ const Mainoption = () => {
                         <span>문화 예술 공연 정보</span>
                     </div>
                 </Link>
-                <Link to='/community-main' className ='info-card-link'>
+                <Link to='/community-free' className ='info-card-link'>
                     <div className='community'>
                         <div className='icon-box'>
                            <img src={Group33} alt="커뮤니티 아이콘" />

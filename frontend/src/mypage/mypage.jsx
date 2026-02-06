@@ -8,7 +8,6 @@ const MyPage = ({ userId }) => {
     <div className="mypage-wrapper">
       {/* 공통 헤더 불러오기 */}
       <Header userId={userId} />
-      <CategoryBar />
 
       <div className="mypage-container">
         <div className="content-wrapper">
