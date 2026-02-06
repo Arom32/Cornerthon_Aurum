@@ -79,7 +79,7 @@ function App() {
       <Route path="/trade-bulletin-board" element={<TradeBulletinBoard userId={userId} />} />
 
       {/* 글쓰기 (상세보기와 일반 작성) */}
-      <Route path="/writing" element={<Writing userId={userId} />} />
+      <Route path="/writing/:id" element={<Writing userId={userId} />} />
       <Route path="/performance/:id" element={<PerformanceDetailPage userId={userId} />} />
     </Routes>
     
