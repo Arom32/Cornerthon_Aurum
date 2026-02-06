@@ -27,27 +27,39 @@ body {
 
 /* Section Titles */
 .section-title {
-    font-size: 24px;
+   font-size: 10px;
     font-weight: bold;
     margin-bottom: 20px;
     margin-top: 0;
-    color: #333;
+    color: #8b5cf6;
+    text-align: left;
+    width: 900px;
+    max-width: 900px;
+    display: block;
+    visibility: visible;
+    position: relative;
+
 }
 
 /* 추천 공연 Section */
 .recommend-section {
-    margin-bottom: 40px;
+    
+   margin-bottom: 40px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
 }
 
 .section-grid {
-    display: grid;
+      display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     max-width: 900px;
     width: 900px;
-    position: relative;
-    left: 0;
+    /*채원추가 여기를 조절해야 사진들이 내려감*/
+    margin-top: 100px;
 }
 
 /* Image Card */
@@ -88,13 +100,16 @@ body {
 }
 
 .image-card p {
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
     margin: 0;
+    margin-top: 8px;  /* 이미지와의 간격 */
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: block;  /* 추가 */
+    visibility: visible;  /* 추가 */
 }
 
 /* Purple Skeleton Card */

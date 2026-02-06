@@ -46,13 +46,12 @@
 .list-controls {
     position: relative;
     display: flex;
-    /* justify-content: center; 를 제거하고 왼쪽 여백으로 위치를 잡습니다 */
-    justify-content: flex-start; 
+    justify-content: center;
     align-items: center;
     height: 120px;
     width: 100%;
-    margin-top: 5px; /* 위아래 위치 조절 */
-    margin-bottom: 60px;
+    margin-top: 5px;
+    margin-bottom: 20px;
 }
 
 .section-title {
@@ -62,8 +61,8 @@
     margin: 0;
     
     /* 그림자가 보였던 그 위치로 옮기기 위한 설정 */
-    position: absolute; 
-    left: 45%;           /* 1. 화면의 약 45% 지점으로 위치 이동 */
+    position: flex; 
+    left: 35%;          /* 1. 화면의 약 45% 지점으로 위치 이동 */
     transform: translateX(-50%); /* 2. 그 지점을 기준으로 글자 정중앙 맞춤 */
     
     text-align: center;
@@ -74,7 +73,7 @@
 .list-controls select {
     position: absolute;
     right: 80px;         /* 오른쪽 끝에서의 거리 */
-    top: 140%;
+    top: 90%;
     transform: translateY(-50%);
     
     width: 150px;
@@ -109,13 +108,13 @@
 /* 5. 페이지네이션 - 수동 위치값 제거 후 중앙 정렬 */
 .pagination {
     display: flex;
-    position: relative;
+    left: 300px;
     align-items: center;
     height: 60px;
     margin-top: 10px;
     gap: 20px;
     width: 100%;
-    left: 410px;
+    position:relative;
 }
 
 .pagination button {

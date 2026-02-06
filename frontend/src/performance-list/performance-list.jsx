@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header.jsx';
 import './performance-list.css';
 
-const BACK_URL = import.meta.env.VITE_BACK_URL;
+const BACK_URL = import.meta.env.VITE_BACK_URL || 'http://localhost:5000';
 
 const GENRE_MAP = {
     '전체': '',

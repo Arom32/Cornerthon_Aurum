@@ -6,7 +6,7 @@ import './main-performance.css';
 
 import Header from '../Header/Header.jsx';
 
-const BACK_URL = import.meta.env.VITE_BACK_URL
+const BACK_URL = import.meta.env.VITE_BACK_URL || 'http://localhost:5000';
 
 const Mainperformance = ({userId}) => {
     const [recommendPerformance, setRecommendPerformance] = useState([]); // 추천 공연용
@@ -126,7 +126,7 @@ const Mainperformance = ({userId}) => {
 
     return (
         <div className="container">
-             <Header userId={userId} />
+            <Header userId={userId} />
             
 
             <section className="recommend-section">
@@ -139,6 +139,7 @@ const Mainperformance = ({userId}) => {
 
             <nav className="middle-category">
                 <Link to="/concert">List</Link>
+                
             </nav>
 
             <section className="all-performance">
