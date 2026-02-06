@@ -157,7 +157,7 @@ const Writing = ({ userId }) => {
 
     return (
         <div className="container">
-            <Header />
+             <Header userId={userId} />
             <main className='writing-detail'>
                 <article className='writing-section'>
                     <div className="title-area">
