@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
 import Mainpage from './main-page/main-page.jsx';
 import Mainoption from './main-option/main-option.jsx';
 import Mainperformance from './main-performance/main-performance.jsx';
@@ -9,6 +8,7 @@ import Performancemusical from './performance-musical/performance-musical.jsx';
 import Performanceplayacting from './performance-playacting/performance-playacting.jsx';
 import Performancefestival from './performance-festival/performance-festival.jsx';
 import Performancedisplay from './performance-display/performance-display.jsx';
+import PerformanceList from './performance-list/performance-list.jsx';
 import Communitymain from './community-main/community-main.jsx';
 import Communityfree from './community-free/community-free.jsx';
 import Communitydeal from './community-deal/community-deal.jsx';
@@ -79,7 +79,7 @@ function App() {
       <Route path="/trade-bulletin-board" element={<TradeBulletinBoard userId={userId} />} />
 
       {/* 글쓰기 (상세보기와 일반 작성) */}
-      <Route path="/writing/:id" element={<Writing userId={userId} />} />
+      <Route path="/writing" element={<Writing userId={userId} />} />
       <Route path="/performance/:id" element={<PerformanceDetailPage userId={userId} />} />
     </Routes>
     
