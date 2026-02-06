@@ -5,20 +5,49 @@ import Header from '../Header/Header.jsx';
 
 const BACK_URL = import.meta.env.VITE_BACK_URL || 'http://localhost:5000';
 
+const CommentItem = ({ comment, handleReply, toggleCommentLike }) => {
+    return (
+        <div className={`comment-group ${comment.parentCommentId ? 'reply-group' : ''}`}>
+            <div className="comment-item">
+                <div className="comment-info">
+                    <span className="comment-author">{comment.creator?.username || '익명'}</span>
+                </div>
+                <div className="comment-content">
+                    <p className="comment-text">{comment.content}</p>
+                    <div className="comment-actions">
+                        <button className="reply-btn" onClick={() => handleReply(comment._id, comment.creator?.username)}>답글</button>
+                        <button className="comment-like-btn" onClick={() => toggleCommentLike(comment._id)}>
+                            ♡ {comment.countLikes || 0}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {comment.replies && comment.replies.length > 0 && (
+                <div className="replies-container">
+                    {comment.replies.map(reply => (
+                        <CommentItem 
+                            key={reply._id} 
+                            comment={reply} 
+                            handleReply={handleReply} 
+                            toggleCommentLike={toggleCommentLike} 
+                        />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
 const Writing = ({ userId }) => {
     const { id } = useParams();
     const navigate = useNavigate();
     
-    // --- 1. 상태 관리 통합 (중복 제거) ---
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]); 
     const [loading, setLoading] = useState(true);
-    
-    // 입력 상태
     const [newComment, setNewComment] = useState(""); 
-    const [replyTo, setReplyTo] = useState(null); // 답글 대상 댓글 ID
+    const [replyTo, setReplyTo] = useState(null);
 
-    // [함수] 로그인 체크 및 유도
     const checkAuth = useCallback(() => {
         if (!userId) {
             if (window.confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")) {
@@ -29,7 +58,6 @@ const Writing = ({ userId }) => {
         return true;
     }, [userId, navigate]);
 
-    // [함수] 데이터 로드 (게시글 & 댓글)
     const fetchData = useCallback(async () => {
         try {
             const postResponse = await fetch(`${BACK_URL}/api/boards/list?page=1&limit=100`);
@@ -55,55 +83,57 @@ const Writing = ({ userId }) => {
         fetchData();
     }, [fetchData]);
 
-    // [기능] 게시글 좋아요
+    // --- [수정] 좋아요 토글 기능 ---
     const toggleLike = async () => {
-        if (!checkAuth()) return;
-        try {
-            const response = await fetch(`${BACK_URL}/api/boards/like`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ id })
-            });
-            const result = await response.json();
-            if (response.status === 401) {
-                alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-                navigate('/login');
-                return;
-            }
-            if (response.ok) {
-                setPost(prev => ({ ...prev, countLikes: result.likesCount }));
-            } else {
-                alert(result.message);
-            }
-        } catch (error) {
-            alert("좋아요 처리 중 오류가 발생했습니다.");
-        }
-    };
+    if (!checkAuth()) return;
 
-    // [기능] 댓글 좋아요
+    // 1. 전송 직전 데이터 검증
+    if (!id) {
+        console.error("오류: 게시물 ID가 없습니다!");
+        return;
+    }
+
+    console.log("서버로 보내는 ID:", id); // 콘솔에서 이 값이 '24자리 문자열'인지 확인
+
+    try {
+        const response = await fetch(`${BACK_URL}/api/boards/like`, {
+            method: 'PATCH',
+            headers: { 
+                'Content-Type': 'application/json' // 2. 헤더 확인
+            },
+            credentials: 'include', // 3. 쿠키 전송 확인
+            body: JSON.stringify({ id }) 
+        });
+
+        // 서버에서 에러 응답을 줄 경우 상세 내용 출력
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error("서버 에러 응답:", errorData);
+            alert(`에러: ${errorData.message}`);
+            return;
+        }
+
+        const result = await response.json();
+        setPost(prev => ({ ...prev, countLikes: result.likesCount }));
+
+    } catch (error) {
+        console.error("네트워크/통신 에러:", error);
+    }
+};
     const toggleCommentLike = async (commentId) => {
+        if (!checkAuth()) return;
         try {
             const response = await fetch(`${BACK_URL}/api/comments/${commentId}/like`, {
                 method: 'PATCH',
                 credentials: 'include',
             });
-            const result = await response.json();
-            if (result.success) {
-                setComments(prev => prev.map(comment => 
-                    comment._id === commentId 
-                        ? { ...comment, countLikes: result.data.countLikes }
-                        : comment
-                ));
-            }
+            if (response.ok) fetchData(); 
         } catch (error) { console.error("좋아요 실패"); }
     };
 
-    // 댓글 작성 (함수명 handleCommentSubmit으로 통일)
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
-        if (!checkAuth()) return;
-        if (!newComment.trim()) return;
+        if (!checkAuth() || !newComment.trim()) return;
 
         try {
             const response = await fetch(`${BACK_URL}/api/comments`, {
@@ -113,45 +143,32 @@ const Writing = ({ userId }) => {
                 body: JSON.stringify({ 
                     boardId: id, 
                     content: newComment,
-                    parentId: replyTo 
+                    parentCommentId: replyTo 
                 })
             });
 
-            if (response.status === 201) {
+            if (response.ok) {
                 setNewComment("");
                 setReplyTo(null);
-                fetchData(); // 등록 후 목록 갱신
+                fetchData(); 
             }
-        } catch (error) {
-            alert("댓글 등록에 실패했습니다.");
-        }
+        } catch (error) { alert("등록 실패"); }
     };
 
-    // [기능] 답글 버튼 클릭
     const handleReply = (commentId, username) => {
         setReplyTo(commentId);
         setNewComment(`@${username} `);
     };
 
-    // [기능] 게시글 삭제
     const deletePost = async () => {
-        if (!checkAuth()) return;
-        if (!window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) return;
+        if (!checkAuth() || !window.confirm("삭제하시겠습니까?")) return;
         try {
             const response = await fetch(`${BACK_URL}/api/boards/${id}`, {
                 method: 'DELETE',
                 credentials: 'include',
             });
-            if (response.ok) {
-                alert("삭제되었습니다.");
-                navigate('/community-free');
-            } else {
-                const result = await response.json();
-                alert(result.message);
-            }
-        } catch (error) {
-            alert("삭제 중 오류가 발생했습니다.");
-        }
+            if (response.ok) navigate('/community-free');
+        } catch (error) { alert("삭제 실패"); }
     };
 
     if (loading) return <div className="container"><Header /><div className="loading">로딩 중...</div></div>;
@@ -159,7 +176,7 @@ const Writing = ({ userId }) => {
 
     return (
         <div className="container">
-             <Header userId={userId} />
+            <Header userId={userId} />
             <main className='writing-detail'>
                 <article className='writing-section'>
                     <div className="title-area">
@@ -173,28 +190,25 @@ const Writing = ({ userId }) => {
                     </div>
                     <div className="post-meta">
                         <span className="post-author">작성자: {post.creator?.username || '익명'}</span>
-                        <span className="post-category">{post.category || '일반'}</span>
                     </div>
                     <div className="post-body">{post.content}</div>
                     <div className="like-section">
-                        <button className="like-btn" onClick={toggleLike}>좋아요 ♡ {post.countLikes || 0}</button>
+                        <button className="like-btn" onClick={toggleLike}>
+                            좋아요 ♡ {post.countLikes ?? 0}
+                        </button>
                     </div>
                 </article>
 
                 <section className='comment-section'>
-                    <h3 className="comment-title">댓글 ({comments.length})</h3>
+                    <h3 className="comment-title">댓글</h3>
                     <div className="comment-list">
                         {comments.map((comment) => (
-                            <div key={comment._id} className={`comment-item ${comment.parentId ? 'reply' : ''}`}>
-                                <span className="comment-author">{comment.creator?.username || '익명'}</span>
-                                <div className="comment-content">
-                                    <p className="comment-text">{comment.content}</p>
-                                    <div className="comment-actions">
-                                        <button className="reply-btn" onClick={() => handleReply(comment._id, comment.creator?.username || '익명')}>답글</button>
-                                        <button className="comment-like-btn" onClick={() => toggleCommentLike(comment._id)}>♡ {comment.countLikes || 0}</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <CommentItem 
+                                key={comment._id} 
+                                comment={comment} 
+                                handleReply={handleReply} 
+                                toggleCommentLike={toggleCommentLike} 
+                            />
                         ))}
                     </div>
                 </section>
@@ -204,16 +218,15 @@ const Writing = ({ userId }) => {
                         <input 
                             type="text" 
                             className="comment-input" 
-                            placeholder={replyTo ? "답글을 입력하세요..." : "댓글을 입력하세요"} 
+                            placeholder="댓글을 입력하세요" 
                             value={newComment} 
                             onChange={(e) => setNewComment(e.target.value)} 
                             readOnly={!userId}
-                            onClick={() => !userId && checkAuth()}
                         />
-                        <button type="submit" className="comment-submit-btn">{replyTo ? '답글 등록' : '등록'}</button>
+                        <button type="submit" className="comment-submit-btn">등록</button>
                     </form>
                     {replyTo && (
-                        <button className="cancel-reply-btn" onClick={() => { setReplyTo(null); setNewComment(""); }}>답글 취소</button>
+                        <button className="cancel-reply-btn" onClick={() => { setReplyTo(null); setNewComment(""); }}>취소</button>
                     )}
                 </section>
             </main>

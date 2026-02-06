@@ -187,55 +187,37 @@ async function getUserPosts(req, res) {
 //[PATCH] 게시물 좋아요 토글 로직
 async function toggleBoardLike(req, res) {
     try {
-        if (!req.user?.id){ 
-            return res.status(401).json({ message: "로그인 필요" });
-        }
+        if (!req.user?.id) return res.status(401).json({ message: "로그인 필요" });
 
-        const { id } = req.body; // 게시물 ID
+        const { id } = req.body;
         const userId = req.user.id;
 
         const board = await Board.findById(id);
         if (!board) return res.status(404).json({ message: "게시물을 찾을 수 없습니다." });
-
-        // 본인 게시글 좋아요 방지 
         if (board.creator.toString() === userId) {
             return res.status(400).json({ message: "본인의 게시물에는 좋아요를 누를 수 없습니다." });
         }
 
         const isLiked = board.whoLikes.includes(userId);
         
-        //  좋아요 취소 로직
-        if (isLiked) {
-            // board 내부 좋아요 
-            await Board.findByIdAndUpdate(id, {
-                $pull: { whoLikes: userId },
-                $inc: { countLikes: -1 }
-            });
-            // 작성자의 likesCount 차감
-            await User.findByIdAndUpdate(board.creator, { $inc: { likesCount: -1 } });
+        // findByIdAndUpdate에 { new: true }를 추가하여 업데이트된 문서를 반환받음
+        const updatedBoard = await Board.findByIdAndUpdate(
+            id,
+            isLiked 
+                ? { $pull: { whoLikes: userId }, $inc: { countLikes: -1 } }
+                : { $addToSet: { whoLikes: userId }, $inc: { countLikes: 1 } },
+            { new: true }
+        );
 
-            res.status(200).json({ 
-                message: "좋아요 취소됨", 
-                isLiked: false,
-                likesCount : board.countLikes,
-            });
-        } 
-        // 좋아요 추가 로직
-        else {
-            await Board.findByIdAndUpdate(id, {
-                $addToSet: { whoLikes: userId },
-                $inc: { countLikes: 1 }
-            });
-            // 작성자의 likesCount 증가
-            await User.findByIdAndUpdate(board.creator, { $inc: { likesCount: 1 } });
+        await User.findByIdAndUpdate(board.creator, { $inc: { likesCount: isLiked ? -1 : 1 } });
 
-            res.status(200).json({ 
-                message: "좋아요 추가됨",
-                isLiked: true,
-                likesCount : board.countLikes, });
-        }
+        res.status(200).json({ 
+            message: isLiked ? "좋아요 취소됨" : "좋아요 추가됨", 
+            isLiked: !isLiked,
+            likesCount: updatedBoard.countLikes 
+        });
     } catch (err) {
-        res.status(500).json({ message: "게시글 좋아요 처리 중 오류 발생", error: err.message });
+        res.status(500).json({ message: err.message });
     }
 }
 
