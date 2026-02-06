@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react'; // useEffect 추가
 import Mainpage from './main-page/main-page.jsx';
 import Mainoption from './main-option/main-option.jsx';
 import Mainperformance from './main-performance/main-performance.jsx';
@@ -8,6 +8,7 @@ import Performancemusical from './performance-musical/performance-musical.jsx';
 import Performanceplayacting from './performance-playacting/performance-playacting.jsx';
 import Performancefestival from './performance-festival/performance-festival.jsx';
 import Performancedisplay from './performance-display/performance-display.jsx';
+import PerformanceList from './performance-list/performance-list.jsx';
 import Communitymain from './community-main/community-main.jsx';
 import Communityfree from './community-free/community-free.jsx';
 import Communitydeal from './community-deal/community-deal.jsx';
@@ -17,46 +18,68 @@ import SignupForm from "./signup/signup.jsx";
 import Mypage from "./mypage/mypage.jsx";
 import FreeBulletinBoard from './free-bulletin-board/free-bulletin-board.jsx';
 import TradeBulletinBoard from './trade-bulletin-board/trade-bulletin-board.jsx';
+import PerformanceDetailPage from './performance-detail-page/performance-detail-page.jsx';
 import './App.css';
 
 function App() {
-  // 64번 줄 에러 해결: 함수는 return문 밖, App 함수 바로 아래에 있어야 합니다.
-  const checkLogin = async () => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_BACK_URL || 'http://localhost:5000'}/api/user/mypage`, {
-        method: 'GET',
-        credentials: 'include', // 중요: 쿠키 포함
-      });
-      const data = await response.json();
-      console.log("로그인 확인:", data);
-    } catch (error) {
-      console.error("로그인 체크 실패:", error);
-    }
-  };
+  // 1. 공통 상태 관리
+  const [userId, setUserId] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACK_URL || 'http://localhost:5000'}/api/user/mypage`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          setUserId(result.name); // 서버 응답 데이터에 맞춰 result.id 또는 result.name 사용
+        }
+      } catch (error) {
+        console.error("인증 확인 실패:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     checkLogin();
   }, []);
 
+  if (loading) return <div>Loading...</div>;
+
   return (
     <Routes>
-      <Route path="/" element={<Mainpage />} />
-      <Route path="/option" element={<Mainoption />} />
-      <Route path="/performance" element={<Mainperformance />} />
-      <Route path="/concert" element={<Performanceconcert />} />
-      <Route path="/musical" element={<Performancemusical />} />
-      <Route path="/playacting" element={<Performanceplayacting />} />
-      <Route path="/festival" element={<Performancefestival />} />
-      <Route path="/display" element={<Performancedisplay />} />
-      <Route path="/community" element={<Communitymain />} />
-      <Route path="/free" element={<Communityfree />} />
-      <Route path="/deal" element={<Communitydeal />} />
-      <Route path="/free-bulletin-board" element={<FreeBulletinBoard />} />
-      <Route path="/trade-bulletin-board" element={<TradeBulletinBoard />} />
-      <Route path="/writing" element={<Writing />} />
-      <Route path="/login" element={<LoginForm />} />
+      {/* 메인 및 기본 기능 */}
+      <Route path="/" element={<Mainpage userId={userId} />} />
+      <Route path="/main-option" element={<Mainoption userId={userId} />} />
+      <Route path="/main-performance" element={<Mainperformance userId={userId} />} />
+
+      {/* 로그인, 회원가입, 마이페이지 */}
+      <Route path="/login" element={<LoginForm setUserId={setUserId} />} />
       <Route path="/signup" element={<SignupForm />} />
-      <Route path="/mypage" element={<Mypage />} />
+      <Route path="/mypage" element={<Mypage userId={userId} />} />
+
+      {/* 공연 관련 */}
+      <Route path="/concert" element={<PerformanceList userId={userId} />} />
+      <Route path="/musical" element={<Performancemusical userId={userId} />} />
+      <Route path="/playacting" element={<Performanceplayacting userId={userId} />} />
+      <Route path="/festival" element={<Performancefestival userId={userId} />} />
+      <Route path="/display" element={<Performancedisplay userId={userId} />} />
+      <Route path="/performance/:id" element={<PerformanceDetailPage userId={userId} />} />
+
+      {/* 커뮤니티 및 게시판 */}
+      <Route path="/community-main" element={<Communitymain userId={userId} />} />
+      <Route path="/community-free" element={<Communityfree userId={userId} />} />
+      <Route path="/community-deal" element={<Communitydeal userId={userId} />} />
+      <Route path="/free-bulletin-board" element={<FreeBulletinBoard userId={userId} />} />
+      <Route path="/trade-bulletin-board" element={<TradeBulletinBoard userId={userId} />} />
+
+      {/* 글쓰기 (상세보기와 일반 작성) */}
+      <Route path="/writing" element={<Writing userId={userId} />} />
+      <Route path="/writing/:id" element={<Writing userId={userId} />} />
     </Routes>
   );
 }
