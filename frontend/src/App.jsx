@@ -1,7 +1,4 @@
- fe/free-bulletin-board
-
 import React, { useState, useEffect } from 'react';
- main
 import { Routes, Route } from 'react-router-dom';
 import Mainpage from './main-page/main-page.jsx';
 import Mainoption from './main-option/main-option.jsx';
@@ -21,108 +18,70 @@ import SignupForm from "./signup/signup.jsx";
 import Mypage from "./mypage/mypage.jsx";
 import FreeBulletinBoard from './free-bulletin-board/free-bulletin-board.jsx';
 import TradeBulletinBoard from './trade-bulletin-board/trade-bulletin-board.jsx';
-import './App.css';
 import PerformanceDetailPage from './performance-detail-page/performance-detail-page.jsx';
+import './App.css';
 
 function App() {
- fe/free-bulletin-board
-  return (
-    <Routes>
-      {/* 메인 및 기본 기능 */}
-      <Route path="/" element={<Mainpage />} />
-      <Route path="/option" element={<Mainoption />} />
-      <Route path="/performance" element={<Mainperformance />} />
-
-      {/* 공연 관련 카테고리 */}
-      <Route path="/concert" element={<Performanceconcert />} />
-      <Route path="/musical" element={<Performancemusical />} />
-      <Route path="/playacting" element={<Performanceplayacting />} />
-      <Route path="/festival" element={<Performancefestival />} />
-      <Route path="/display" element={<Performancedisplay />} />
-
-      {/* 커뮤니티 및 게시판 */}
-      <Route path="/community" element={<Communitymain />} />
-      <Route path="/free" element={<Communityfree />} />
-      <Route path="/deal" element={<Communitydeal />} />
-      <Route path="/free-bulletin-board" element={<FreeBulletinBoard />} />
-      <Route path="/trade-bulletin-board" element={<TradeBulletinBoard />} />
-
-      {/* 글쓰기 */}
-      <Route path="/writing" element={<Writing />} />
-
-      {/* 로그인, 회원가입, 마이페이지 */}
-      <Route path="/login" element={<LoginForm />} />
-      <Route path="/signup" element={<SignupForm />} />
-      <Route path="/mypage" element={<Mypage />} />
-
-  // 1. 모든 페이지가 공유할 로그인 아이디 상태
+  // 1. 공통 상태 관리
   const [userId, setUserId] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-      // 앱 실행 시 서버에 프로필 요청 (쿠키 전송)
-      const checkLogin = async () => {
-        try {
-          const response = await fetch(`${import.meta.env.VITE_BACK_URL || 'http://localhost:5000'}/api/user/mypage`, {
-            method: 'GET',
-            credentials: 'include', // 중요: 쿠키 포함
-          });
+    const checkLogin = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACK_URL || 'http://localhost:5000'}/api/user/mypage`, {
+          method: 'GET',
+          credentials: 'include',
+        });
 
-          if (response.ok) {
-            const result = await response.json();
-            setUserId(result.name); // 서버에서 받은 유저 이름으로 상태 설정
-          }
-        } catch (error) {
-          console.error("인증 확인 실패:", error);
-        } finally {
-          setLoading(false);
+        if (response.ok) {
+          const result = await response.json();
+          setUserId(result.name); // 서버 응답 데이터에 맞춰 result.id 또는 result.name 사용
         }
-      };
+      } catch (error) {
+        console.error("인증 확인 실패:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      checkLogin();
-    }, []);
+    checkLogin();
+  }, []);
 
   if (loading) return <div>Loading...</div>;
+
   return (
     <Routes>
-      {/* 2. 각 컴포넌트에 userId와 setUserId를 Props로 전달 */}
+      {/* 메인 및 기본 기능 */}
       <Route path="/" element={<Mainpage userId={userId} />} />
       <Route path="/main-option" element={<Mainoption userId={userId} />} />
       <Route path="/main-performance" element={<Mainperformance userId={userId} />} />
-      
-      {/* LoginForm은 아이디를 '저장'해야 하므로 setUserId를 넘겨줌 */}
+
+      {/* 로그인, 회원가입, 마이페이지 */}
       <Route path="/login" element={<LoginForm setUserId={setUserId} />} />
       <Route path="/signup" element={<SignupForm />} />
-      
-      {/* Mypage는 저장된 아이디를 '보여줘야' 하므로 userId를 넘겨줌 */}
       <Route path="/mypage" element={<Mypage userId={userId} />} />
 
+      {/* 공연 관련 */}
       <Route path="/concert" element={<PerformanceList userId={userId} />} />
-      {/* <Route path="/concert" element={<Performanceconcert userId={userId} />} /> */}
       <Route path="/musical" element={<Performancemusical userId={userId} />} />
       <Route path="/playacting" element={<Performanceplayacting userId={userId} />} />
       <Route path="/festival" element={<Performancefestival userId={userId} />} />
       <Route path="/display" element={<Performancedisplay userId={userId} />} />
+      <Route path="/performance/:id" element={<PerformanceDetailPage userId={userId} />} />
 
+      {/* 커뮤니티 및 게시판 */}
       <Route path="/community-main" element={<Communitymain userId={userId} />} />
       <Route path="/community-free" element={<Communityfree userId={userId} />} />
       <Route path="/community-deal" element={<Communitydeal userId={userId} />} />
-      <Route path="/writing/:id" element={<Writing userId={userId} />} />
       <Route path="/free-bulletin-board" element={<FreeBulletinBoard userId={userId} />} />
       <Route path="/trade-bulletin-board" element={<TradeBulletinBoard userId={userId} />} />
 
-
+      {/* 글쓰기 (상세보기와 일반 작성) */}
       <Route path="/writing" element={<Writing userId={userId} />} />
-      <Route path="/performance/:id" element={<PerformanceDetailPage userId={userId} />} />
-
- main
- main
+      <Route path="/writing/:id" element={<Writing userId={userId} />} />
     </Routes>
   );
 }
 
- fe/free-bulletin-board
 export default App;
-
-export default App;
- main
