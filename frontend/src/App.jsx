@@ -44,11 +44,6 @@ function App() {
         } finally {
           setLoading(false);
         }
-      } catch (error) {
-        console.error("인증 확인 실패:", error);
-      } finally {
-        setLoading(false);
-      }
     };
 
     checkLogin();
